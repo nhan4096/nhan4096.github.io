@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ben Clicker</title>
+    </head>
+    <body>
+        <div class="news-ticker">
+            <div class="ticker-content">
+                <span id="ticker">Ben rơi vật lạ</span>
+            </div>
+        </div>
+        <div class="tabs">
+            <button class="button-home">Bengay</button>
+        </div>
+        <div class="bengay">
+            <div class="center-flex-vertical shit-text">
+                <span>Ben has shat <span class="large-text brown-anim" id="shit-count"> 10 times</span>.</span>
+                <span id="shits-per-tick"></span>
+            </div>
+            <div class="center-flex">
+                <div class="building">
+                    <span class="brown-anim">Toilets</span>
+                    <br>
+                    <span id="toilet-count">You have 0 toilets</span>
+                    <button class="building-buy" onclick="game.buyToilet()" id="toilet-btn">Buy a toilet (10)</button>
+                </div>
+                <div class="building hidden" id="toilet-producer">
+                    <span class="brown-anim">Toilet Producers</span>
+                    <br>
+                    <span id="toilet-producer-count">You have 0 toilet producers</span>
+                    <button class="building-buy" onclick="game.buyToiletProducer()" id="toilet-producer-btn">Buy a toilet producer (10)</button>
+                </div>
+            </div>
+            <div class="hidden shit-galaxy" id="shit-galaxy">
+                <span id="shit-galaxy-count">Shit Galaxy (0)</span>
+                <button id="shit-galaxy-btn" onclick="game.shitGalaxy()"></button>
+            </div>
+        </div>
+        <script src="breakinf.js"></script>
+        <script src="index.js"></script>
+    </body>
+</html>

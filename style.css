@@ -1,0 +1,107 @@
+body {
+    background-color: #191b1f;
+}
+
+p, h1, h2, h3, h4, h5, h6, span {
+    color: #b4b9c2;
+    font-family: monospace;
+}
+
+.news-ticker {
+    overflow: hidden;
+    overflow: hidden;
+    white-space: nowrap;
+    box-sizing: border-box;
+    padding: 10px 0;
+    position: relative;
+    background-color:#111215;
+    outline: 2px solid #b4b9c2;
+}
+
+.ticker-content {
+    display: inline-block;
+    padding-right: 100%;
+    animation: ticker 14s linear infinite;
+}
+
+@keyframes ticker {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.tabs {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    font-family: 'Inconsolata', monospace;
+    background: linear-gradient(#0000, rgb(0 0 0/40%)) top/100% 800%;
+    background-color: white;
+    transition: 0.2s;
+}
+
+button:hover {
+    font-family: 'Inconsolata', monospace;
+    background-position: bottom;
+}
+
+.large-text {
+    font-size: 30px;
+}
+
+.brown-anim {
+    animation-name: brown-anim;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes brown-anim {
+    0% {color: #5c2f11;}
+    50% {color: #6e3b18;}
+    100% {color: #5c2f11}
+}
+
+.center-flex {
+    display: flex;
+    justify-content: center;
+}
+
+.center-flex > div {
+    margin: 20px;
+    padding: 20px;
+}
+
+.center-flex-vertical {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.building {
+    height: 130px;
+    width: 130px;
+    outline: #b4b9c2 2px solid;
+}
+
+.shit-text {
+    padding-bottom: 25px;
+}
+
+.hidden {
+    display: none;
+}
+
+.shit-galaxy {
+    width: 200px;
+    height: 100px;
+    position: relative;
+    left: 5%;
+    margin-top: 20px;
+}
