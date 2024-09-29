@@ -105,3 +105,7 @@ button:hover {
     left: 5%;
     margin-top: 20px;
 }
+
+.settings-box {
+    width: 200px;
+}

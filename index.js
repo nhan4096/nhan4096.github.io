@@ -2,8 +2,6 @@ const tickers = ['Ben rơi vật lạ', 'Ben gặp sự cố khó nói', 'Ben �
 
 var game = {
     v: {
-        currentTab: 0,
-
         toilets: new Decimal(0),
         toiletCost: new Decimal(10),
         toiletCostIncrease: new Decimal(1.2),
@@ -20,11 +18,12 @@ var game = {
         shitGalaxyCost: new Decimal("1e6"),
         shitGalaxyCostIncrease: new Decimal("e2"),
         shitGalaxyCostIncInc: new Decimal("2.5"),
+        unlockedShitGalaxies: false,
 
         shitCount: new Decimal(10),
     },
     html: {
-        tabs: [document.getElementById('bengay')],
+        tabs: [document.getElementById('bengay'), document.getElementById('settings')],
 
         toiletCount: document.getElementById('toilet-count'),
         toiletBtn: document.getElementById('toilet-btn'),
@@ -42,6 +41,17 @@ var game = {
         shitsPerTick: document.getElementById('shits-per-tick'),
 
         ticker: document.getElementById('ticker'),
+
+        locked: document.getElementsByClassName('locked'),
+    },
+    initialize: function () {
+        for (var i=0; i<game.html.locked.length; i++) {
+            game.html.locked[i].disabled = true
+        }
+        game.beginningSave = game.save()
+        if (localStorage.savefile) {
+            game.load(localStorage.savefile)
+        }
     },
     calculateMults: function (name) {
         switch (name) {
@@ -70,7 +80,7 @@ var game = {
         game.html.toiletBtn.innerHTML = `Buy a toilet (${game.format(game.v.toiletCost)})`
         game.html.shitCount.innerHTML = `${game.format(game.v.shitCount)} times`
 
-        game.html.toiletCount.innerHTML = `You have ${game.format(game.v.toilets)} toilets`
+        game.html.toiletCount.innerHTML = game.v.unlockedShitGalaxies ? `You have ${game.format(game.v.toilets)} toilets (×${game.format(game.calculateMults('TM').pow(game.v.toiletBuyCount))})` : `You have ${game.format(game.v.toilets)} toilets`
 
         game.html.toiletProducerBtn.innerHTML = `Buy a toilet producer (${game.format(game.v.toiletProducerCost)})`
 
@@ -82,7 +92,7 @@ var game = {
         Cost: ${game.format(game.v.shitGalaxyCost)}
         `
 
-        game.html.toiletProducerCount.innerHTML = `You have ${game.format(game.v.toiletProducers)} toilets`
+        game.html.toiletProducerCount.innerHTML = `You have ${game.format(game.v.toiletProducers)} toilet producers`
 
         if (game.v.shitCount.gte(100)) {
             game.html.toiletProducer.style.display = 'inline-block'
@@ -90,6 +100,7 @@ var game = {
 
         if (game.v.shitCount.gte(1e6)) {
             game.html.shitGalaxy.style.display = 'inline-block'
+            game.v.unlockedShitGalaxies = true
         }
 
     },
@@ -141,8 +152,46 @@ var game = {
             }
         }
         game.v = savefileDecoded
+    },
+    playFart: function () {
+        // new Audio(`fart${Math.floor(4*Math.random()+1)}.mp3`).play()
+    },
+    promptLoad: function () {
+        try {
+            game.load(prompt('Savefile:'))
+        }
+        catch {
+            alert('Invalid savefile!')
+        }
+    },
+    promptSave: function () {
+        prompt('Savefile:', game.save())
+    },
+    promptDelete: function () {
+        if (prompt('Are you sure you want to reset the game? If yes, type "Ben RVLKV2024"') == 'Ben RVLKV2024') {
+            game.load(game.beginningSave)
+            localStorage.removeItem('savefile')
+            location.reload(true)
+        }
+    },
+    saveBrowser: function () {
+        localStorage.setItem('savefile', game.save())
+    },
+    openTab: function (t) {
+        for (var i=0; i<game.html.tabs.length; i++) {
+            game.html.tabs[i].style.display = 'none'
+        }
+        game.html.tabs[t].style.display = 'inline'
+    },
+    locked: function () {
+        alert('Pay 1000000SIMUI to unlock that button!')
+        prompt('Pay at:', 'https://bit.ly/47Jiz2O')
     }
 }
 
+game.initialize()
+
 setInterval(game.tick, 50)
 setInterval(game.tickerUpdate, 14000)
+setInterval(game.playFart, 3000)
+setInterval(game.saveBrowser, 5000)

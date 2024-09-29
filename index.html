@@ -14,9 +14,10 @@
             </div>
         </div>
         <div class="tabs">
-            <button class="button-home">Bengay</button>
+            <button class="button-home" onclick="game.openTab(0)">Bengay</button>
+            <button class="button-home" onclick="game.openTab(1)">Settings</button>
         </div>
-        <div class="bengay">
+        <div id="bengay">
             <div class="center-flex-vertical shit-text">
                 <span>Ben has shat <span class="large-text brown-anim" id="shit-count"> 10 times</span>.</span>
                 <span id="shits-per-tick"></span>
@@ -38,6 +39,25 @@
             <div class="hidden shit-galaxy" id="shit-galaxy">
                 <span id="shit-galaxy-count">Shit Galaxy (0)</span>
                 <button id="shit-galaxy-btn" onclick="game.shitGalaxy()"></button>
+            </div>
+        </div>
+        <div class="hidden" id="settings">
+            <div class="center-flex">
+                <div class="settings-box">
+                    <button class="large-text" onclick="game.promptLoad()">LOAD SAVEFILE</button>
+                </div>
+                <div class="settings-box">
+                    <button class="large-text" onclick="game.promptSave()">EXPORT SAVEFILE</button>
+                </div>
+                <div class="settings-box">
+                    <button class="large-text" onclick="game.saveBrowser()">SAVE TO BROWSER</button>
+                </div>
+                <div class="settings-box">
+                    <button class="large-text" onclick="game.promptDelete()">RESET THE GAME</button>
+                </div>
+                <div class="settings-box">
+                    <button class="locked large-text" onclick="game.locked()">MUTE ALL SOUNDS</button>
+                </div>
             </div>
         </div>
         <script src="breakinf.js"></script>
