@@ -12,6 +12,7 @@ var game = {
         toiletProducerCost: new Decimal(100),
         toiletProducerCostIncrease: new Decimal(1.2),
         toiletProducerEff: new Decimal(0.2),
+        unlockedToiletProducers: false,
 
         shitGalaxies: new Decimal(0),
         shitGalaxyEff: new Decimal(1.05),
@@ -89,11 +90,12 @@ var game = {
 
         game.html.toiletProducerCount.innerHTML = `You have ${game.format(game.v.toiletProducers)} toilet producers`
 
-        if (game.v.shitCount.gte(100)) {
+        if (game.v.shitCount.gte(100) || game.v.unlockedToiletProducers) {
             game.html.toiletProducer.style.display = 'inline-block'
+            game.v.unlockedToiletProducers = true
         }
 
-        if (game.v.shitCount.gte(1e6)) {
+        if (game.v.shitCount.gte(1e6) || game.v.unlockedShitGalaxies) {
             game.html.shitGalaxy.style.display = 'inline-block'
             game.v.unlockedShitGalaxies = true
         }
