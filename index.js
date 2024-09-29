@@ -41,13 +41,8 @@ var game = {
         shitsPerTick: document.getElementById('shits-per-tick'),
 
         ticker: document.getElementById('ticker'),
-
-        locked: document.getElementsByClassName('locked'),
     },
     initialize: function () {
-        for (var i=0; i<game.html.locked.length; i++) {
-            game.html.locked[i].disabled = true
-        }
         game.beginningSave = game.save()
         if (localStorage.savefile) {
             game.load(localStorage.savefile)
@@ -154,7 +149,7 @@ var game = {
         game.v = savefileDecoded
     },
     playFart: function () {
-        // new Audio(`fart${Math.floor(4*Math.random()+1)}.mp3`).play()
+        new Audio(`fart${Math.floor(4*Math.random()+1)}.mp3`).play()
     },
     promptLoad: function () {
         try {

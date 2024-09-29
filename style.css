@@ -109,3 +109,7 @@ button:hover {
 .settings-box {
     width: 200px;
 }
+
+.locked {
+    color: #b4b9c2
+}
