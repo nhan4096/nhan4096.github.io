@@ -14,8 +14,10 @@
             </div>
         </div>
         <div class="tabs">
-            <button class="button-home" onclick="game.openTab(0)">Bengay</button>
-            <button class="button-home" onclick="game.openTab(1)">Settings</button>
+            <button onclick="game.openTab(0)">Bengay</button>
+            <button onclick="game.openTab(1)">Settings</button>
+            <button onclick="game.openTab(2)">Achievements</button>
+            <button class="button-auto hidden" id="auto-tab" onclick="game.openTab(3)">Auto-Shitter</button>
         </div>
         <div id="bengay">
             <div class="center-flex-vertical shit-text">
@@ -57,6 +59,23 @@
                 </div>
                 <div class="settings-box">
                     <button class="locked large-text" onclick="game.locked()">MUTE ALL SOUNDS</button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden" id="achievements">
+            <div class="center-flex-vertical">
+                <div>
+                    <span class="large-text brown-anim">Your Achievements</span>
+                    <span id="achievements-list"></span>
+                </div>
+            </div>
+        </div>
+        <div class="center-flex-vertical hidden" id="auto-shitter">
+            <div>
+                <div class="auto">
+                    <span>Toilet Buyer</span>
+                    <input type="checkbox" id="shitter-enabled">
+                    <button id="shitter-upgrade" onclick="game.upgradeShitter()"></button>
                 </div>
             </div>
         </div>

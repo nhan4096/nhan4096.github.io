@@ -2,13 +2,12 @@ body {
     background-color: #191b1f;
 }
 
-p, h1, h2, h3, h4, h5, h6, span {
+p, h1, h2, h3, h4, h5, h6, span, label {
     color: #b4b9c2;
     font-family: monospace;
 }
 
 .news-ticker {
-    overflow: hidden;
     overflow: hidden;
     white-space: nowrap;
     box-sizing: border-box;
@@ -20,16 +19,16 @@ p, h1, h2, h3, h4, h5, h6, span {
 
 .ticker-content {
     display: inline-block;
-    padding-right: 100%;
+    padding-left: 100%;
     animation: ticker 14s linear infinite;
 }
 
 @keyframes ticker {
     0% {
-        transform: translateX(100%);
+        transform: translateX(-100%);
     }
     100% {
-        transform: translateX(-100%);
+        transform: translateX(100%);
     }
 }
 
@@ -71,6 +70,7 @@ button:hover {
 .center-flex {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .center-flex > div {
@@ -113,3 +113,15 @@ button:hover {
 .locked {
     color: #b4b9c2
 }
+
+.button-auto {
+    background: #9aeb03;
+}
+
+.auto {
+    width: 250px;
+    height: 100px;
+    outline: #b4b9c2 2px solid;
+    padding: 5px !important;
+}
+

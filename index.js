@@ -21,10 +21,43 @@ var game = {
         shitGalaxyCostIncInc: new Decimal("2.5"),
         unlockedShitGalaxies: false,
 
+        unlockedAutobuyers: false,
+        toiletAutobuyerInterval: 1000,
+        toiletAutobuyerEnabled: false,
+        toiletAutobuyersLast: Date.now(),
+        toiletAutobuyerUpgradeCost: new Decimal('1e20'),
+        toiletAutobuyerUpgradeCostInc: new Decimal('1e2'),
+
         shitCount: new Decimal(10),
     },
+    achievements: [
+        {
+            id: 1,
+            name: "Skibidi Toilet",
+            description: "Buy a Toilet",
+            unlocked: false,
+        },
+        {
+            id: 2,
+            name: "DaFuqBoom",
+            description: "Buy a Toilet Producer",
+            unlocked: false,
+        },
+        {
+            id: 3,
+            name: "Cosmic Shitting",
+            description: "Have 1 Shit Galaxy",
+            unlocked: false,
+        },
+        {
+            id: 4,
+            name: "Shit-pocalypse",
+            description: "Get 1e15 shits",
+            unlocked: false,
+        }
+    ],
     html: {
-        tabs: [document.getElementById('bengay'), document.getElementById('settings')],
+        tabs: [document.getElementById('bengay'), document.getElementById('settings'), document.getElementById('achievements'), document.getElementById('auto-shitter')],
 
         toiletCount: document.getElementById('toilet-count'),
         toiletBtn: document.getElementById('toilet-btn'),
@@ -41,6 +74,12 @@ var game = {
         shitCount: document.getElementById('shit-count'),
         shitsPerTick: document.getElementById('shits-per-tick'),
 
+        autoShitterTabBtn: document.getElementById('auto-tab'),
+        autoShitterEnabled: document.getElementById('shitter-enabled'),
+        autoShitterUpgrade: document.getElementById('shitter-upgrade'),
+
+        achievementsList: document.getElementById('achievements-list'),
+
         ticker: document.getElementById('ticker'),
     },
     initialize: function () {
@@ -56,10 +95,12 @@ var game = {
         }
     },
     format: function (x) {
+        if (typeof x != 'object') {x = new Decimal(x)}
         if (x.lt(1000)) {return x.toFixed(2)}
         else {return x.mantissa.toFixed(2) + "e" + x.exponent}
     },
     formatInt: function (x) {
+        if (typeof x != 'object') {x = new Decimal(x)}
         if (x.lt(1000)) {return x.toFixed(0)}
         else {return x.mantissa.toFixed(2) + "e" + x.exponent}
     },
@@ -90,6 +131,17 @@ var game = {
 
         game.html.toiletProducerCount.innerHTML = `You have ${game.format(game.v.toiletProducers)} toilet producers`
 
+        game.v.toiletAutobuyerEnabled = game.html.autoShitterEnabled.checked
+
+        if (game.v.toiletAutobuyerInterval*0.7 >= 50) {
+            game.html.autoShitterUpgrade.innerHTML = `Increase Toilet Buyer speed by 30% (${game.formatInt(game.v.toiletAutobuyerInterval)}ms → ${game.formatInt(game.v.toiletAutobuyerInterval*0.7)}ms)
+            <br>
+            Cost: ${game.v.toiletAutobuyerUpgradeCost}`
+        }
+        else {
+            game.html.autoShitterUpgrade.innerHTML = `Toilet Buyer speed: 10ms (Capped)`
+        }
+
         if (game.v.shitCount.gte(100) || game.v.unlockedToiletProducers) {
             game.html.toiletProducer.style.display = 'inline-block'
             game.v.unlockedToiletProducers = true
@@ -99,6 +151,14 @@ var game = {
             game.html.shitGalaxy.style.display = 'inline-block'
             game.v.unlockedShitGalaxies = true
         }
+
+        if (game.v.shitCount.gte(1e15) || game.v.unlockedAutobuyers) {
+            game.html.autoShitterTabBtn.style.display = 'inline-block'
+            game.v.unlockedAutobuyers = true
+        }
+
+        game.checkAchievements()
+        game.html.achievementsList.innerHTML = game.getAchievementString()
 
     },
     tickerUpdate: function () {
@@ -139,16 +199,23 @@ var game = {
     },
 
     save: function () {
-        return btoa(JSON.stringify(game.v))
+        return btoa(JSON.stringify(game.v)) + '%' + btoa(JSON.stringify(game.achievements))
     },
     load: function (savefile) {
-        savefileDecoded = JSON.parse(atob(savefile))
+        savefileDecoded = JSON.parse(atob(savefile.split("%")[0]))
+        try {
+            achievementsDecoded = JSON.parse(atob(savefile.split("%")[1]))
+            for (var i=0; i<game.achievements.length; i++) {
+                game.achievements[i] = game.achievementsDecoded[i]
+            }
+        }
+        catch {console.log('Old save detected...')}
         for (var key in savefileDecoded) {
             if (typeof savefileDecoded[key] == 'string') {
                 savefileDecoded[key] = new Decimal(savefileDecoded[key])
             }
+            game.v[key] = savefileDecoded[key]
         }
-        game.v = savefileDecoded
     },
     playFart: function () {
         new Audio(`fart${Math.floor(4*Math.random()+1)}.mp3`).play()
@@ -178,17 +245,72 @@ var game = {
         for (var i=0; i<game.html.tabs.length; i++) {
             game.html.tabs[i].style.display = 'none'
         }
-        game.html.tabs[t].style.display = 'inline'
+        game.html.tabs[t].style.display = 'block'
     },
     locked: function () {
         alert('Pay 1000000SIMUI to unlock that button!')
         prompt('Pay at:', 'https://bit.ly/47Jiz2O')
+    },
+    runAutobuyers: function () {
+        if (Date.now() - game.v.toiletAutobuyersLast >= game.v.toiletAutobuyerInterval) {
+            game.buyToilet()
+            game.v.toiletAutobuyersLast = Date.now()
+        }
+    },
+    upgradeShitter: function () {
+        if (game.v.shitCount.gte(game.v.toiletAutobuyerUpgradeCost) && game.v.toiletAutobuyerInterval*0.7 > 50) {
+            game.v.toiletAutobuyerInterval *= 0.7
+            game.v.shitCount = game.v.shitCount.sub(game.v.toiletAutobuyerUpgradeCost)
+            game.v.toiletAutobuyerUpgradeCost = game.v.toiletAutobuyerUpgradeCost.mul(game.v.toiletAutobuyerUpgradeCostInc)
+        }
+    },
+    checkAchievements: function () {
+        game.achievements.forEach(e => {
+            if (!e.unlocked) {
+                switch (e.id) {
+                    case 1:
+                        game.achievements[0].unlocked = game.v.toilets.gte(1)
+                        break
+                    case 2:
+                        game.achievements[1].unlocked = game.v.toiletProducers.gte(1)
+                        break
+                    case 3:
+                        game.achievements[2].unlocked = game.v.shitGalaxies.gte(1)
+                        break
+                    case 4:
+                        game.achievements[3].unlocked = game.v.shitCount.gte(1e15)
+                        break
+                }
+            }
+         });
+    },
+    getAchievementString: function () {
+        var acstr = ''
+        game.achievements.forEach(e => {
+            if (e.unlocked) {
+                acstr += `
+                <br>
+                ------------
+                <br>
+                Achievement: ${e.name}
+                <br>
+                Description: ${e.description}
+                <br>
+                `
+            }
+        })
+        return acstr
     }
 }
 
 game.initialize()
 
-setInterval(game.tick, 50)
+setInterval(function () {
+    game.tick()
+    if (game.v.unlockedAutobuyers && game.v.toiletAutobuyerEnabled) {
+        game.runAutobuyers()
+    } 
+}, 50)
 setInterval(game.tickerUpdate, 14000)
-setInterval(game.playFart, 3000)
+setInterval(game.playFart, 10000)
 setInterval(game.saveBrowser, 5000)
