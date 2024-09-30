@@ -139,7 +139,7 @@ var game = {
             Cost: ${game.v.toiletAutobuyerUpgradeCost}`
         }
         else {
-            game.html.autoShitterUpgrade.innerHTML = `Toilet Buyer speed: 10ms (Capped)`
+            game.html.autoShitterUpgrade.innerHTML = `Toilet Buyer speed: 50ms (Capped)`
         }
 
         if (game.v.shitCount.gte(100) || game.v.unlockedToiletProducers) {
