@@ -435,20 +435,20 @@ let game = {
         return acstr
     },
     enterShittiverse: function (i) {
-        if (game.v.currentUniverse != i) {
+        if (i == 0) {
+            Array.prototype.slice.call(game.html.shittiverseEnterBtns).forEach(e => {
+                e.innerHTML = "Enter"
+            })
+            game.v.currentUniverse = 0
+            game.resetUniverse(0)
+        }
+        else {
             Array.prototype.slice.call(game.html.shittiverseEnterBtns).forEach(e => {
                 e.innerHTML = "Enter"
             })
             game.html.shittiverseEnterBtns[i-1].innerHTML = "Exit"
             game.v.currentUniverse = i
             game.resetUniverse(i)
-        }
-        else {
-            Array.prototype.slice.call(game.html.shittiverseEnterBtns).forEach(e => {
-                e.innerHTML = "Enter"
-            })
-            game.v.currentUniverse = 0
-            game.resetUniverse(0)
         }
     },
     resetUniverse: function (i) {
