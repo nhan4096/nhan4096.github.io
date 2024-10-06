@@ -118,6 +118,10 @@ button:hover {
     background: #9aeb03;
 }
 
+.button-verse {
+    background: #7590eb;
+}
+
 .auto {
     width: 250px;
     height: 100px;
@@ -125,3 +129,18 @@ button:hover {
     padding: 5px !important;
 }
 
+.shittiverse {
+    width: 250px;
+    height: 150px;
+    outline: #b4b9c2 2px solid;
+    padding: 5px !important;
+    text-align: center;
+}
+
+.verse-text {
+    font-size: 20px;
+}
+
+.brown {
+    color: #6e3b18;
+}

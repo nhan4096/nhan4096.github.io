@@ -18,6 +18,7 @@
             <button onclick="game.openTab(1)">Settings</button>
             <button onclick="game.openTab(2)">Achievements</button>
             <button class="button-auto hidden" id="auto-tab" onclick="game.openTab(3)">Auto-Shitter</button>
+            <button class="button-verse hidden" id="verse-tab" onclick="game.openTab(4)">Shittiverses</button>
         </div>
         <div id="bengay">
             <div class="center-flex-vertical shit-text">
@@ -64,9 +65,21 @@
         </div>
         <div class="hidden" id="achievements">
             <div class="center-flex-vertical">
-                <div>
-                    <span class="large-text brown-anim">Your Achievements</span>
-                    <span id="achievements-list"></span>
+                <div class="center-flex">
+                    <button onclick="game.subTab('2a')">Achievements</button>
+                    <button onclick="game.subTab('2b')">Locked Achievements</button>
+                </div>
+                <div class="center-flex-vertical" id="ach-2a">
+                    <div>
+                        <span class="large-text brown-anim">Your Achievements</span>
+                        <span id="achievements-list"></span>
+                    </div>
+                </div>
+                <div class="center-flex-vertical hidden" id="ach-2b">
+                    <div>
+                        <span class="large-text brown-anim">Locked Achievements</span>
+                        <span id="locked-achievements"></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -79,7 +92,23 @@
                 </div>
             </div>
         </div>
+        <div class="hidden" id="shittiverses">
+            <div class="center-flex">
+                <div class="shittiverse">
+                    <span class="verse-text brown">Diarrheaverse</span>
+                    <br>
+                    <span>Your toilet multiplier is reduced by ^0.75</span>
+                    <br>
+                    <span>Goal: Get 1e50 shits</span>
+                    <br>
+                    <span>Reward: You gain a ^1.35 increase on your toilet multiplier</span>
+                    <br>
+                    <button onclick="game.enterShittiverse(1)" class="enter-shittiverse">Enter</button>
+                </div>
+            </div>
+        </div>
         <script src="breakinf.js"></script>
+        <script src="constants.js"></script>
         <script src="index.js"></script>
     </body>
 </html>
