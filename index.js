@@ -294,7 +294,7 @@ let game = {
         }
     },
     playFart: function () {
-        //new Audio(`fart${Math.floor(4*Math.random()+1)}.mp3`).play()
+        new Audio(`fart${Math.floor(4*Math.random()+1)}.mp3`).play()
     },
     promptLoad: function () {
         try {
@@ -457,6 +457,8 @@ let game = {
                 game.v[key] = game.beginningV[key]
             }
         }
+        game.html.autoShitterTabBtn.style.display = 'none'
+        game.html.shitGalaxy.style.display = 'none'
         game.universe = i
     },
     checkShittiverseGoals: function (i) {
