@@ -1,5 +1,3 @@
-const tickers = ['Ben rơi vật lạ', 'Ben gặp sự cố khó nói', 'Ben ỉa đùn', 'Anh ơi mua SIM cho em', 'Anh ơi mua sub cho em', 'Hahahahaha cringtuber', 'Cringe', 'Worst-developer hahhaha', 'Nhớ đăng kí ultra interface', "Tuan Hai's fat mom hahaha", "tao béo", "Where is your dinininisour vringring", "SpeedyMcTrash", "Hyper-copycat", "Bestuber là tao", "hahahahahahahaha", "gị đăp", "xí đuông", "Con xuống đi", "đơi ri", "You are my special", '<a href="https://chubin.net">https://chubin.net</a>', 'Insert foreign object', 'Drop foreign object', 'Vringr', 'DUTLA INTERFACE', 'Bengay topical analgesic cream', 'BESTTUBER', 'Tin là Bb', 'BESTUBER']
-
 let game = {
     v: {
         version: 1,
@@ -45,10 +43,11 @@ let game = {
         autoshitterBulkCost: new Decimal(1e100),
         autoshitterBulkCostIncrease: new Decimal(1e50),
 
-        universeUnlocks: [false, false, false, false],
+        universeUnlocks: [false, false, false, false, false],
         unlockedShittiverses: false,
 
         maniEnabled: false,
+        maniEnabledFull: false,
 
         maniCooldown: 10*60*1000/50,
         maniLastStart: 0,
@@ -62,6 +61,12 @@ let game = {
         maniCycle: new Decimal(10*1000/50),
         maniCycleCost: new Decimal("1e300"),
         maniCycleCostInc: new Decimal("1e60"),
+
+        toiletProducerAutobuyerInterval: 50000,
+        toiletProducerAutobuyerEnabled: false,
+        toiletProducerAutobuyersLast: Date.now(),
+        toiletProducerAutobuyerUpgradeCost: new Decimal('1e500'),
+        toiletProducerAutobuyerUpgradeCostInc: new Decimal('1e25'),
     },
     achievements: [
         {
@@ -90,8 +95,8 @@ let game = {
         },
         {
             id: 5,
-            name: "The Shitty Way",
-            description: "Have 10 shit galaxies",
+            name: "nice.",
+            description: "Get 1e69 shits",
             unlocked: false,
         },
         {
@@ -138,6 +143,13 @@ let game = {
             reward: '',
             description: 'Get 1e500 shits',
             unlocked: false,
+        },
+        {
+            id: 13,
+            name: 'The Battle Cats (Gambling Addiction)',
+            description: 'Get 7e777 shits',
+            reward: '',
+            unlocked: false,
         }
     ],
     html: {
@@ -175,16 +187,23 @@ let game = {
         benverse: document.getElementById('benverse'),
         benverseDesc: document.getElementById('benverse-desc'),
         meetfanverse: document.getElementById('meetfanverse'),
+        toiletiverse: document.getElementById('toiletiverse'),
+        toiletiverseDesc: document.getElementById('toiletiverse-desc'),
 
         autoShitterBulkBuyButton: document.getElementById('shitter-bulk-upgrade'),
 
         maniButton: document.getElementById('mani-tab'),
+        maniEnabled: document.getElementById('mani-enabled'),
         cooldownUpg: document.getElementById('cooldown-upg'),
         powerUpg: document.getElementById('power-upg'),
         cycleUpg: document.getElementById('cycle-upg'),
         speedTxt: document.getElementById('speed-txt'),
         untilActivation: document.getElementById('until-activation'),
         benImg: document.getElementById('ben-img'),
+
+        toiletProdBtn: document.getElementById('toilet-prod-upgrade'),
+        toiletProducerEnabled: document.getElementById('toilet-prod-enabled'),
+        toiletProdBuyer: document.getElementById('toilet-prod-buyer'),
 
         ticker: document.getElementById('ticker'),
     },
@@ -213,24 +232,23 @@ let game = {
             case 'TM':
                 return game.calc('GP').pow(game.v.shitGalaxies)
             case 'M':
-                return (game.achievements[8].unlocked ? game.calc('A9M') : new Decimal(1)).mul(game.achievements[10].unlocked ? game.calc('A11M') : 1)
+                return (game.achievements[8].unlocked ? game.calc('A9M') : new Decimal(1)).mul(game.achievements[10].unlocked ? game.calc('A11M') : 1).mul(game.achievements[12].unlocked ? game.calc('A13M') : 1)
             case 'TMCB':
                 return game.calc('TM').pow(game.v.toiletBuyCount).mul(game.calc('M')).gte("1e100") ? new Decimal("1e100").mul(game.calc('TM').pow(game.v.toiletBuyCount).mul(game.calc('M')).div('1e100').pow(0.25)).pow(game.v.universeUnlocks[0] && game.v.currentUniverse != 1 && game.v.currentUniverse != 4 ? 1.35 : 1) : game.calc('TM').pow(game.v.toiletBuyCount).mul(game.calc('M')).pow(game.v.universeUnlocks[0] && game.v.currentUniverse != 1 && game.v.currentUniverse != 4 ? 1.35 : 1)
             case 'TMC':
-                if (game.v.currentUniverse == 0) {
-                    return game.calc('TMCB')
-                }
-                else if (game.v.currentUniverse == 1) {
-                    return game.calc('TMCB').pow(0.75)
-                }
-                else if (game.v.currentUniverse == 2) {
-                    return game.calc('TMCB').div(game.calc('U2D'))
-                }
-                else if (game.v.currentUniverse == 3) {
-                    return game.calc('TMCB').mul(game.calc('U3D'))
-                }
-                else if (game.v.currentUniverse == 4) {
-                    return game.calc('TMCB').pow(0.75).div(game.calc('U2D')).mul(game.calc('U3D'))
+                switch (game.v.currentUniverse) {
+                    case 0:
+                        return game.calc('TMCB')
+                    case 1:
+                        return game.calc('TMCB').pow(0.75)
+                    case 2:
+                        return game.calc('TMCB').div(game.calc('U2D'))
+                    case 3:
+                        return game.calc('TMCB').mul(game.calc('U3D'))
+                    case 4:
+                        return game.calc('TMCB').pow(0.75).div(game.calc('U2D')).mul(game.calc('U3D'))
+                    case 5:
+                        return game.calc('TMCB').mul(game.calc('U5D'))
                 }
             case 'U2D':
                 return new Decimal(1.75).pow(game.v.shitCount.gt(0) ? game.v.shitCount.log(10) : 1)
@@ -242,10 +260,14 @@ let game = {
                 return game.v.shitCount.gt(0) ? new Decimal(1.5).pow(game.v.shitCount.log(10)) : new Decimal(1)
             case 'A12M':
                 return game.v.shitCount.gt(0) ? game.v.shitCount.log(5) : new Decimal(1)
+            case 'A13M':
+                return game.v.toiletProducers.gt(0) ? game.v.toiletProducers.pow(3) : new Decimal(1)
             case 'T':
-                return (game.v.maniEnabled ? game.v.maniPower.mul(game.achievements[11] ? game.calc('A12M') : new Decimal(1)) : new Decimal(1))
+                return (game.v.maniEnabled && game.v.maniEnabledFull ? game.v.maniPower.mul(game.achievements[11] ? game.calc('A12M') : new Decimal(1)) : game.achievements[11] ? game.calc('A12M') : new Decimal(1))
             case 'GP':
                 return game.v.shitGalaxyEff.mul(game.v.universeUnlocks[3] ? 1.0005 : 1)
+            case 'U5D':
+                return game.v.ticksSinceLastReset.gte((1000/50)*60*60*10) ? 0 : new Decimal(1).sub(game.v.ticksSinceLastReset.div((1000/50)*60*60*10))
         }
     },
     format: function (x) {
@@ -311,6 +333,11 @@ let game = {
         game.html.toiletProducerCount.innerHTML = `You have ${game.format(game.v.toiletProducers)} toilet producers`
 
         game.v.toiletAutobuyerEnabled = game.html.autoShitterEnabled.checked
+        game.v.toiletProducerAutobuyerEnabled = game.html.toiletProducerEnabled.checked
+
+        if (game.v.universeUnlocks[4]) {
+            game.html.toiletProdBuyer.style.display = 'flex'
+        }
 
         if (game.v.toiletAutobuyerInterval*0.7 >= 50) {
             game.html.autoShitterUpgrade.innerHTML = `Increase Toilet Buyer speed by 30% (${game.formatTime(game.v.toiletAutobuyerInterval/50)} → ${game.formatTime(game.v.toiletAutobuyerInterval*0.7/50)})
@@ -319,6 +346,15 @@ let game = {
         }
         else {
             game.html.autoShitterUpgrade.innerHTML = `Toilet Buyer speed: ${game.formatInt(game.v.toiletAutobuyerInterval)}ms (Capped)`
+        }
+
+        if (game.v.toiletProducerAutobuyerInterval*0.7 >= 50) {
+            game.html.toiletProdBtn.innerHTML = `Increase Toilet Producer Buyer speed by 30% (${game.formatTime(game.v.toiletProducerAutobuyerInterval/50)} → ${game.formatTime(game.v.toiletProducerAutobuyerInterval*0.7/50)})
+            <br>
+            Cost: ${game.format(game.v.toiletProducerAutobuyerUpgradeCost)}`
+        }
+        else {
+            game.html.toiletProdBtn.innerHTML = `Toilet Buyer speed: ${game.formatInt(game.v.toiletProducerAutobuyerInterval)}ms (Capped)`
         }
 
         game.html.ultraverseDesc.innerHTML = `The more shits you get, the weaker your toilet multiplier will be (current: ÷${game.format(game.calc('U2D'))})`
@@ -331,6 +367,8 @@ let game = {
         Cost: ${game.format(game.v.autoshitterBulkCost)}` : `Bulk: 100 (Capped)`
 
         game.html.benverseDesc.innerHTML = `Your toilet multiplier's power slowly increases from 0% over the span of 1 hour. Current: ${game.format(game.calc('U3D').mul(100))}%`
+        
+        game.html.toiletiverseDesc.innerHTML = `A multiplier on your toilet multiplier reduces from ×1 to ×0 over the span of 10 hours (game time). <br> Current: ×${game.formatMili(game.calc('U5D'))}`
 
         game.html.cooldownUpg.innerHTML = game.v.maniCooldown*0.8 > 5*1000/50 ? `Reduce activation cooldown by 20% <br> Cost: ${game.format(game.v.maniCooldownCost)} <br> (${game.formatTime(game.v.maniCooldown)} → ${game.formatTime(game.v.maniCooldown*0.8)})` : `Cooldown time: ${game.formatTime(game.v.maniCooldown)} (Capped)`
         game.html.powerUpg.innerHTML = `Increase power by 20% <br> Cost: ${game.format(game.v.maniPowerCost)} <br> (×${game.format(game.v.maniPower)} → ×${game.format(game.v.maniPower.mul(1.2))})`
@@ -390,28 +428,38 @@ let game = {
         if (game.tickerIsOffScreen()) {
             game.tickerUpdate()
         }
+        
+        game.v.maniEnabledFull = game.html.maniEnabled.checked
+        game.v.timeSpeed = game.calc('T')
 
-        if (Date.now()-(game.v.maniLastStart+Number(game.v.maniCycle)) > game.v.maniCooldown*50 && !game.v.maniEnabled && game.v.universeUnlocks[2]) {
-            game.v.maniEnabled = true
-            game.v.maniLastStart = Date.now()
-            new Audio('fart-mani.mp3').play()
-        }
-        if (Date.now()-game.v.maniLastStart > game.v.maniCycle*50 && game.v.maniEnabled && game.v.universeUnlocks[2]) {
-
-            game.v.maniEnabled = false
-            game.v.maniLastStart = Date.now()
-        }
-        if (game.v.maniEnabled) {
+        if (game.v.maniEnabled && game.v.maniEnabledFull) {
             game.html.benImg.style.filter = 'invert(1)'
         }
         else {
             game.html.benImg.style.filter = 'invert(0)'
         }
-        game.v.timeSpeed = game.calc('T')
+        
+        if (game.v.maniEnabledFull) {
+            if (Date.now()-(game.v.maniLastStart+Number(game.v.maniCycle)) > game.v.maniCooldown*50 && !game.v.     maniEnabled && game.v.universeUnlocks[2]) {
+                game.v.maniEnabled = true
+                game.v.maniLastStart = Date.now()
+                new Audio('fart-mani.mp3').play()
+            }
+            if (Date.now()-game.v.maniLastStart > game.v.maniCycle*50 && game.v.maniEnabled && game.v.universeUnlocks[2]) {
 
-        game.html.untilActivation.innerHTML = game.v.maniEnabled ? `Time until activation ends: ${game.formatTime(((game.v.maniLastStart+Number(game.v.maniCycle)*50)-Date.now())/50)}` : `Time until next activation: ${game.formatTime(((game.v.maniLastStart+game.v.maniCooldown*50)-Date.now())/50)}`
-        game.html.speedTxt.innerHTML = `×${game.format(game.v.timeSpeed)}`
+                game.v.maniEnabled = false
+                game.v.maniLastStart = Date.now()
+            }
 
+            game.html.untilActivation.innerHTML = game.v.maniEnabled ? `Time until activation ends: ${game.formatTime(((game.v.maniLastStart+Number(game.v.maniCycle)*50)-Date.now())/50)}` : `Time until next activation: ${game.formatTime(((game.v.maniLastStart+game.v.maniCooldown*50)-Date.now())/50)}`
+            game.html.speedTxt.innerHTML = `×${game.format(game.v.timeSpeed)}`
+        }
+        else {
+            game.v.maniEnabled = false
+            game.html.speedTxt.innerHTML = `×${game.format(game.v.timeSpeed)}`
+            game.html.untilActivation.innerHTML = `Shit-Time Manipulator disabled`
+        }
+        
         game.v.ticksSinceLastReset = game.v.ticksSinceLastReset.add(game.v.timeSpeed)
         game.v.ticksSinceLastGalaxy = game.v.ticksSinceLastGalaxy.add(game.v.timeSpeed)
         game.v.ticks = game.v.ticks.add(game.v.timeSpeed)
@@ -425,7 +473,7 @@ let game = {
         return tickerRect.left > containerRect.right;
     },
     tickerUpdate: function () {
-        game.html.ticker.innerHTML = tickers[Math.floor(Math.random()*tickers.length)]
+        game.html.ticker.innerHTML = constants.tickers[Math.floor(Math.random()*constants.tickers.length)]
     },
     buyToilet: function () {
         if (game.v.shitCount.gte(game.v.toiletCost)) {
@@ -550,18 +598,33 @@ let game = {
         prompt('Pay at:', 'https://bit.ly/47Jiz2O')
     },
     runAutobuyers: function () {
-        if (Date.now() - game.v.toiletAutobuyersLast >= game.v.toiletAutobuyerInterval) {
-            for (let i=0; i<game.v.autoshitterBulk; i++) {
-                game.buyToilet()
+        if (game.v.unlockedAutobuyers && game.v.toiletAutobuyerEnabled) {
+            if (Date.now() - game.v.toiletAutobuyersLast >= game.v.toiletAutobuyerInterval) {
+                for (let i=0; i<game.v.autoshitterBulk; i++) {
+                    game.buyToilet()
+                }
+                game.v.toiletAutobuyersLast = Date.now()
             }
-            game.v.toiletAutobuyersLast = Date.now()
+        }
+        if (game.v.unlockedAutobuyers && game.v.toiletProducerAutobuyerEnabled) {
+            if (Date.now() - game.v.toiletProducerAutobuyersLast >= game.v.toiletProducerAutobuyerInterval) {
+                for (let i=0; i<100; i++) {
+                    game.buyToiletProducer()
+                }
+                game.v.toiletProducerAutobuyersLast = Date.now()
+            }
         }
     },
-    upgradeShitter: function () {
-        if (game.v.shitCount.gte(game.v.toiletAutobuyerUpgradeCost) && game.v.toiletAutobuyerInterval*0.7 > 50) {
+    upgradeShitter: function (k) {
+        if (game.v.shitCount.gte(game.v.toiletAutobuyerUpgradeCost) && game.v.toiletAutobuyerInterval*0.7 > 50 && k == 0) {
             game.v.toiletAutobuyerInterval *= 0.7
             game.v.shitCount = game.v.shitCount.sub(game.v.toiletAutobuyerUpgradeCost)
             game.v.toiletAutobuyerUpgradeCost = game.v.toiletAutobuyerUpgradeCost.mul(game.v.toiletAutobuyerUpgradeCostInc)
+        }
+        else if (game.v.shitCount.gte(game.v.toiletProducerAutobuyerUpgradeCost) && game.v.toiletProducerAutobuyerInterval*0.7 > 50 && k == 1) {
+            game.v.toiletProducerAutobuyerInterval *= 0.7
+            game.v.shitCount = game.v.shitCount.sub(game.v.toiletProducerAutobuyerUpgradeCost)
+            game.v.toiletProducerAutobuyerUpgradeCost = game.v.toiletProducerAutobuyerUpgradeCost.mul(game.v.toiletProducerAutobuyerUpgradeCostInc)
         }
     },
     upgradeShitterBulk: function () {
@@ -599,7 +662,7 @@ let game = {
                         game.unlockAchievements(3, game.v.shitCount.gte(1e15))
                         break
                     case 5:
-                        game.unlockAchievements(4, game.v.shitGalaxies.gte(1))
+                        game.unlockAchievements(4, game.v.shitCount.gte(1e69))
                         break
                     case 6:
                         game.unlockAchievements(5, game.v.shitCount.gte(1e87))
@@ -618,6 +681,8 @@ let game = {
                         game.unlockAchievements(10, game.v.currentUniverse == 1 && game.v.shitGalaxies.gte(1) && game.v.ticksSinceLastReset.lte(20*1000/50))
                     case 12:
                         game.unlockAchievements(11, game.v.shitCount.gte("1e500"))
+                    case 13:
+                        game.unlockAchievements(12, game.v.shitCount.gte("7e777"))
                 }
             }
          })
@@ -626,6 +691,7 @@ let game = {
         game.achievements[8].reward = `Unlock a multiplier to your toilets that increases over time since last universe reset (Current: ×${game.format(game.calc('A9M'))})`
         game.achievements[10].reward = `Unlock a multiplier that increases based on the number of shits you have (Current: ×${game.format(game.calc('A11M'))})`
         game.achievements[11].reward = `Unlock a multiplier to Shittiverse time speed that increases based on the number of shits you have (Current: ×${game.format(game.calc('A12M'))})`
+        game.achievements[12].reward = `Unlock a multiplier to your toilets based on Toilet Producers (Current: ×${game.format(game.calc('A13M'))})`
     },
     getAchievementString: function () {
         let acstr = ''
@@ -714,6 +780,8 @@ let game = {
                 return game.v.shitCount.gte(1e150)
             case 4:
                 return game.v.shitCount.gte(1e65)
+            case 5:
+                return game.v.shitCount.gte("1e500")
         }
     },
     maniCooldownUpgrade: function () {
@@ -746,9 +814,7 @@ game.initialize()
 
 setInterval(function () {
     game.tick()
-    if (game.v.unlockedAutobuyers && game.v.toiletAutobuyerEnabled) {
-        game.runAutobuyers()
-    } 
+    game.runAutobuyers()
 }, 50)
 setInterval(game.playFart, 10000)
 setInterval(game.saveBrowser, 5000)

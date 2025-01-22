@@ -89,8 +89,15 @@
                 <div class="auto">
                     <span>Toilet Buyer</span>
                     <input type="checkbox" id="shitter-enabled">
-                    <button id="shitter-upgrade" onclick="game.upgradeShitter()"></button>
+                    <button id="shitter-upgrade" onclick="game.upgradeShitter(0)"></button>
                     <button class="hidden" id="shitter-bulk-upgrade" onclick="game.upgradeShitterBulk()"></button>
+                </div>
+            </div>
+            <div class="center-flex-vertical hidden" id="toilet-prod-buyer">
+                <div class="auto">
+                    <span>Toilet Producer Buyer</span>
+                    <input type="checkbox" id="toilet-prod-enabled">
+                    <button id="toilet-prod-upgrade" onclick="game.upgradeShitter(1)"></button>
                 </div>
             </div>
         </div>
@@ -135,7 +142,7 @@
                 <div class="shittiverse hidden" id="meetfanverse">
                     <span class="verse-text brown">Meetfanverse</span>
                     <br>
-                    <span id="benverse-desc">Apply all restrictions from Diarrheaverse, Ultraverse and Benverse</span>
+                    <span>Apply all restrictions from Diarrheaverse, Ultraverse and Benverse</span>
                     <br>
                     <span>Goal: Get 1e65 shits</span>
                     <br>
@@ -143,11 +150,26 @@
                     <br>
                     <button onclick="game.enterShittiverse(4)" class="enter-shittiverse">Enter</button>
                 </div>
+                <div class="shittiverse" id="toiletiverse">
+                    <span class="verse-text brown">Toiletiverse</span>
+                    <br>
+                    <span id="toiletiverse-desc"></span>
+                    <br>
+                    <span>Goal: Get 1e500 shits</span>
+                    <br>
+                    <span>Reward: Unlock <span class="bold">Toilet Producer Buyers</span> with a bulk of 100</span>
+                    <br>
+                    <button onclick="game.enterShittiverse(5)" class="enter-shittiverse">Enter</button>
+                </div>
             </div>
         </div>
         <div class="hidden" id="mani">
             <div class="center-flex">
                 <div class="center-flex-vertical mani-contain">
+                    <form>
+                        <label class="bold">Shit-Time Manipulator Enabled: </label>
+                        <input type="checkbox" id="mani-enabled">
+                    </form>
                     <img src="ben.png" class="ben-img" id="ben-img"></img>
                     <br>
                     <span>Current Shittiverse time speed: <span class="large-text ben-time" id="speed-txt"></span></span>
