@@ -263,7 +263,7 @@ let game = {
             case 'A13M':
                 return game.v.toiletProducers.gt(0) ? game.v.toiletProducers.pow(3) : new Decimal(1)
             case 'T':
-                return (game.v.maniEnabled && game.v.maniEnabledFull ? game.v.maniPower.mul(game.achievements[11] ? game.calc('A12M') : new Decimal(1)) : game.achievements[11] ? game.calc('A12M') : new Decimal(1))
+                return (game.v.maniEnabled && game.v.maniEnabledFull) ? (game.v.maniPower.mul(game.achievements[11] ? game.calc('A12M') : new Decimal(1))) : (game.achievements[11].unlocked ? game.calc('A12M') : new Decimal(1))
             case 'GP':
                 return game.v.shitGalaxyEff.mul(game.v.universeUnlocks[3] ? 1.0005 : 1)
             case 'U5D':
@@ -307,6 +307,8 @@ let game = {
         return `${game.formatMili(totalSeconds.mul(1000))}ms`
     },
     tick: function () {
+        game.v.timeSpeed = game.calc('T')
+        console.log(game.v.timeSpeed)
         let shitsPerTick = game.v.toilets.mul(game.v.toiletEff.mul(game.calc('TMC'))).mul(game.v.timeSpeed)
 
         game.html.shitsPerTick.innerHTML = `(${game.format(shitsPerTick)} shits/tick)`
@@ -446,7 +448,6 @@ let game = {
                 new Audio('fart-mani.mp3').play()
             }
             if (Date.now()-game.v.maniLastStart > game.v.maniCycle*50 && game.v.maniEnabled && game.v.universeUnlocks[2]) {
-
                 game.v.maniEnabled = false
                 game.v.maniLastStart = Date.now()
             }
@@ -568,8 +569,8 @@ let game = {
     },
     promptDelete: function () {
         if (prompt('Are you sure you want to reset the game? If yes, type "Ben RVLKV2024"') == 'Ben RVLKV2024') {
-            localStorage.removeItem('savefile')
-            location.reload(true)
+            localStorage.clear()
+            alert('Please reload the website.')
         }
     },
     saveBrowser: function () {
@@ -817,4 +818,4 @@ setInterval(function () {
     game.runAutobuyers()
 }, 50)
 setInterval(game.playFart, 10000)
-setInterval(game.saveBrowser, 5000)
+setInterval(game.saveBrowser, 30000)
