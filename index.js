@@ -409,7 +409,7 @@ let game = {
             game.html.meetfanverse.style.display = 'inline-block'
         }
 
-        if (game.v.universeUnlocks[3] || game.v.unlockedShittiverses) {
+        if (game.v.universeUnlocks[3]) {
             game.html.toiletiverse.style.display = 'inline-block'
             game.v.unlockedShittiverses = true
         }
