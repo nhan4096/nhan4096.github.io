@@ -308,7 +308,6 @@ let game = {
     },
     tick: function () {
         game.v.timeSpeed = game.calc('T')
-        console.log(game.v.timeSpeed)
         let shitsPerTick = game.v.toilets.mul(game.v.toiletEff.mul(game.calc('TMC'))).mul(game.v.timeSpeed)
 
         game.html.shitsPerTick.innerHTML = `(${game.format(shitsPerTick)} shits/tick)`
@@ -641,50 +640,48 @@ let game = {
         }
     },
     unlockAchievements: function(i, condition) {
-        if (condition) {
+        if (condition && !game.achievements[i].unlocked) {
             game.achievements[i].unlocked = true
             new Audio('fart-achievement.mp3').play()
         }
     },
     checkAchievements: function () {
         game.achievements.forEach(e => {
-            if (!e.unlocked) {
-                switch (e.id) {
-                    case 1:
-                        game.unlockAchievements(0, game.v.toilets.gte(1))
-                        break
-                    case 2:
-                        game.unlockAchievements(1, game.v.toiletProducers.gte(1))
-                        break
-                    case 3:
-                        game.unlockAchievements(2, game.v.shitGalaxies.gte(1))
-                        break
-                    case 4:
-                        game.unlockAchievements(3, game.v.shitCount.gte(1e15))
-                        break
-                    case 5:
-                        game.unlockAchievements(4, game.v.shitCount.gte(1e69))
-                        break
-                    case 6:
-                        game.unlockAchievements(5, game.v.shitCount.gte(1e87))
-                        break
-                    case 7:
-                        game.unlockAchievements(6, game.v.universeUnlocks[0])
-                        break
-                    case 8:
-                        game.unlockAchievements(7, game.v.universeUnlocks[1])
-                        break
-                    case 9:
-                        game.unlockAchievements(8, game.v.ticksSinceLastGalaxy.lte(15*1000/50) && game.v.shitCount.gte(1e100))
-                    case 10:
-                        game.unlockAchievements(9, game.v.universeUnlocks[2])
-                    case 11:
-                        game.unlockAchievements(10, game.v.currentUniverse == 1 && game.v.shitGalaxies.gte(1) && game.v.ticksSinceLastReset.lte(20*1000/50))
-                    case 12:
-                        game.unlockAchievements(11, game.v.shitCount.gte("1e500"))
-                    case 13:
-                        game.unlockAchievements(12, game.v.shitCount.gte("7e777"))
-                }
+            switch (e.id) {
+                case 1:
+                    game.unlockAchievements(0, game.v.toilets.gte(1))
+                    break
+                case 2:
+                    game.unlockAchievements(1, game.v.toiletProducers.gte(1))
+                    break
+                case 3:
+                    game.unlockAchievements(2, game.v.shitGalaxies.gte(1))
+                    break
+                case 4:
+                    game.unlockAchievements(3, game.v.shitCount.gte(1e15))
+                    break
+                case 5:
+                    game.unlockAchievements(4, game.v.shitCount.gte(1e69))
+                    break
+                case 6:
+                    game.unlockAchievements(5, game.v.shitCount.gte(1e87))
+                    break
+                case 7:
+                    game.unlockAchievements(6, game.v.universeUnlocks[0])
+                    break
+                case 8:
+                    game.unlockAchievements(7, game.v.universeUnlocks[1])
+                    break
+                case 9:
+                    game.unlockAchievements(8, game.v.ticksSinceLastGalaxy.lte(15*1000/50) && game.v.shitCount.gte(1e100))
+                case 10:
+                    game.unlockAchievements(9, game.v.universeUnlocks[2])
+                case 11:
+                    game.unlockAchievements(10, game.v.currentUniverse == 1 && game.v.shitGalaxies.gte(1) && game.v.ticksSinceLastReset.lte(20*1000/50))
+                case 12:
+                    game.unlockAchievements(11, game.v.shitCount.gte("1e500"))
+                case 13:
+                    game.unlockAchievements(12, game.v.shitCount.gte("7e777"))
             }
          })
     },
