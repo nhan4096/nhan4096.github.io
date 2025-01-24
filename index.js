@@ -259,7 +259,7 @@ let game = {
             case 'A11M':
                 return game.v.shitCount.gt(0) ? new Decimal(1.5).pow(game.v.shitCount.log(10)) : new Decimal(1)
             case 'A12M':
-                return game.v.shitCount.gt(0) ? game.v.shitCount.log(5) : new Decimal(1)
+                return game.v.shitCount.gt(5) ? game.v.shitCount.log(5) : new Decimal(1)
             case 'A13M':
                 return game.v.toiletProducers.gt(0) ? game.v.toiletProducers.pow(3) : new Decimal(1)
             case 'T':
