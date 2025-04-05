@@ -3,7 +3,7 @@ function square(n) {
 };
 
 async function startGame() {
-    $('return-btn').hide()
+    $('#return-btn').hide()
     if (!$('#len').val() || !$('#max-count').val() || !$('#allow-negative') || !$('#wait-time').val()) {
         alert("Còn những tham số chưa được nhập vào!");
         return;
