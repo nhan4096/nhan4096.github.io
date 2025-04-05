@@ -1,0 +1,227 @@
+body {
+    background-color: #191b1f;
+}
+
+.center {
+    text-align: center;
+}
+
+p, h1, h2, h3, h4, h5, h6, span, label {
+    color: #b4b9c2;
+    font-family: monospace;
+}
+
+.news-ticker {
+    overflow: hidden;
+    white-space: nowrap;
+    box-sizing: border-box;
+    padding: 10px 0;
+    position: relative;
+    background-color:#111215;
+    outline: 2px solid #b4b9c2;
+}
+
+.ticker-content {
+    display: inline-block;
+    padding-left: 100%;
+    animation: ticker 14s linear infinite;
+}
+
+@keyframes ticker {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.tabs {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    font-family: 'Inconsolata', monospace;
+    background: linear-gradient(#0000, rgb(0 0 0/40%)) top/100% 800%;
+    background-color: white;
+    transition: 0.2s;
+}
+
+button:hover {
+    font-family: 'Inconsolata', monospace;
+    background-position: bottom;
+}
+
+.large-text {
+    font-size: 30px;
+}
+
+.brown-anim {
+    animation-name: brown-anim;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes brown-anim {
+    0% {color: #5c2f11;}
+    50% {color: #6e3b18;}
+    100% {color: #5c2f11}
+}
+
+.center-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.center-flex > div {
+    margin: 20px;
+    padding: 20px;
+}
+
+.center-flex-vertical {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.building {
+    height: 130px;
+    width: 130px;
+    outline: #b4b9c2 2px solid;
+}
+
+.shit-text {
+    padding-bottom: 25px;
+}
+
+.hidden {
+    display: none;
+}
+
+.shit-galaxy {
+    width: 200px;
+    height: 100px;
+    position: relative;
+    left: 5%;
+    margin-top: 20px;
+}
+
+.shit-uni {
+    width: 200px;
+    height: 100px;
+    position: relative;
+    left: 5%;
+    margin-top: 20px;
+}
+
+.settings-box {
+    width: 200px;
+}
+
+.locked {
+    color: #b4b9c2
+}
+
+.button-auto {
+    background: #9aeb03;
+}
+
+.button-verse {
+    background: #7590eb;
+}
+
+.verse-number {
+    color: #7590eb;
+}
+
+.auto {
+    width: 250px;
+    height: 150px;
+    outline: #b4b9c2 2px solid;
+    padding: 5px !important;
+}
+
+.shittiverse {
+    width: 250px;
+    height: 250px;
+    outline: #b4b9c2 2px solid;
+    padding: 5px !important;
+    text-align: center;
+}
+
+.verse-text {
+    font-size: 20px;
+}
+
+.brown {
+    color: #6e3b18;
+}
+
+#shitter-bulk-upgrade {
+    width: 100%;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.button-mani {
+    background-color: #ca0505;
+}
+
+.button-cube {
+    background-color: #3a1c08;
+}
+
+.shitcube {
+    color: #3a1c08;
+}
+
+.small-txt {
+    font-size: 10px;
+    margin: 2px;
+}
+
+.mani-contain {
+    width: 85%;
+}
+
+.ben-img {
+    width: 60%;
+    height: 60%;
+}
+
+.ben-time {
+    color: #008cff;
+}
+
+.mani-upgrade {
+    width: 32%;
+    margin: 0;
+    padding: 0;
+}
+
+.cube-upgrade {
+    width: 32%;
+    margin: 0;
+    padding: 0;
+    height: 90px;
+}
+
+.mani-upg-contain {
+    width: 95%;
+}
+
+.ach-tab {
+    width: 50%;
+}
+
+.lb {background-color: #865635;}
+.b {background-color: #5c2f11}
+.db {background-color: #3a1c08}
