@@ -1,1 +1,3 @@
-// code here
+function gotoPage(p) {
+    window.location.href = p;
+}

@@ -59,10 +59,41 @@
 }
 
 body {
-    background-color: #191b1f;
+    background-color: #ffffff;
 }
 
 p, h1, h2, h3, h4, h5, h6 {
-    color: #b4b9c2;
+    color: #000104;
+    font-family: monospace;
+}
 
+a {
+    font-family: monospace;
+}
+
+a:link {
+    color: #006aff;
+    font-family: monospace;
+}
+
+a:visited {
+    color: #c300fe;
+    font-family: monospace;
+}
+
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.btn {
+    margin: 10px;
+    border: 2px #02b3ff solid;
+    width: 200px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #cef0ff;
 }
