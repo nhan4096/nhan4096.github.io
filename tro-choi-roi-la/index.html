@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script
+            src="https://code.jquery.com/color/jquery.color-3.0.0.min.js"
+            integrity="sha256-KfnxwOV3FhXN7A/28TCtqslo5fRS23cxO5XcxVO5we8="
+            crossorigin="anonymous">
+        </script>
+        <link rel="stylesheet" href="style.css">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Trò Chơi Rơi Lạ</title>
+    </head>
+    <body>
+        <div class="main-div">
+            <h1 class="center">Trò Chơi Rơi Lạ</h1>
+            <div class="start-div" id="start-div">
+                <div class="settings">
+                    <form>
+                        <label>Số lượng vật lạ rơi ở cuối cao nhất: </label>
+                        <input type="number" max="15" class="narrow-input" min="1" placeholder="5" id="max-count" required>
+                        <br>
+                        <label>Độ dài (xấp xỉ) của trò chơi: </label>
+                        <input type="number" max="150" class="narrow-input" min="1" placeholder="10" id="len" required>
+                        <br>
+                        <label>Thời gian đợi giữa các lệnh trong trò chơi: </label>
+                        <input type="number" max="5000" class="narrow-input" min="50" placeholder="500" id="wait-time" required>
+                        <label>ms</label>
+                        <br>
+                        <label>Cho phép số âm trong khi đang chơi: </label>
+                        <input type="checkbox" id="allow-negative">
+                    </form>
+                </div>
+                <div class="center-flex">
+                    <button class="play" onclick="startGame()">Bắt đầu chơi</button>
+                </div>
+            </div>
+            <div class="game-div hidden">
+                <div class="center-flex">
+                    <h1 class="command"></h1>
+                </div>
+                <div class="center-flex">
+                    <form>
+                        <label>Số lần ỉa: </label>
+                        <input type="number" disabled="true" id="final-count">
+                    </form>
+                </div>
+                <div class="center-flex">
+                    <h1 id="status"></h1>
+                </div>
+                <div class="center-flex">
+                    <button id="return-btn" onclick="returnHome()" class="hidden">Quay về</button>
+                </div>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>

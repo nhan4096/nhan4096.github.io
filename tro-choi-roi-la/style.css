@@ -1,0 +1,103 @@
+.center {
+    text-align: center;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.small-text {
+    font-size: small;
+}
+
+.smaller-text {
+    font-size: smaller;
+}
+
+.large-text {
+    font-size: large;
+}
+
+.larger-text {
+    font-size: larger;
+}
+
+.font-roman {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.font-segoe {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.bold {
+    font-style: bold;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.oblique {
+    font-style:oblique;
+}
+
+.underline {
+    text-decoration-line: underline;
+}
+
+.overline {
+    text-decoration-line: overline;
+}
+
+.line-through {
+    text-decoration-line: line-through;
+}
+
+body {
+    background-color: #41a2d6;
+}
+
+p, h1, h2, h3, h4, h5, h6, label, input, button {
+    color: #000000;
+    font-family: monospace;
+}
+
+.main-div {
+    background-color: #ffffff;
+    width: 50%;
+    height: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1%;
+}
+
+.narrow-input {
+    width: 10%;
+}
+
+.settings {
+    border: 2px #41a2d6 solid;
+    margin: 0 0 5% 0;
+}
+
+.center-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.command {
+    border: 2px #02b3ff solid;
+    padding: 1%;
+}
+
+.hidden {
+    display: none;
+}

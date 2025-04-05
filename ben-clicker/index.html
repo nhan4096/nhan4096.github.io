@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ben Clicker</title>
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+    </head>
+    <body>
+        <div class="news-ticker">
+            <div class="ticker-content">
+                <span id="ticker">Ben rơi vật lạ</span>
+            </div>
+        </div>
+        <div class="tabs">
+            <button onclick="game.openTab(0)">Bengay</button>
+            <button onclick="game.openTab(1)">Settings</button>
+            <button onclick="game.openTab(2)">Achievements</button>
+            <button class="button-auto hidden" id="auto-tab" onclick="game.openTab(3)">Auto-Shitter</button>
+            <button class="button-verse hidden" id="verse-tab" onclick="game.openTab(4)">Shittiverses</button>
+            <button class="button-mani hidden" id="mani-tab" onclick="game.openTab(5)">Shit-Time Manipulator</button>
+            <button class="button-cube hidden" id="cube-tab" onclick="game.openTab(6)">Shitcubes</button>
+        </div>
+        <div id="bengay">
+            <div class="center-flex-vertical shit-text">
+                <span>Ben has shat <span class="large-text brown-anim" id="shit-count"> 10 times</span>.</span>
+                <span id="shits-per-tick"></span>
+            </div>
+            <div class="center-flex">
+                <div class="building">
+                    <span class="brown-anim">Toilets</span>
+                    <br>
+                    <span id="toilet-count">You have 0 toilets</span>
+                    <button class="building-buy" onclick="game.buyToilet()" id="toilet-btn">Buy a toilet (10)</button>
+                </div>
+                <div class="building hidden" id="toilet-producer">
+                    <span class="brown-anim">Toilet Producers</span>
+                    <br>
+                    <span id="toilet-producer-count">You have 0 toilet producers</span>
+                    <button class="building-buy" onclick="game.buyToiletProducer()" id="toilet-producer-btn">Buy a toilet producer (10)</button>
+                </div>
+            </div>
+            <div class="hidden shit-galaxy" id="shit-galaxy">
+                <span id="shit-galaxy-count">Shit Galaxy (0)</span>
+                <button id="shit-galaxy-btn" onclick="game.shitGalaxy()"></button>
+            </div>
+            <div class="hidden shit-uni" id="shit-uni">
+                <span id="shit-uni-count">Shit Universe (0)</span>
+                <button id="shit-uni-btn" onclick="game.shitUniverse()"></button>
+            </div>
+        </div>
+        <div class="hidden" id="settings">
+            <div class="center-flex">
+                <div class="settings-box">
+                    <button class="large-text" onclick="game.promptLoad()">LOAD SAVEFILE</button>
+                </div>
+                <div class="settings-box">
+                    <button class="large-text" onclick="game.promptSave()">EXPORT SAVEFILE</button>
+                </div>
+                <div class="settings-box">
+                    <button class="large-text" onclick="game.saveBrowser()">SAVE TO BROWSER</button>
+                </div>
+                <div class="settings-box">
+                    <button class="large-text" onclick="game.promptDelete()">RESET THE GAME</button>
+                </div>
+                <div class="settings-box">
+                    <button class="locked large-text" onclick="game.locked()">MUTE ALL SOUNDS</button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden" id="achievements">
+            <div class="center-flex-vertical">
+                <div class="center-flex">
+                    <button onclick="game.subTab('2a')">Achievements</button>
+                    <button onclick="game.subTab('2b')">Locked Achievements</button>
+                </div>
+                <div class="center-flex-vertical ach-tab" id="ach-2a">
+                    <div>
+                        <span class="large-text brown-anim">Your Achievements</span>
+                        <span id="achievements-list"></span>
+                    </div>
+                </div>
+                <div class="center-flex-vertical hidden ach-tab" id="ach-2b">
+                    <div>
+                        <span class="large-text brown-anim">Locked Achievements</span>
+                        <span id="locked-achievements"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hidden" id="auto-shitter">
+            <div class="center small-txt">
+                <span>Autoshitters automatically buy selected items. Bulk is the number of items it can buy in one single run.</span>
+            </div>
+            <br>
+            <div class="center-flex-vertical">
+                <div class="auto">
+                    <span>Toilet Buyer</span>
+                    <input type="checkbox" id="shitter-enabled">
+                    <button id="shitter-upgrade" onclick="game.upgradeShitter(0)"></button>
+                    <button class="hidden" id="shitter-bulk-upgrade" onclick="game.upgradeShitterBulk()"></button>
+                </div>
+            </div>
+            <div class="center-flex-vertical hidden" id="toilet-prod-buyer">
+                <div class="auto">
+                    <span>Toilet Producer Buyer</span>
+                    <input type="checkbox" id="toilet-prod-enabled">
+                    <button id="toilet-prod-upgrade" onclick="game.upgradeShitter(1)"></button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden" id="shittiverses">
+            <div class="center small-txt">
+                <span>Shittiverses are different Universes with unique restrictions that give rewards when you've reached a goal.</span>
+            </div>
+            <div class="center">
+                <span>You are currently in Universe <span class="large-text verse-number" id="universe">0</span>.</span>
+            </div>
+            <div class="center-flex">
+                <div class="shittiverse">
+                    <span class="verse-text brown">Diarrheaverse</span>
+                    <br>
+                    <span>Your toilet multiplier is reduced by ^0.75</span>
+                    <br>
+                    <span>Goal: Get 1e50 shits</span>
+                    <br>
+                    <span>Reward: You gain a ^1.35 increase on your toilet multiplier</span>
+                    <br>
+                    <button onclick="game.enterShittiverse(1)" class="enter-shittiverse">Enter</button>
+                </div>
+                <div class="shittiverse hidden" id="ultraverse">
+                    <span class="verse-text brown">Ultraverse</span>
+                    <br>
+                    <span id="ultraverse-desc"></span>
+                    <br>
+                    <span>Goal: Get 1e50 shits</span>
+                    <br>
+                    <span>Reward: Unlock Toilet Buyer bulk-buying</span>
+                    <br>
+                    <button onclick="game.enterShittiverse(2)" class="enter-shittiverse">Enter</button>
+                </div>
+                <div class="shittiverse hidden" id="benverse">
+                    <span class="verse-text brown">Benverse</span>
+                    <br>
+                    <span id="benverse-desc"></span>
+                    <br>
+                    <span>Goal: Get 1e150 shits</span>
+                    <br>
+                    <span>Reward: Unlock the <span class="bold">Shit-Time Manipulator</span></span>
+                    <br>
+                    <button onclick="game.enterShittiverse(3)" class="enter-shittiverse">Enter</button>
+                </div>
+                <div class="shittiverse hidden" id="meetfanverse">
+                    <span class="verse-text brown">Meetfanverse</span>
+                    <br>
+                    <span>Apply all restrictions from Diarrheaverse, Ultraverse and Benverse</span>
+                    <br>
+                    <span>Goal: Get 1e65 shits</span>
+                    <br>
+                    <span>Reward: Shit Galaxies are 0.05% stronger</span>
+                    <br>
+                    <button onclick="game.enterShittiverse(4)" class="enter-shittiverse">Enter</button>
+                </div>
+                <div class="shittiverse hidden" id="toiletiverse">
+                    <span class="verse-text brown">Toiletiverse</span>
+                    <br>
+                    <span id="toiletiverse-desc"></span>
+                    <br>
+                    <span>Goal: Get 1e500 shits</span>
+                    <br>
+                    <span>Reward: Unlock <span class="bold">Toilet Producer Buyers</span> with a bulk of 100</span>
+                    <br>
+                    <button onclick="game.enterShittiverse(5)" class="enter-shittiverse">Enter</button>
+                </div>
+                <div class="shittiverse hidden" id="rvlkverse">
+                    <span class="verse-text brown">RVLKVerse</span>
+                    <br>
+                    <span>Time is slowed down by ×1e-6</span>
+                    <br>
+                    <span>Goal: Get 1e32 shits</span>
+                    <br>
+                    <span>Reward: Unlock <span class="bold">Shitcubes</span></span>
+                    <br>
+                    <button onclick="game.enterShittiverse(6)" class="enter-shittiverse">Enter</button>
+                </div>
+                <div class="shittiverse hidden" id="stomachacheverse">
+                    <span class="verse-text brown">Stomachacheverse</span>
+                    <br>
+                    <span>Toilet cost scaling is higher</span>
+                    <br>
+                    <span>Goal: Get 1e32 shits</span>
+                    <br>
+                    <span>Reward: Light Brown type Shitcube reward is squared</span>
+                    <br>
+                    <button onclick="game.enterShittiverse(7)" class="enter-shittiverse">Enter</button>
+                </div>
+                <div class="shittiverse hidden" id="lol-cringeverse">
+                    <span class="verse-text brown">LOL-Cringeverse</span>
+                    <br>
+                    <span>Galaxy multiplier is reduced (×1.05 → ×1.005)</span>
+                    <br>
+                    <span>Goal: Get 1e23 shits</span>
+                    <br>
+                    <span>Reward: Unlock <span class="bold">Shit Universe</span></span>
+                    <br>
+                    <button onclick="game.enterShittiverse(8)" class="enter-shittiverse">Enter</button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden" id="mani">
+            <div class="center-flex">
+                <div class="center small-txt">
+                    <span>Shit-Time Manipulators can change the speed that time flows. </span>
+                </div>
+                <div class="center-flex-vertical mani-contain">
+                    <form>
+                        <label class="bold">Shit-Time Manipulator Enabled: </label>
+                        <input type="checkbox" id="mani-enabled">
+                    </form>
+                    <img src="ben.png" class="ben-img" id="ben-img"></img>
+                    <br>
+                    <span>Current Shittiverse time speed: <span class="large-text ben-time" id="speed-txt"></span></span>
+                    <span id="until-activation"></span>
+                    <br>
+                    <div class="center-flex mani-upg-contain">
+                        <button class="mani-upgrade" onclick="game.maniCooldownUpgrade()" id="cooldown-upg"></button>
+                        <button class="mani-upgrade" onclick="game.maniPowerUpgrade()" id="power-upg"></button>
+                        <button class="mani-upgrade" onclick="game.maniCycleUpgrade()" id="cycle-upg"></button></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hidden" id="shitcubes">
+            <div class="center small-txt">
+                <span>Upon reaching a specified amount of shits, the number of shitcubes will increment. You can use them on colors for bonuses. </span>
+            </div>
+            <div class="center">
+                <span>You have <span class="large-text shitcube" id="shitcube-count">0</span> shitcubes and you have <span class="large-text shitcube" id="shitcube-left-count">0</span> unspent left.</span>
+                <br>
+                <span>You will have another one when you reach <span class="large-text shitcube" id="shitcube-goal">1e800</span> shits.</span>
+            </div>
+            <div class="center">
+                <button onclick="game.shitcubeTypeReset()">Reset</button>
+            </div>
+            <div class="center center-flex mani-upg-contain">
+                <button class="cube-upgrade lb" id="lb-shitcube" onclick="game.addShitcubeType(0)">Light Brown: </button>
+                <button class="cube-upgrade b" id="b-shitcube" onclick="game.addShitcubeType(1)">Brown: </button>
+                <button class="cube-upgrade db" id="db-shitcube" onclick="game.addShitcubeType(2)">Dark Brown: </button>
+            </div>
+            <br>
+            <div class="center">
+                <form>
+                    <label>Light Brown : Brown : Dark Brown</label>
+                    <br>
+                    <input id="lb-ratio" placeholder="1"> <span>:</span> <input id="b-ratio" placeholder="1"> <span>:</span> <input id="db-ratio" placeholder="1">
+                </form>
+                <button onclick="game.reassignShitcubeTypes()">Assign by ratio</button>
+            </div>
+        </div>
+        <script src="breakinf.js"></script>
+        <script src="constants.js"></script>
+        <script src="script.js"></script>
+    </body>
+</html>

@@ -1,0 +1,68 @@
+.center {
+    text-align: center;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.small-text {
+    font-size: small;
+}
+
+.smaller-text {
+    font-size: smaller;
+}
+
+.large-text {
+    font-size: large;
+}
+
+.larger-text {
+    font-size: larger;
+}
+
+.font-roman {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.font-segoe {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.bold {
+    font-style: bold;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.oblique {
+    font-style:oblique;
+}
+
+.underline {
+    text-decoration-line: underline;
+}
+
+.overline {
+    text-decoration-line: overline;
+}
+
+.line-through {
+    text-decoration-line:line-through;
+}
+
+body {
+    background-color: #191b1f;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+    color: #b4b9c2;
+
+}
