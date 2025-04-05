@@ -34,7 +34,7 @@ async function startGame() {
     $('#status').show()
 
     let count = $('#final-count').val();
-    if (count === s[1]) {
+    if (Number(count) == s[1] && count != '') {
         new Audio('fart-achievement.mp3').play()
         $('#status').text("CHEATeR INSSPeCT ELEMENTTTTTTT");
     }
