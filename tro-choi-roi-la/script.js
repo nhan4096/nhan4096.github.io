@@ -115,6 +115,7 @@ function generateString(len, maxCount, allowNegatives) {
                 count = sigma(count);
             }
             else if (rngSeconds < 4/9 && count <= 8) {
+                string += "C";
                 count = Math.pow(2, count);
             }
             else if (rngSeconds < 5/9 && string.length > 0) {
