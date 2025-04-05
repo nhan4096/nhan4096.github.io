@@ -1,3 +1,7 @@
+function square(n) {
+    return n > 0 && Math.sqrt(n) % 1 === 0;
+};
+
 async function startGame() {
     $('return-btn').hide()
     if (!$('#len').val() || !$('#max-count').val() || !$('#allow-negative') || !$('#wait-time').val()) {
@@ -58,6 +62,17 @@ function factorial(n) {
     return prod
 }
 
+function sigma(n) {
+    let s = 0;
+    for (let i=1; i<=Math.sqrt(n); i++) {
+        if (n % i == 0) {
+            s += i;
+            if (n / i != i) {s += n / i;}
+        }
+    }
+    return s
+}
+
 function returnHome() {
     $('.start-div').show();
     $('.game-div').hide();
@@ -73,6 +88,7 @@ function sleep(ms) {
 
 function generateString(len, maxCount, allowNegatives) {
     let count = 0;
+    let counts = [];
     let string = "";
     while (true) {
         let rng = Math.random();
@@ -86,43 +102,49 @@ function generateString(len, maxCount, allowNegatives) {
         }
         else {
             let rngSeconds = Math.random();
-            if (rngSeconds < 1/6 && count % 2 == 0) {
+            if (rngSeconds < 1/9 && count % 2 == 0) {
                 string += "M";
                 count = Number(count/2);
             }
-            else if (rngSeconds < 2/6) {
-                string += "W";
-                count *= 2;
-            }
-            else if (rngSeconds < 3/6) {
-                string += "X";
-                count = 0;
-            }
-            else if (rngSeconds < 4/6 && Number(Math.sqrt(count))*Number(Math.sqrt(count)) == count) {
+            else if (rngSeconds < 2/9 && square(count)) {
                 string += "D";
                 count = Number(Math.sqrt(count));
             }
-            else if (rngSeconds < 5/6) {
+            else if (rngSeconds < 3/9 && count > 0) {
+                string += "Σ";
+                count = sigma(count);
+            }
+            else if (rngSeconds < 4/9 && count <= 8) {
+                count = Math.pow(2, count);
+            }
+            else if (rngSeconds < 5/9 && string.length > 0) {
+                string += "U";
+                count = counts[counts.length-2];
+            }
+            else if (rngSeconds < 6/9 && count <= 6) {
+                string += "T";
+                count = factorial(count);
+            }
+            else if (rngSeconds < 7/9) {
+                string += "W";
+                count *= 2;
+            }
+            else if (rngSeconds < 8/9) {
+                string += "X";
+                count = 0;
+            }
+            else {
                 string += "A";
                 count *= count;
             }
-            else {
-                string += "T";
-                // count = factorial(count);
-                if (factorial(count) <= 250) {
-                    count = factorial(count)
-                }
-                else {
-                    continue
-                }
-            }
-        }
+        }        
+        counts.push(count);
         if (string.length > len*1.2) {
             return ['', -1]
         }
         let finished = Math.random() < 3.5/len ? true : false;
         if (finished && count <= maxCount && string.length > len/2 && string[string.length-1] != "X") {
-            return [string, count];
+            return [string, count, counts];
         }
     }
 }
