@@ -8,9 +8,13 @@ async function startGame() {
         alert("Còn những tham số chưa được nhập vào!");
         return;
     }
+    let allowedCommands = []
+    for (let i=1; i<=9; i++) {
+        allowedCommands.push($('#allow-' + i).is(":checked"))
+    }
     s = ['', 0]
     while (Math.abs($('#len').val()-s[0].length) > $('#len').val()*0.2) {
-        s = generateString($('#len').val(), $('#max-count').val(), $('#allow-negative').is(":checked"));
+        s = generateString($('#len').val(), $('#max-count').val(), $('#allow-negative').is(":checked"), allowedCommands);
     }
     // console.log(s[0], s[1], s[0].length)
     $('.start-div').hide();
@@ -80,16 +84,18 @@ function returnHome() {
     $('#final-count').prop("disabled", true);
     $('#status').hide();
     $('#final-count').val("");
+    $('#return-btn').hide();
 }
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function generateString(len, maxCount, allowNegatives) {
+function generateString(len, maxCount, allowNegatives, allowedCommands) {
     let count = 0;
     let counts = [];
     let string = "";
+    let firstTime = true;
     while (true) {
         let rng = Math.random();
         if (rng < 0.4 && (count > 0 || allowNegatives)) {
@@ -102,41 +108,51 @@ function generateString(len, maxCount, allowNegatives) {
         }
         else {
             let rngSeconds = Math.random();
-            if (rngSeconds < 1/9 && count % 2 == 0) {
-                string += "M";
-                count = Number(count/2);
-            }
-            else if (rngSeconds < 2/9 && square(count)) {
-                string += "D";
-                count = Number(Math.sqrt(count));
-            }
-            else if (rngSeconds < 3/9 && count > 0) {
-                string += "Σ";
-                count = sigma(count);
-            }
-            else if (rngSeconds < 4/9 && count <= 8) {
-                string += "C";
-                count = Math.pow(2, count);
-            }
-            else if (rngSeconds < 5/9 && string.length > 0) {
-                string += "U";
-                count = counts[counts.length-2];
-            }
-            else if (rngSeconds < 6/9 && count <= 6) {
-                string += "T";
-                count = factorial(count);
-            }
-            else if (rngSeconds < 7/9) {
-                string += "W";
-                count *= 2;
-            }
-            else if (rngSeconds < 8/9) {
-                string += "X";
-                count = 0;
-            }
-            else {
-                string += "A";
-                count *= count;
+            while (!allowedCommands[Math.floor(rngSeconds*9)] || firstTime) {
+                rngSeconds = Math.random();
+                if (rngSeconds < 1/9 && count % 2 == 0 && allowedCommands[0]) {
+                    string += "M";
+                    count = Number(count/2);
+                }
+                else if (rngSeconds < 2/9 && square(count) && allowedCommands[1]) {
+                    string += "D";
+                    count = Number(Math.sqrt(count));
+                }
+                else if (rngSeconds < 3/9 && count > 0 && allowedCommands[2]) {
+                    string += "Σ";
+                    count = sigma(count);
+                }
+                else if (rngSeconds < 4/9 && count >= 0 && count <= 8 && allowedCommands[3]) {
+                    string += "C";
+                    count = Math.pow(2, count);
+                }
+                else if (rngSeconds < 5/9 && string.length > 0 && allowedCommands[4]) {
+                    string += "U";
+                    count = counts[counts.length-2];
+                }
+                else if (rngSeconds < 6/9 && count <= 6 && allowedCommands[5]) {
+                    string += "T";
+                    count = factorial(count);
+                }
+                else if (rngSeconds < 7/9 && allowedCommands[6]) {
+                    string += "W";
+                    count *= 2;
+                }
+                else if (rngSeconds < 8/9 && allowedCommands[7]) {
+                    string += "X";
+                    count = 0;
+                }
+                else if (allowedCommands[8]) {
+                    string += "A";
+                    count *= count;
+                }
+                else {
+                    let rng3 = Math.random();
+                    string += rng3 < 0.5 && (count > 0 || allowNegatives) ? "L" : "Đ";
+                    count += rng3 < 0.5 && (count > 0 || allowNegatives) ? -1 : 1;
+                    break
+                }
+                firstTime = false;
             }
         }        
         counts.push(count);
@@ -147,5 +163,6 @@ function generateString(len, maxCount, allowNegatives) {
         if (finished && count <= maxCount && string.length > len/2 && string[string.length-1] != "X") {
             return [string, count, counts];
         }
+        firstTime = true;
     }
 }
