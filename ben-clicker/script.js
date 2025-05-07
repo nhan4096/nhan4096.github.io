@@ -149,7 +149,7 @@ let game = {
         {
             id: 10,
             name: 'Getting Constipated',
-            description: 'Unlock Benverse',
+            description: 'Unlock UIverse',
             unlocked: false,
         },
         {
@@ -196,7 +196,7 @@ let game = {
         {
             id: 17,
             name: 'SPEEDYMcTrash',
-            description: 'Unlock Benverse in under 30 seconds (real time)',
+            description: 'Unlock UIverse in under 30 seconds (real time)',
             reward: 'The Shitcube Brown reward is stronger',
             unlocked: false,
         },
@@ -209,7 +209,7 @@ let game = {
         },
         {
             id: 19,
-            name: 'co3 ben ahang5 nhat68 kia0',
+            name: 'co3 UI ahang5 nhat68 kia0',
             description: 'Get 1e1000 shits',
             unlocked: false,
         },
@@ -222,7 +222,7 @@ let game = {
         }
     ],
     html: {
-        tabs: [document.getElementById('bengay'), document.getElementById('settings'), document.getElementById('achievements'), document.getElementById('auto-shitter'), document.getElementById('shittiverses'), document.getElementById('mani'), document.getElementById('shitcubes')],
+        tabs: [document.getElementById('UIgay'), document.getElementById('settings'), document.getElementById('achievements'), document.getElementById('auto-shitter'), document.getElementById('shittiverses'), document.getElementById('mani'), document.getElementById('shitcubes')],
 
         toiletCount: document.getElementById('toilet-count'),
         toiletBtn: document.getElementById('toilet-btn'),
@@ -253,8 +253,8 @@ let game = {
         ultraverseDesc: document.getElementById('ultraverse-desc'),
         currentUniverse: document.getElementById('universe'),
         ultraverse: document.getElementById('ultraverse'),
-        benverse: document.getElementById('benverse'),
-        benverseDesc: document.getElementById('benverse-desc'),
+        UIverse: document.getElementById('UIverse'),
+        UIverseDesc: document.getElementById('UIverse-desc'),
         meetfanverse: document.getElementById('meetfanverse'),
         toiletiverse: document.getElementById('toiletiverse'),
         toiletiverseDesc: document.getElementById('toiletiverse-desc'),
@@ -271,7 +271,7 @@ let game = {
         cycleUpg: document.getElementById('cycle-upg'),
         speedTxt: document.getElementById('speed-txt'),
         untilActivation: document.getElementById('until-activation'),
-        benImg: document.getElementById('ben-img'),
+        UIImg: document.getElementById('UI-img'),
 
         toiletProdBtn: document.getElementById('toilet-prod-upgrade'),
         toiletProducerEnabled: document.getElementById('toilet-prod-enabled'),
@@ -480,7 +480,7 @@ let game = {
         <br>
         Cost: ${game.format(game.v.autoshitterBulkCost)}` : `Bulk: 100 (Capped)`
 
-        game.html.benverseDesc.innerHTML = `Your toilet multiplier's power slowly increases from 0% over the span of 1 hour. Current: ${game.format(game.calc('U3D').mul(100))}%`
+        game.html.UIverseDesc.innerHTML = `Your toilet multiplier's power slowly increases from 0% over the span of 1 hour. Current: ${game.format(game.calc('U3D').mul(100))}%`
         
         game.html.toiletiverseDesc.innerHTML = `A multiplier on your toilet multiplier reduces from ×1 to ×0 over the span of 10 hours (game time). <br> Current: ×${game.formatMili(game.calc('U5D'))}`
 
@@ -514,7 +514,7 @@ let game = {
 
         if (game.v.universeUnlocks[0]) {
             game.html.ultraverse.style.display = 'inline-block'
-            game.html.benverse.style.display = 'inline-block'
+            game.html.UIverse.style.display = 'inline-block'
         }
 
         if (game.v.universeUnlocks[2]) {
@@ -569,10 +569,10 @@ let game = {
         game.v.timeSpeed = game.calc('T')
 
         if (game.v.maniEnabled && game.v.maniEnabledFull) {
-            game.html.benImg.style.filter = 'invert(1)'
+            game.html.UIImg.style.filter = 'invert(1)'
         }
         else {
-            game.html.benImg.style.filter = 'invert(0)'
+            game.html.UIImg.style.filter = 'invert(0)'
         }
         
         if (game.v.maniEnabledFull) {
@@ -744,7 +744,7 @@ let game = {
         alert('Copied to clipboard!')
     },
     promptDelete: function () {
-        if (prompt('Are you sure you want to reset the game? If yes, type "Ben RVLKV2024"') == 'Ben RVLKV2024') {
+        if (prompt('Are you sure you want to reset the game? If yes, type "UI RVLKV2024"') == 'UI RVLKV2024') {
             localStorage.clear()
             alert('Please reload the website.')
         }

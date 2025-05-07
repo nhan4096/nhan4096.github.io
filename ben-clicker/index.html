@@ -5,17 +5,17 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Ben Clicker</title>
+        <title>UI Clicker</title>
         <link rel="icon" type="image/x-icon" href="favicon.ico">
     </head>
     <body>
         <div class="news-ticker">
             <div class="ticker-content">
-                <span id="ticker">Ben rơi vật lạ</span>
+                <span id="ticker">UI rơi vật lạ</span>
             </div>
         </div>
         <div class="tabs">
-            <button onclick="game.openTab(0)">Bengay</button>
+            <button onclick="game.openTab(0)">UIgay</button>
             <button onclick="game.openTab(1)">Settings</button>
             <button onclick="game.openTab(2)">Achievements</button>
             <button class="button-auto hidden" id="auto-tab" onclick="game.openTab(3)">Auto-Shitter</button>
@@ -23,9 +23,9 @@
             <button class="button-mani hidden" id="mani-tab" onclick="game.openTab(5)">Shit-Time Manipulator</button>
             <button class="button-cube hidden" id="cube-tab" onclick="game.openTab(6)">Shitcubes</button>
         </div>
-        <div id="bengay">
+        <div id="UIgay">
             <div class="center-flex-vertical shit-text">
-                <span>Ben has shat <span class="large-text brown-anim" id="shit-count"> 10 times</span>.</span>
+                <span>UI has shat <span class="large-text brown-anim" id="shit-count"> 10 times</span>.</span>
                 <span id="shits-per-tick"></span>
             </div>
             <div class="center-flex">
@@ -141,10 +141,10 @@
                     <br>
                     <button onclick="game.enterShittiverse(2)" class="enter-shittiverse">Enter</button>
                 </div>
-                <div class="shittiverse hidden" id="benverse">
-                    <span class="verse-text brown">Benverse</span>
+                <div class="shittiverse hidden" id="UIverse">
+                    <span class="verse-text brown">UIverse</span>
                     <br>
-                    <span id="benverse-desc"></span>
+                    <span id="UIverse-desc"></span>
                     <br>
                     <span>Goal: Get 1e150 shits</span>
                     <br>
@@ -155,7 +155,7 @@
                 <div class="shittiverse hidden" id="meetfanverse">
                     <span class="verse-text brown">Meetfanverse</span>
                     <br>
-                    <span>Apply all restrictions from Diarrheaverse, Ultraverse and Benverse</span>
+                    <span>Apply all restrictions from Diarrheaverse, Ultraverse and UIverse</span>
                     <br>
                     <span>Goal: Get 1e65 shits</span>
                     <br>
@@ -219,9 +219,9 @@
                         <label class="bold">Shit-Time Manipulator Enabled: </label>
                         <input type="checkbox" id="mani-enabled">
                     </form>
-                    <img src="ben.png" class="ben-img" id="ben-img"></img>
+                    <img src="UI.png" class="UI-img" id="UI-img"></img>
                     <br>
-                    <span>Current Shittiverse time speed: <span class="large-text ben-time" id="speed-txt"></span></span>
+                    <span>Current Shittiverse time speed: <span class="large-text UI-time" id="speed-txt"></span></span>
                     <span id="until-activation"></span>
                     <br>
                     <div class="center-flex mani-upg-contain">
