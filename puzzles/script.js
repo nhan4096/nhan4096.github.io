@@ -52,7 +52,7 @@ async function SHA256(message) {
 
 async function correct(answer, doc) {
     const hashed = await SHA256(answer);
-    console.log("Hashed: " + hashed + " Answer: " + doc.data().answer_hashed);
+    // console.log("Hashed: " + hashed + " Answer: " + doc.data().answer_hashed);
     if (hashed === doc.data().answer_hashed) {
         return true;
     }
@@ -61,20 +61,20 @@ async function correct(answer, doc) {
     }
 }
 
-function checkAnswer() {
+async function checkAnswer() {
     if (currPuzzle) {
         let answer = document.getElementById("puzzle-answer").value;
-        puzzleList.forEach((doc) => {
+        for (const doc of puzzleList.docs) {
             if (doc.id == currPuzzle) {
-                let data = doc.data();
-                if (correct(answer, doc)) {
+                const isCorrect = await correct(answer, doc);
+                if (isCorrect) {
                     localStorage.setItem("puzzle-" + currPuzzle, "solved");
                     localStorage.setItem("answer-" + currPuzzle, answer);
                     document.getElementById("popup-dialog").style.backgroundColor = "#4caf50";
                     document.getElementById("puzzle-answer").disabled = true;
                 };
             };
-        });
+        };
     };
 };
 
