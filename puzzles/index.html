@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lekton:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="module">
+        
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyBRjSYN7VcAnYFXbLZEvtIfWGRaHY7R3ZI",
+            authDomain: "puzzles-nhan4096.firebaseapp.com",
+            projectId: "puzzles-nhan4096",
+            storageBucket: "puzzles-nhan4096.firebasestorage.app",
+            messagingSenderId: "872131400607",
+            appId: "1:872131400607:web:57067afa49ba1d50cd23aa"
+        };
+    
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        </script>
+        <title>Puzzles</title>
+    </head>
+    <body>
+        <h1 class="center no-margin bold big-text">Puzzles</h1>
+        <h3 class="center no-margin italics">Puzzles to test your open-source researching skills. Released (hopefully) weekly.</h3>
+
+        <div id="puzzle-list">
+
+        </div>
+
+        <div id="overlay"></div>
+
+        <div id="popup-dialog">
+            <div class="puzzle-info">
+                <i class="fas fa-window-close" id="close-popup"></i>
+                <h1 class="center no-margin bold" id="puzzle-name">Name</h1>
+                <h3 class="center no-margin italics" id="puzzle-date">Date</h2>
+                <img id="puzzle-img" src="" alt="Puzzle Image">
+                <br>
+                <h3 class="center no-margin" id="puzzle-text">Text</h3>
+                <br>
+                <form class="puzzle-form flex-column">
+                    <input type="text" id="puzzle-answer" placeholder="Answer" class="dark-input answer-field" required>
+                </form>
+                <button id="submit-answer" class="dark-button submit-button">Check</button>
+            </div>
+        </div>
+
+        <script src="script.js" type="module"></script>
+    </body>
+</html>
