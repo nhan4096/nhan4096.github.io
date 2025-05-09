@@ -52,7 +52,8 @@ async function SHA256(message) {
 
 async function correct(answer, doc) {
     const hashed = await SHA256(answer);
-    if (hashed === doc.answer_hashed) {
+    console.log("Hashed: " + hashed + " Answer: " + doc.data().answer_hashed);
+    if (hashed === doc.data().answer_hashed) {
         return true;
     }
     else {
