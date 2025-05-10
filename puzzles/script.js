@@ -125,7 +125,9 @@ puzzleList.forEach((doc) => {
     puzzleItem.innerHTML = `
         <h2 class="center bold no-margin" id="${doc.id}">${data.name}</h2>
         <p class="no-margin italics">${month} ${day + (day % 10 == 1 ? "st" : (day % 10 == 2 ? "nd" : (day % 10 == 3 ? "rd" : "th")))}, ${year}</p>
-        <img class="img-puzzle" src="${data.img}" alt="${data.name}" id="${doc.id}">
+        <div class="img-container">
+            <img class="img-puzzle" src="${data.img}" alt="${data.name}" id="${doc.id}">
+        </div>
     `;
     if (localStorage.getItem("puzzle-" + doc.id) == "solved") {
         puzzleItem.classList.add("solved");
