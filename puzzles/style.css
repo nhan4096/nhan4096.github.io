@@ -76,10 +76,10 @@ p, h1, h2, h3, h4, h5, h6, input, button {
     background-color: #1a1a1a;
     border-radius: 10px;
     padding: 1%;
-    margin: 1%;
+    margin: 0.5%;
     cursor: pointer;
-    width: 50vh;
-    height: 50vh;
+    width: 49.6vh;
+    height: 49.6vh;
 }
 
 #puzzle-list {
