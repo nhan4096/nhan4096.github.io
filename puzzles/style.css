@@ -172,6 +172,11 @@ p, h1, h2, h3, h4, h5, h6, input, button {
     height: 50px;
 }
 
+.submit-button:disabled, .answer-field:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+}
+
 .solved {
     background-color: #4acf50;
 }
