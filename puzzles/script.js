@@ -112,15 +112,15 @@ const puzzleHTML = document.getElementById("puzzle-list");
 const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 var solvedPuzzles = 0;
 
-puzzleList = Array.from(puzzleList.docs);
+let arrayPuzzleList = Array.from(puzzleList.docs);
 
-puzzleList.sort((a, b) => {
+arrayPuzzleList.sort((a, b) => {
     let dataa = a.data();
     let datab = b.data();
     return dataa.id < datab.id ? 1 : dataa.id > datab.id ? -1 : 0;
 })
 
-puzzleList.forEach((doc) => {
+arrayPuzzleList.forEach((doc) => {
     let data = doc.data();
     let puzzleItem = document.createElement("div");
     let date = new Date(data.date.seconds * 1000 + data.date.nanoseconds / 1000000);
@@ -145,6 +145,6 @@ puzzleList.forEach((doc) => {
     puzzleItem.addEventListener("click", loadPuzzle);
 });
 
-document.getElementById("solved-count").innerHTML = `Solved: ${solvedPuzzles} / ${puzzleList.length}`;
+document.getElementById("solved-count").innerHTML = `Solved: ${solvedPuzzles} / ${puzzleList.size}`;
 document.getElementById("close-popup").addEventListener("click", closePopup);
 document.getElementById("submit-answer").addEventListener("click", checkAnswer);
