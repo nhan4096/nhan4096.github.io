@@ -107,10 +107,18 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const puzzleCollection = collection(db, "puzzles");
-const puzzleList = await getDocs(puzzleCollection);
+let puzzleList = await getDocs(puzzleCollection);
 const puzzleHTML = document.getElementById("puzzle-list");
 const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 var solvedPuzzles = 0;
+
+puzzleList = Array.from(puzzleList.docs);
+
+puzzleList.sort((a, b) => {
+    let dataa = a.data();
+    let datab = b.data();
+    return dataa.id < datab.id ? 1 : dataa.id > datab.id ? -1 : 0;
+})
 
 puzzleList.forEach((doc) => {
     let data = doc.data();
@@ -137,6 +145,6 @@ puzzleList.forEach((doc) => {
     puzzleItem.addEventListener("click", loadPuzzle);
 });
 
-document.getElementById("solved-count").innerHTML = `Solved: ${solvedPuzzles} / ${puzzleList.size}`;
+document.getElementById("solved-count").innerHTML = `Solved: ${solvedPuzzles} / ${puzzleList.length}`;
 document.getElementById("close-popup").addEventListener("click", closePopup);
 document.getElementById("submit-answer").addEventListener("click", checkAnswer);
