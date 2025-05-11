@@ -3,6 +3,17 @@ import { getFirestore, collection, getDocs } from "https://www.gstatic.com/fireb
 
 let currPuzzle = null;
 
+function ordinal(i) {
+    if (i == 1) { return "1st" }
+    else if (i == 2) { return "2nd" }
+    else if (i == 3) { return "3rd" }
+    else if (i < 20) { return i + "th"}
+    else if (i % 10 == 1) { return i + "st" }
+    else if (i % 10 == 2) { return i + "nd" }
+    else if (i % 10 == 3) { return i + "rd" }
+    else { return i + "th" }
+}
+
 function loadPuzzle(e) {
     currPuzzle = e.target.id;
     puzzleList.forEach((doc) => {
@@ -29,7 +40,7 @@ function loadPuzzle(e) {
             document.getElementById("puzzle-answer").disabled = false;
             document.getElementById("submit-answer").disabled = false;
             document.getElementById("popup-dialog").style.backgroundColor = "#1a1a1a";
-            document.getElementById("puzzle-date").innerHTML = `${month} ${day + (day % 10 == 1 ? "st" : (day % 10 == 2 ? "nd" : (day % 10 == 3 ? "rd" : "th")))}, ${year}`;
+            document.getElementById("puzzle-date").innerHTML = `${month} ${ordinal(day)}, ${year}`;
 
             if (localStorage.getItem("puzzle-" + doc.id) == "solved") {
                 document.getElementById("puzzle-answer").value = localStorage.getItem("answer-" + doc.id);
@@ -132,7 +143,7 @@ arrayPuzzleList.forEach((doc) => {
     puzzleItem.id = doc.id;
     puzzleItem.innerHTML = `
         <h2 class="center bold no-margin" id="${doc.id}">${data.name}</h2>
-        <p class="no-margin italics">${month} ${day + (day % 10 == 1 ? "st" : (day % 10 == 2 ? "nd" : (day % 10 == 3 ? "rd" : "th")))}, ${year}</p>
+        <p class="no-margin italics">${month} ${ordinal(day)}, ${year}</p>
         <div class="img-container">
             <img class="img-puzzle" src="${data.img}" alt="${data.name}" id="${doc.id}">
         </div>
