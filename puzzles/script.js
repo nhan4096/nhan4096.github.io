@@ -40,7 +40,7 @@ function loadPuzzle(e) {
             document.getElementById("puzzle-answer").disabled = false;
             document.getElementById("submit-answer").disabled = false;
             document.getElementById("popup-dialog").style.backgroundColor = "#1a1a1a";
-            document.getElementById("puzzle-date").innerHTML = `${month} ${ordinal(day)}, ${year}`;
+            document.getElementById("puzzle-date").innerHTML = `${month} ${ordinal(day)}, ${year} | #${data.id}`;
 
             if (localStorage.getItem("puzzle-" + doc.id) == "solved") {
                 document.getElementById("puzzle-answer").value = localStorage.getItem("answer-" + doc.id);
@@ -143,7 +143,7 @@ arrayPuzzleList.forEach((doc) => {
     puzzleItem.id = doc.id;
     puzzleItem.innerHTML = `
         <h2 class="center bold no-margin" id="${doc.id}">${data.name}</h2>
-        <p class="no-margin italics">${month} ${ordinal(day)}, ${year}</p>
+        <p class="no-margin italics">${month} ${ordinal(day)}, ${year} | #${data.id}</p>
         <div class="img-container">
             <img class="img-puzzle" src="${data.img}" alt="${data.name}" id="${doc.id}">
         </div>
