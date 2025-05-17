@@ -82,6 +82,10 @@ p, h1, h2, h3, h4, h5, h6, input, button {
     height: 49.6vh;
 }
 
+.puzzle:hover {
+    background-color: #2a2a2a;
+}
+
 #puzzle-list {
     display: flex;
     flex-wrap: wrap;
@@ -191,4 +195,42 @@ img {
     height: 80%;
     display: flex;
     justify-content: center;
+}
+
+.tab-btn {
+    width: 7.5vh;
+    height: 7.5vh;
+    background-color: #1a1a1a;
+    border-radius: 10%;
+    font-size: 1.25em;
+    margin: 1vh;
+}
+
+.tab-btn:hover {
+    background-color: #2a2a2a;
+}
+
+.selected {
+    background-color: #4acf50 !important;
+}
+
+.ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #e8ebef;
+}
+
+.form-item {
+    display: inline;
+    width: 7.5vh;
+    height: 7.5vh;
+    background-color: #1a1a1a;
+}
+
+.tab-input {
+    width: 15vh;
+    height: 7.5vh;
+    background-color: #1a1a1a;
+    border-radius: 10%;
 }

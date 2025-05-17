@@ -124,37 +124,117 @@ const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov
 var solvedPuzzles = 0;
 
 let arrayPuzzleList = Array.from(puzzleList.docs);
+let tabCount = Math.ceil(arrayPuzzleList.length/4);
+let tabs = [];
 
 arrayPuzzleList.sort((a, b) => {
     let dataa = a.data();
     let datab = b.data();
     return dataa.id < datab.id ? 1 : dataa.id > datab.id ? -1 : 0;
-})
+});
+
+for (let i = 0; i < tabCount; i++) {
+    let start = i * 4;
+    let end = start + 4;
+    tabs[i] = arrayPuzzleList.slice(start, Math.min(end, arrayPuzzleList.length));
+}
+
+console.log(tabs)
+
+var selectedTab = 0;
+
+function redrawTabs() {
+    const tabContainer = document.getElementById("tabs");
+    tabContainer.innerHTML = "";
+    const maxTabsToShow = 5;
+    const lastTab = tabCount - 1;
+
+    function addTabButton(i) {
+        const tabButton = document.createElement("button");
+        tabButton.className = "tab-btn";
+        tabButton.id = "tab-" + i;
+        if (i == selectedTab) {tabButton.classList.add("selected");}
+        tabButton.textContent = i + 1;
+        tabButton.addEventListener("click", () => loadTab(i));
+        tabContainer.appendChild(tabButton);
+    }
+
+    function addEllipsis() {
+        const ellipsis = document.createElement("span");
+        ellipsis.className = "ellipsis";
+        ellipsis.textContent = "...";
+        tabContainer.appendChild(ellipsis);
+    }
+
+    if (tabCount <= maxTabsToShow) {
+        for (let i = 0; i < tabCount; i++) {addTabButton(i);}
+    }
+    else {
+        addTabButton(0);
+        if (selectedTab > 2) {addEllipsis();}
+        for (let i = selectedTab - 1; i <= selectedTab + 1; i++) {
+            if (i > 0 && i < lastTab) {addTabButton(i);}
+        }
+        if (selectedTab < tabCount - 3) {addEllipsis();}
+
+        addTabButton(lastTab);
+    }
+
+    const formItem = document.createElement("form");
+    const tabInput = document.createElement("input");
+    tabInput.type = "number";
+    formItem.appendChild(tabInput);
+    tabInput.placeholder = "Go to tab";
+    formItem.className = "form-item";
+    tabInput.className = "tab-input";
+    tabInput.min = 1;
+    tabInput.max = tabCount;
+    tabInput.addEventListener("change", () => loadTab(parseInt(tabInput.value)-1));
+    tabContainer.appendChild(formItem);
+}
+
+redrawTabs();
 
 arrayPuzzleList.forEach((doc) => {
-    let data = doc.data();
-    let puzzleItem = document.createElement("div");
-    let date = new Date(data.date.seconds * 1000 + data.date.nanoseconds / 1000000);
-    let year = date.getFullYear();
-    let month = months[date.getMonth()];
-    let day = date.getDate();
-
-    puzzleItem.className = "puzzle";
-    puzzleItem.id = doc.id;
-    puzzleItem.innerHTML = `
-        <h2 class="center bold no-margin" id="${doc.id}">${data.name}</h2>
-        <p class="no-margin italics">${month} ${ordinal(day)}, ${year} | #${data.id}</p>
-        <div class="img-container">
-            <img class="img-puzzle" src="${data.img}" alt="${data.name}" id="${doc.id}">
-        </div>
-    `;
     if (localStorage.getItem("puzzle-" + doc.id) == "solved") {
-        puzzleItem.classList.add("solved");
         solvedPuzzles++;
     }
-    puzzleHTML.appendChild(puzzleItem);
-    puzzleItem.addEventListener("click", loadPuzzle);
 });
+
+function loadTab(i) {
+    puzzleHTML.innerHTML = "";
+    document.getElementById("tab-" + selectedTab).classList.remove("selected");
+    selectedTab = i;
+    redrawTabs();
+    document.getElementById("tab-" + i).classList.add("selected");
+    tabs[i].forEach((doc) => {
+        let data = doc.data();
+        let puzzleItem = document.createElement("div");
+        let date = new Date(data.date.seconds * 1000 + data.date.nanoseconds / 1000000);
+        let year = date.getFullYear();
+        let month = months[date.getMonth()];
+        let day = date.getDate();
+
+        puzzleItem.className = "puzzle";
+        puzzleItem.id = doc.id;
+        puzzleItem.innerHTML = `
+            <h2 class="center bold no-margin" id="${doc.id}">${data.name}</h2>
+            <p class="no-margin italics">${month} ${ordinal(day)}, ${year} | #${data.id}</p>
+            <div class="img-container">
+                <img class="img-puzzle" src="${data.img}" alt="${data.name}" id="${doc.id}">
+            </div>
+        `;
+        if (localStorage.getItem("puzzle-" + doc.id) == "solved") {
+            puzzleItem.classList.add("solved");
+        }
+        puzzleHTML.appendChild(puzzleItem);
+        puzzleItem.addEventListener("click", loadPuzzle);
+    });
+}
+
+console.log(tabs);
+
+loadTab(0);
 
 document.getElementById("solved-count").innerHTML = `Solved: ${solvedPuzzles} / ${puzzleList.size}`;
 document.getElementById("close-popup").addEventListener("click", closePopup);
