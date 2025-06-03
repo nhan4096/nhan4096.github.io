@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
-
-let currPuzzle = null;
+import { getFirestore, collection, getDocs, doc, setDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, onAuthStateChanged, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
 function ordinal(i) {
     if (i == 1) { return "1st" }
@@ -14,15 +13,26 @@ function ordinal(i) {
     else { return i + "th" }
 }
 
-function loadPuzzle(e) {
+let currPuzzle = null;
+
+async function loadPuzzle(e) {
     currPuzzle = e.target.id;
-    puzzleList.forEach((doc) => {
-        if (doc.id == e.target.id) {
-            let data = doc.data();
+    Array.prototype.slice.call(document.getElementById("popup-dialog").children).forEach((child) => {
+        if (child.id != "puzzle-info" && child.id != "close-popup") {
+            child.style.display = "none";
+        }
+        else {
+            child.style.display = "block";
+        }
+    });
+    for (let i=0; i<arrayPuzzleList.length; i++) {
+        let docu = arrayPuzzleList[i];
+        if (docu.id == e.target.id) {
+            let data = docu.data();
             let puzzleName = data.name;
             let puzzleImg = data.img;
             let puzzleText = data.text;
-            let puzzleId = doc.id;
+            let puzzleId = docu.id;
 
             let date = new Date(data.date.seconds * 1000 + data.date.nanoseconds / 1000000);
 
@@ -42,16 +52,44 @@ function loadPuzzle(e) {
             document.getElementById("popup-dialog").style.backgroundColor = "#1a1a1a";
             document.getElementById("puzzle-date").innerHTML = `${month} ${ordinal(day)}, ${year} | #${data.id}`;
 
-            if (localStorage.getItem("puzzle-" + doc.id) == "solved") {
-                document.getElementById("puzzle-answer").value = localStorage.getItem("answer-" + doc.id);
+            const userDoc = await getDoc(doc(db, "userlist", uid));
+            //console.log(userDoc.data().puzzlesSolved);
+            const hasSolved = Object.values(userDoc.data().puzzlesSolved).some(obj => obj.id === docu.id);
+            //console.log(hasSolved, puzzleName);
+
+            if (hasSolved) {
+                let answer = Object.values(userDoc.data().puzzlesSolved).find(obj => obj.id === docu.id).answer;
+                document.getElementById("puzzle-answer").value = answer;
                 document.getElementById("puzzle-answer").disabled = true;
                 document.getElementById("submit-answer").disabled = true;
                 document.getElementById("popup-dialog").style.backgroundColor = "#4caf50";
                 document.getElementById(puzzleId).classList.add("solved");
             }
         };
-    });
+    };
 };
+
+async function getPuzzleObject() {
+    try {
+        let obj = {};
+        //console.log(uid)
+        const userDoc = await getDoc(doc(db, "userlist", uid));
+        puzzleList.forEach(e => {
+            if (Object.values(userDoc.data().puzzlesSolved).some(obj => obj.id === e.id)) {
+                obj[e.id] = {
+                    id: e.id,
+                    answer: Object.values(userDoc.data().puzzlesSolved).find(obj => obj.id === e.id).answer,
+                }
+            }
+        });
+        return obj;
+
+    }
+    catch (error) {
+        //console.log("Error getting puzzle object:", error);
+        return {};
+    }
+}
 
 async function SHA256(message) {
     const msgUint8 = new TextEncoder().encode(message);
@@ -77,19 +115,31 @@ async function correct(answer, doc) {
 async function checkAnswer() {
     if (currPuzzle) {
         let answer = document.getElementById("puzzle-answer").value;
-        for (const doc of puzzleList.docs) {
-            if (doc.id == currPuzzle) {
-                const isCorrect = await correct(answer, doc);
+        for (const docu of puzzleList.docs) {
+            if (docu.id == currPuzzle) {
+                const isCorrect = await correct(answer, docu);
                 if (isCorrect) {
-                    const puzzleId = doc.id;
-                    localStorage.setItem("puzzle-" + currPuzzle, "solved");
-                    localStorage.setItem("answer-" + currPuzzle, answer);
+                    const puzzleId = docu.id;
                     document.getElementById("popup-dialog").style.backgroundColor = "#4caf50";
                     document.getElementById("puzzle-answer").disabled = true;
                     document.getElementById(puzzleId).classList.add("solved");
                     document.getElementById("submit-answer").disabled = true;
                     solvedPuzzles++;
                     document.getElementById("solved-count").innerHTML = `Solved: ${solvedPuzzles} / ${puzzleList.size}`;
+
+                    const userRef = doc(db, "userlist", uid);
+
+                    let newPuzzleObject = await getPuzzleObject();
+                    newPuzzleObject[puzzleId] = {
+                        id: puzzleId,
+                        answer: answer,
+                    };
+
+                    await updateDoc(userRef, {
+                        'numPuzzlesSolved': solvedPuzzles,
+                        'puzzlesSolved': newPuzzleObject,
+                    });
+
                     new Audio("correct.mp3").play();
                 }
                 else {
@@ -118,29 +168,33 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const puzzleCollection = collection(db, "puzzles");
-let puzzleList = await getDocs(puzzleCollection);
+const userlistCollection = collection(db, "userlist");
+const usernamelistCollection = collection(db, "usernamelist");
 const puzzleHTML = document.getElementById("puzzle-list");
 const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const auth = getAuth(app);
 var solvedPuzzles = 0;
 
-let arrayPuzzleList = Array.from(puzzleList.docs);
-let tabCount = Math.ceil(arrayPuzzleList.length/4);
-let tabs = [];
+var puzzleList = await getDocs(puzzleCollection);
+var arrayPuzzleList = Array.from(puzzleList.docs);
+var tabCount = Math.ceil(arrayPuzzleList.length/4);
+var tabs = [];
 
-arrayPuzzleList.sort((a, b) => {
-    let dataa = a.data();
-    let datab = b.data();
-    return dataa.id < datab.id ? 1 : dataa.id > datab.id ? -1 : 0;
-});
+async function loadPuzzleTabs() {
+    arrayPuzzleList.sort((a, b) => {
+        let dataa = a.data();
+        let datab = b.data();
+        return dataa.id < datab.id ? 1 : dataa.id > datab.id ? -1 : 0;
+    });
 
-for (let i = 0; i < tabCount; i++) {
-    let start = i * 4;
-    let end = start + 4;
-    tabs[i] = arrayPuzzleList.slice(start, Math.min(end, arrayPuzzleList.length));
+    for (let i = 0; i < tabCount; i++) {
+        let start = i * 4;
+        let end = start + 4;
+        tabs[i] = arrayPuzzleList.slice(start, Math.min(end, arrayPuzzleList.length));
+    }
 }
 
-console.log(tabs)
-
+loadPuzzleTabs()
 var selectedTab = 0;
 
 function redrawTabs() {
@@ -195,20 +249,16 @@ function redrawTabs() {
 
 redrawTabs();
 
-arrayPuzzleList.forEach((doc) => {
-    if (localStorage.getItem("puzzle-" + doc.id) == "solved") {
-        solvedPuzzles++;
-    }
-});
-
-function loadTab(i) {
+async function loadTab(i) {
     puzzleHTML.innerHTML = "";
     document.getElementById("tab-" + selectedTab).classList.remove("selected");
     selectedTab = i;
     redrawTabs();
     document.getElementById("tab-" + i).classList.add("selected");
-    tabs[i].forEach((doc) => {
-        let data = doc.data();
+    //console.log(uid)
+    const userDoc = uid ? await getDoc(doc(db, "userlist", uid)) : null;
+    for (const docu of tabs[i]) {
+        let data = docu.data();
         let puzzleItem = document.createElement("div");
         let date = new Date(data.date.seconds * 1000 + data.date.nanoseconds / 1000000);
         let year = date.getFullYear();
@@ -216,26 +266,194 @@ function loadTab(i) {
         let day = date.getDate();
 
         puzzleItem.className = "puzzle";
-        puzzleItem.id = doc.id;
+        puzzleItem.id = docu.id;
         puzzleItem.innerHTML = `
-            <h2 class="center bold no-margin" id="${doc.id}">${data.name}</h2>
+            <h2 class="center bold no-margin" id="${docu.id}">${data.name}</h2>
             <p class="no-margin italics">${month} ${ordinal(day)}, ${year} | #${data.id}</p>
             <div class="img-container">
-                <img class="img-puzzle" src="${data.img}" alt="${data.name}" id="${doc.id}">
+                <img class="img-puzzle" src="${data.img}" alt="${data.name}" id="${docu.id}">
             </div>
         `;
-        if (localStorage.getItem("puzzle-" + doc.id) == "solved") {
-            puzzleItem.classList.add("solved");
+        if (uid) {
+            //console.log(uid, userDoc.data().puzzlesSolved);
+            if (Object.values(userDoc.data().puzzlesSolved).some(obj => obj.id === docu.id)) {
+                puzzleItem.classList.add("solved");
+            }
         }
         puzzleHTML.appendChild(puzzleItem);
         puzzleItem.addEventListener("click", loadPuzzle);
+    };
+}
+
+function signUpPopup() {
+    document.getElementById("overlay").style.display = "block";
+    document.getElementById("popup-dialog").style.display = "block";
+
+    Array.prototype.slice.call(document.getElementById("popup-dialog").children).forEach((child) => {
+        if (child.id != "sign-up" && child.id != "close-popup") {
+            child.style.display = "none";
+        }
+        else {
+            child.style.display = "block";
+        }
     });
 }
 
-console.log(tabs);
+function logInPopup() {
+    document.getElementById("overlay").style.display = "block";
+    document.getElementById("popup-dialog").style.display = "block";
+    Array.prototype.slice.call(document.getElementById("popup-dialog").children).forEach((child) => {
+        if (child.id != "log-in" && child.id != "close-popup") {
+            child.style.display = "none";
+        }
+        else {
+            child.style.display = "block";
+        }
+    });
+}
 
-loadTab(0);
+async function signUp(e) {
+    e.preventDefault();
+    const signUpForm = document.getElementById("sign-up-form");
+    const signUpErrors = document.getElementById("sign-up-error");
+
+    //console.log(signUpForm.checkValidity());
+
+    if (signUpForm.checkValidity()) {
+        const username = signUpForm.username.value;
+        const email = signUpForm.email.value;
+        const password = signUpForm.password.value;
+
+        const users = await getDocs(usernamelistCollection);
+        const userExists = users.docs.some(doc => doc.data.username === username);
+        //console.log(userExists)
+        if (userExists) {
+            signUpErrors.innerHTML = "Username already exists. Please choose a different username.";
+            return;
+        }
+        //console.log(username);
+
+        //console.log(`Signing up with email: ${email} and password: ${password}`);
+
+        closePopup();
+
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            await updateProfile(user, { displayName: username });
+            alert(`Welcome, ${username}! Please check your email (${email}) in order to complete email verification.`);
+
+            uid = user.uid;
+
+            await setDoc(doc(userlistCollection, user.uid), {
+                username: username,
+                email: email,
+                numPuzzlesSolved: solvedPuzzles,
+                puzzlesSolved: await getPuzzleObject(),
+                dateJoined: new Date(),
+            });
+            await setDoc(doc(usernamelistCollection, user.uid), { username: username });
+
+            sendEmailVerification(user);
+
+            signUpForm.reset();
+            await signOut(auth);
+        }
+        catch (error) {
+            signUpPopup();
+            console.error("Error signing up:", error);
+            if (error.code === 'auth/email-already-in-use') {
+                signUpErrors.innerHTML = "This email is already in use. Please try a different email.";
+            } else if (error.code === 'auth/invalid-email') {
+                signUpErrors.innerHTML = "The email address is not valid. Please enter a valid email.";
+            } else if (error.code === 'auth/weak-password') {
+                signUpErrors.innerHTML = "The password is too weak. Please choose a stronger password.";
+            } else {
+                signUpErrors.innerHTML = "An error occurred while signing up. Please try again later.";
+            }
+        }
+    }
+    else {
+        signUpForm.reportValidity();
+    }
+}
+
+async function logIn(e) {
+    e.preventDefault();
+    const logInForm = document.getElementById("log-in-form");
+    const logInErrors = document.getElementById("log-in-error");
+
+    if (logInForm.checkValidity()) {
+        try {
+            const email = logInForm.email.value;
+            const password = logInForm.password.value;
+
+            const userCredentials = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredentials.user;
+            if (!user.emailVerified) {
+                logInErrors.innerHTML = "Please verify your email before logging in.";
+                await signOut(auth);
+                return;
+            }
+            closePopup();
+        }
+        catch (error) {
+            
+        }
+    }
+}
+
+async function userSignOut() {
+    await signOut(auth);
+}
+
+var uid = null;
 
 document.getElementById("solved-count").innerHTML = `Solved: ${solvedPuzzles} / ${puzzleList.size}`;
 document.getElementById("close-popup").addEventListener("click", closePopup);
 document.getElementById("submit-answer").addEventListener("click", checkAnswer);
+
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        uid = user.uid;
+        //console.log("User is signed in:", user);
+        if (user.emailVerified) {
+            let userDoc = await getDoc(doc(db, "userlist", uid));
+            solvedPuzzles = userDoc.data().numPuzzlesSolved || 0;
+            document.getElementById("solved-count").innerHTML = `Solved: ${solvedPuzzles} / ${puzzleList.size}`;
+            document.getElementById("signed-in-line").innerHTML = `Welcome, ${user.displayName ? user.displayName : user.email}. <a href="#" id="sign-out-link">Sign out</a>`;
+            const userRef = doc(db, "userlist", user.uid);
+            await updateDoc(userRef, {
+                'puzzlesSolved': await getPuzzleObject(),
+                'numPuzzlesSolved': solvedPuzzles,
+            });
+        }
+        else {
+            document.getElementById("signed-in-line").innerHTML = `Your account is not verified! Please check your email (${user.email}) for a verification link. You will be signed out in order to log in once you've verified your email. <a id="resend-verify" href="#">Resend</a> <a href="#" id="sign-out-link">Sign out</a>`;
+            document.getElementById("resend-verify").addEventListener("click", async () => {
+                await sendEmailVerification(user);
+            });
+        }
+        await loadTab(selectedTab);
+        document.getElementById("puzzles-container").style.display = "block";
+        document.getElementById("overlay-not-logged-in").style.display = "none";
+        document.getElementById("sign-out-link").addEventListener("click", userSignOut);
+    }
+    else {
+        uid = null;
+        //console.log("No user signed in");
+        document.getElementById("signed-in-line").innerHTML = '<a href="#" id="sign-up-link">Sign up</a> / <a href="#" id="log-in-link">Log in</a>';
+        document.getElementById("sign-up-link").addEventListener("click", signUpPopup);
+        document.getElementById("sign-up-link-2").addEventListener("click", signUpPopup);
+        document.getElementById("sign-up-form").addEventListener("submit", signUp);
+
+        document.getElementById("log-in-link").addEventListener("click", logInPopup);
+        document.getElementById("log-in-link-2").addEventListener("click", logInPopup);
+        document.getElementById("log-in-form").addEventListener("submit", logIn);
+
+        document.getElementById("puzzles-container").style.display = "none";
+        document.getElementById("overlay-not-logged-in").style.display = "block";
+        await loadTab(selectedTab);
+    }
+});
