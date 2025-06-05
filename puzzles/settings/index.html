@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lekton:ital,wght@0,400;0,700;1,400&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <link rel="icon" href="favicon.ico" type="image/x-icon"> 
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="module">
+        
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyBRjSYN7VcAnYFXbLZEvtIfWGRaHY7R3ZI",
+            authDomain: "puzzles-nhan4096.firebaseapp.com",
+            projectId: "puzzles-nhan4096",
+            storageBucket: "puzzles-nhan4096.firebasestorage.app",
+            messagingSenderId: "872131400607",
+            appId: "1:872131400607:web:57067afa49ba1d50cd23aa"
+        };
+    
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        </script>
+        <title>Puzzles</title>
+    </head>
+    <body>
+        <div class="account-line no-margin">
+            <p class="no-margin" id="signed-in-line">
+                <a href="#" id="sign-up-link">Sign up</a> / <a href="#" id="log-in-link">Log in</a>
+            </p>
+        </div>
+        <p class="center big-text no-margin bold">Settings</p>
+        <div class="setting-header">
+            <h2 class="no-margin">Account</h2>
+            <p class="no-margin inline" id="username">Username: </p>
+            <i class="fas fa-edit edit-btn" id="edit-username"></i>
+            <br>
+            <p class="no-margin inline" id="bio">Bio: </p>
+            <i class="fas fa-edit edit-btn" id="edit-bio"></i>
+            <br>
+            <p class="no-margin inline" id="email">Email: </p>
+            <i class="fas fa-edit edit-btn" id="edit-email"></i>
+            <br>
+            <p class="no-margin" id="uid">UID: </p>
+            <p class="no-margin" id="created-at">Created at: </p>
+            <button class="dark-button dangerous" id="delete-account">Delete account</button>
+        </div>
+        <script src="script.js" type="module"></script>
+    </body>
+</html>
