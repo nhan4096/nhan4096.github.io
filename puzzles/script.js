@@ -455,7 +455,7 @@ onAuthStateChanged(auth, async (user) => {
             let userDoc = await getDoc(doc(db, "userlist", uid));
             solvedPuzzles = userDoc.data().numPuzzlesSolved || 0;
             document.getElementById("solved-count").innerHTML = `Solved: ${solvedPuzzles} / ${puzzleList.size}`;
-            document.getElementById("signed-in-line").innerHTML = `<i class="fa-solid fa-gear" id="settings-icon"></i> Welcome, <a href="../users/index.html?user=${user.uid}">${escapeHTML(user.displayName)}</a>. <a href="#" id="sign-out-link">Sign out</a>`;
+            document.getElementById("signed-in-line").innerHTML = `<i class="fa-solid fa-gear" id="settings-icon"></i> Welcome, <a href="users/index.html?user=${user.uid}">${escapeHTML(user.displayName)}</a>. <a href="#" id="sign-out-link">Sign out</a>`;
             const userRef = doc(db, "userlist", user.uid);
             await updateDoc(userRef, {
                 'puzzlesSolved': await getPuzzleObject(),
@@ -463,7 +463,7 @@ onAuthStateChanged(auth, async (user) => {
             });
             await updateDoc(doc(usernamelistCollection, user.uid), { puzzlesSolved: solvedPuzzles });
             document.getElementById("settings-icon").addEventListener("click", () => {
-                window.location.href = "/settings/index.html";
+                window.location.href = "settings/index.html";
             });
         }
         else {
