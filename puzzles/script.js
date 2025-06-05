@@ -53,7 +53,7 @@ async function loadPuzzle(e) {
             document.getElementById("puzzle-date").innerHTML = `${month} ${ordinal(day)}, ${year} | #${data.id}`;
 
             const userDoc = await getDoc(doc(db, "userlist", uid));
-            //console.log(userDoc.data().puzzlesSolved);
+            //console.log(userDoc);
             const hasSolved = Object.values(userDoc.data().puzzlesSolved).some(obj => obj.id === docu.id);
             //console.log(hasSolved, puzzleName);
 
@@ -114,7 +114,7 @@ async function correct(answer, doc) {
 
 async function checkAnswer() {
     if (currPuzzle) {
-        let answer = document.getElementById("puzzle-answer").value;
+        let answer = document.getElementById("puzzle-answer").value.trim();
         for (const docu of puzzleList.docs) {
             if (docu.id == currPuzzle) {
                 const isCorrect = await correct(answer, docu);
@@ -140,6 +140,8 @@ async function checkAnswer() {
                         'puzzlesSolved': newPuzzleObject,
                     });
 
+                    await updateDoc(doc(usernamelistCollection, user.uid), { puzzlesSolved: solvedPuzzles });
+
                     new Audio("correct.mp3").play();
                 }
                 else {
@@ -160,7 +162,7 @@ const firebaseConfig = {
     apiKey: "AIzaSyBRjSYN7VcAnYFXbLZEvtIfWGRaHY7R3ZI",
     authDomain: "puzzles-nhan4096.firebaseapp.com",
     projectId: "puzzles-nhan4096",
-    storageBucket: "puzzles-nhan4096.firebasestorage.app",
+    storageBucket: "puzzles-nhan4096.appspot.com",
     messagingSenderId: "872131400607",
     appId: "1:872131400607:web:57067afa49ba1d50cd23aa"
 };
@@ -325,7 +327,7 @@ async function signUp(e) {
         const password = signUpForm.password.value;
 
         const users = await getDocs(usernamelistCollection);
-        const userExists = users.docs.some(doc => doc.data.username === username);
+        const userExists = users.docs.some(doc => doc.data().username === username);
         //console.log(userExists)
         if (userExists) {
             signUpErrors.innerHTML = "Username already exists. Please choose a different username.";
@@ -341,7 +343,7 @@ async function signUp(e) {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
-            await updateProfile(user, { displayName: username });
+            await updateProfile(user, { displayName: username});
             alert(`Welcome, ${username}! Please check your email (${email}) in order to complete email verification.`);
 
             uid = user.uid;
@@ -353,7 +355,7 @@ async function signUp(e) {
                 puzzlesSolved: await getPuzzleObject(),
                 dateJoined: new Date(),
             });
-            await setDoc(doc(usernamelistCollection, user.uid), { username: username });
+            await setDoc(doc(usernamelistCollection, user.uid), { username: username, bio: "" });
 
             sendEmailVerification(user);
 
@@ -365,12 +367,15 @@ async function signUp(e) {
             console.error("Error signing up:", error);
             if (error.code === 'auth/email-already-in-use') {
                 signUpErrors.innerHTML = "This email is already in use. Please try a different email.";
-            } else if (error.code === 'auth/invalid-email') {
+            }
+            else if (error.code === 'auth/invalid-email') {
                 signUpErrors.innerHTML = "The email address is not valid. Please enter a valid email.";
-            } else if (error.code === 'auth/weak-password') {
+            }
+            else if (error.code === 'auth/weak-password') {
                 signUpErrors.innerHTML = "The password is too weak. Please choose a stronger password.";
-            } else {
-                signUpErrors.innerHTML = "An error occurred while signing up. Please try again later.";
+            }
+            else {
+                signUpErrors.innerHTML = `An error (${error.code}) occurred while signing up. Please try again later.`;
             }
         }
     }
@@ -399,9 +404,37 @@ async function logIn(e) {
             closePopup();
         }
         catch (error) {
-            
+            console.log(error);
+            if (error.code === 'auth/user-not-found') {
+                logInErrors.innerHTML = "No user found with this email. Please check your email or sign up.";
+            }
+            else if (error.code === 'auth/invalid-email') {
+                logInErrors.innerHTML = "The email address is not valid. Please enter a valid email.";
+            }
+            else if (error.code === 'auth/invalid-credential') {
+                logInErrors.innerHTML = "The credentials provided are invalid. Please check your email and password.";
+            }
+            else {
+                const email = logInForm.email.value;
+                const password = logInForm.password.value;
+                console.log(auth, email, password);
+                logInErrors.innerHTML = `An error (${error.code}) occurred while logging in. Please try again later.`;
+            }
         }
     }
+}
+
+function escapeHTML(str) {
+    return str.replace(/[&<>"'/]/g, function (match) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;',
+          '/': '&#x2F;'
+        }[match];
+    });
 }
 
 async function userSignOut() {
@@ -422,15 +455,19 @@ onAuthStateChanged(auth, async (user) => {
             let userDoc = await getDoc(doc(db, "userlist", uid));
             solvedPuzzles = userDoc.data().numPuzzlesSolved || 0;
             document.getElementById("solved-count").innerHTML = `Solved: ${solvedPuzzles} / ${puzzleList.size}`;
-            document.getElementById("signed-in-line").innerHTML = `Welcome, ${user.displayName ? user.displayName : user.email}. <a href="#" id="sign-out-link">Sign out</a>`;
+            document.getElementById("signed-in-line").innerHTML = `<i class="fa-solid fa-gear" id="settings-icon"></i> Welcome, <a href="../users/index.html?user=${user.uid}">${escapeHTML(user.displayName)}</a>. <a href="#" id="sign-out-link">Sign out</a>`;
             const userRef = doc(db, "userlist", user.uid);
             await updateDoc(userRef, {
                 'puzzlesSolved': await getPuzzleObject(),
                 'numPuzzlesSolved': solvedPuzzles,
             });
+            await updateDoc(doc(usernamelistCollection, user.uid), { puzzlesSolved: solvedPuzzles });
+            document.getElementById("settings-icon").addEventListener("click", () => {
+                window.location.href = "/settings/index.html";
+            });
         }
         else {
-            document.getElementById("signed-in-line").innerHTML = `Your account is not verified! Please check your email (${user.email}) for a verification link. You will be signed out in order to log in once you've verified your email. <a id="resend-verify" href="#">Resend</a> <a href="#" id="sign-out-link">Sign out</a>`;
+            document.getElementById("signed-in-line").innerHTML = `Your account is not verified! Please check your email (${escapeHTML(user.email)}) for a verification link. You will be signed out in order to log in once you've verified your email. <a id="resend-verify" href="#">Resend</a> <a href="#" id="sign-out-link">Sign out</a>`;
             document.getElementById("resend-verify").addEventListener("click", async () => {
                 await sendEmailVerification(user);
             });

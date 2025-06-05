@@ -1,0 +1,75 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { getFirestore, collection, getDocs, doc, setDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, onAuthStateChanged, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBRjSYN7VcAnYFXbLZEvtIfWGRaHY7R3ZI",
+    authDomain: "puzzles-nhan4096.firebaseapp.com",
+    projectId: "puzzles-nhan4096",
+    storageBucket: "puzzles-nhan4096.appspot.com",
+    messagingSenderId: "872131400607",
+    appId: "1:872131400607:web:57067afa49ba1d50cd23aa"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const puzzleCollection = collection(db, "puzzles");
+const userlistCollection = collection(db, "userlist");
+const usernamelistCollection = collection(db, "usernamelist");
+const puzzleHTML = document.getElementById("puzzle-list");
+const auth = getAuth(app);
+
+const params = new URLSearchParams(window.location.search);
+const userParam = params.get('user');
+
+if (!userParam) {
+    document.body.innerHTML = '<h1 class="big-text center no-margin bold">404</h1><p class="center no-margin">User not specified.</p>';
+    throw new Error("Missing 'user' parameter");
+}
+
+function escapeHTML(str) {
+    return str.replace(/[&<>"'/]/g, function (match) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;',
+          '/': '&#x2F;'
+        }[match];
+    });
+}
+
+var puzzleList = await getDocs(puzzleCollection);
+const numPuzzles = puzzleList.size;
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        if (user.emailVerified) {
+            document.getElementById("signed-in-line").innerHTML = `<i class="fa fa-arrow-left" aria-hidden="true" id="back-arrow"></i> Welcome, ${escapeHTML(user.displayName)}. <a href="#" id="sign-out-link">Sign out</a>`;
+            let accountData = await getDoc(doc(usernamelistCollection, userParam));
+
+            if (accountData.exists()) {
+                document.getElementById("username").innerText = accountData.data().username;
+                document.getElementById("bio").innerText = accountData.data().bio || "[No bio available.]";
+                document.getElementById("solved-puzzles").innerText = `Solved Puzzles: ${accountData.data().puzzlesSolved || 0} / ${numPuzzles}`;
+            }
+            else {
+                document.getElementById("username").innerText = "User not found";
+                document.getElementById("bio").innerText = "No bio available.";
+            }
+
+            document.getElementById("back-arrow").addEventListener("click", () => {
+                window.location.href = "../index.html";
+            });
+        }
+        else {
+            alert("Please verify your email address to view users.");
+            window.location.href = "/../index.html";
+        }
+    }
+    else {
+        uid = null;
+        alert("You are not logged in. Please log in to view users.");
+        window.location.href = "/../index.html";
+    }
+});

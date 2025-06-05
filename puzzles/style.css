@@ -259,3 +259,8 @@ img {
     font-size: 0.8em;
     margin-top: 10px;
 }
+
+#settings-icon {
+    color: #e8ebef;
+    cursor: pointer;
+}
