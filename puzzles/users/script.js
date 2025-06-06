@@ -49,7 +49,8 @@ onAuthStateChanged(auth, async (user) => {
             let accountData = await getDoc(doc(usernamelistCollection, userParam));
 
             if (accountData.exists()) {
-                document.getElementById("username").innerText = accountData.data().username;
+                document.getElementById("username").innerText = `${accountData.data().username} (${accountData.id})`;
+                document.getElementById("create-date").innerHTML = `Created on: ${new Date(accountData.data().createDate).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })}`;
                 document.getElementById("bio").innerText = accountData.data().bio || "[No bio available.]";
                 document.getElementById("solved-puzzles").innerText = `Solved Puzzles: ${accountData.data().puzzlesSolved || 0} / ${numPuzzles}`;
             }
@@ -61,15 +62,33 @@ onAuthStateChanged(auth, async (user) => {
             document.getElementById("back-arrow").addEventListener("click", () => {
                 window.location.href = "../index.html";
             });
+
+            const solvedGrid = document.getElementById("solved-grid");
+            for (let i=0; i<numPuzzles; i++) {
+                let newDiv = document.createElement("div");
+                newDiv.className = "grid-item";
+                newDiv.id = `grid-puzzle-${i+1}`;
+                newDiv.style.width = `${screen.width/12}px`;
+                newDiv.style.height = `${screen.width/12}px`;
+                newDiv.innerHTML = `<p class="no-margin">${i+1}</p>`;
+                solvedGrid.appendChild(newDiv);
+            }
+
+            const solvedPuzzlesArray = accountData.data().puzzlesSolvedArray || [];
+            console.log(solvedPuzzlesArray);
+            for (let i=0; i<solvedPuzzlesArray.length; i++) {
+                let puzzleIndex = solvedPuzzlesArray[i];
+                document.getElementById(`grid-puzzle-${puzzleIndex}`).classList.add("solved");
+            }
         }
         else {
             alert("Please verify your email address to view users.");
-            window.location.href = "/../index.html";
+            window.location.href = "../index.html";
         }
     }
     else {
         uid = null;
         alert("You are not logged in. Please log in to view users.");
-        window.location.href = "/../index.html";
+        window.location.href = "../index.html";
     }
 });
