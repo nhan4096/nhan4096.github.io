@@ -34,23 +34,15 @@
                 <a href="#" id="sign-up-link">Sign up</a> / <a href="#" id="log-in-link">Log in</a>
             </p>
         </div>
-        <p class="center big-text no-margin bold">Settings</p>
-        <div class="setting-header">
-            <h2 class="no-margin">Account</h2>
-            <p class="no-margin inline" id="username">Username: </p>
-            <i class="fas fa-edit edit-btn" id="edit-username"></i>
-            <br>
-            <p class="no-margin inline" id="bio">Bio: </p>
-            <i class="fas fa-edit edit-btn" id="edit-bio"></i>
-            <br>
-            <p class="no-margin inline" id="email">Email: </p>
-            <i class="fas fa-edit edit-btn" id="edit-email"></i>
-            <br>
-            <p class="no-margin" id="uid">UID: </p>
-            <p class="no-margin" id="created-at">Created at: </p>
-            <button class="dark-button dangerous" id="reset-puzzles">Reset puzzles</button>
-            <button class="dark-button dangerous" id="delete-account">Delete account</button>
-        </div>
-        <script src="script.js?v=4" type="module"></script>
+        <h1 class="center no-margin big-text bold">Leaderboard</h1>
+        <p class="italics no-margin">Check out the top scores of the game!</p>
+        <table id="leaderboard">
+            <tr>
+                <th class="rank bold">Rank</th>
+                <th class="name bold">Username</th>
+                <th class="puzzles-solved bold">Puzzles Solved</th>
+            </tr>
+        </table>
+        <script src="script.js" type="module"></script>
     </body>
 </html>

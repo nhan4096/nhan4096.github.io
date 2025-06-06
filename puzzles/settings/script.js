@@ -40,7 +40,7 @@ function escapeHTML(str) {
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         uid = user.uid;
-        console.log("User is signed in:", user);
+        // console.log("User is signed in:", user);
         if (user.emailVerified) {
             document.getElementById("signed-in-line").innerHTML = `<i class="fa fa-arrow-left" aria-hidden="true" id="back-arrow"></i> Welcome, <a href="../users/index.html?user=${user.uid}">${escapeHTML(user.displayName)}</a>. <a href="#" id="sign-out-link">Sign out</a>`;
             document.getElementById("back-arrow").addEventListener("click", () => {
@@ -141,6 +141,16 @@ onAuthStateChanged(auth, async (user) => {
                         console.error("Error deleting account:", error);
                         alert(`Error (${error.code}) deleting account. Please try again.`);
                     }
+                }
+            });
+
+            document.getElementById("reset-puzzles").addEventListener('click', async () => {
+                const confirmReset = prompt("Are you sure you want to reset your solved puzzles? Type the phrase \"UI shat his pants at school on November 1st, 2024.\" with the correct capitalization in the box below to confirm. ");
+                if (confirmReset == 'UI shat his pants at school on November 1st, 2024.') {
+                    await updateDoc(doc(userlistCollection, uid), { numPuzzlesSolved: 0, puzzlesSolved: {} });
+                    await updateDoc(doc(usernamelistCollection, uid), { puzzlesSolved: 0, puzzlesSolvedArray: [] });
+                    alert("Solved puzzles resetted. Refreshing to apply changes.");
+                    location.reload();
                 }
             });
         }

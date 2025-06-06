@@ -63,11 +63,64 @@ async function loadPuzzle(e) {
                 document.getElementById("puzzle-answer").disabled = true;
                 document.getElementById("submit-answer").disabled = true;
                 document.getElementById("popup-dialog").style.backgroundColor = "#4caf50";
-                document.getElementById(puzzleId).classList.add("solved");
+                //document.getElementById(puzzleId).classList.add("solved");
             }
         };
     };
 };
+
+async function loadPuzzleById(id) {
+    currPuzzle = id;
+    Array.prototype.slice.call(document.getElementById("popup-dialog").children).forEach((child) => {
+        if (child.id != "puzzle-info" && child.id != "close-popup") {
+            child.style.display = "none";
+        }
+        else {
+            child.style.display = "block";
+        }
+    });
+    for (let i=0; i<arrayPuzzleList.length; i++) {
+        let docu = arrayPuzzleList[i];
+        if (docu.id == id) {
+            let data = docu.data();
+            let puzzleName = data.name;
+            let puzzleImg = data.img;
+            let puzzleText = data.text;
+
+            let date = new Date(data.date.seconds * 1000 + data.date.nanoseconds / 1000000);
+
+            let year = date.getFullYear();
+            let month = months[date.getMonth()];
+            let day = date.getDate();
+
+            document.getElementById("overlay").style.display = "block";
+            document.getElementById("popup-dialog").style.display = "block";
+
+            document.getElementById("puzzle-name").innerHTML = puzzleName;
+            document.getElementById("puzzle-img").src = puzzleImg;
+            document.getElementById("puzzle-text").innerHTML = puzzleText;
+            document.getElementById("puzzle-answer").value = "";
+            document.getElementById("puzzle-answer").disabled = false;
+            document.getElementById("submit-answer").disabled = false;
+            document.getElementById("popup-dialog").style.backgroundColor = "#1a1a1a";
+            document.getElementById("puzzle-date").innerHTML = `${month} ${ordinal(day)}, ${year} | #${data.id}`;
+
+            const userDoc = await getDoc(doc(db, "userlist", uid));
+            //console.log(userDoc);
+            const hasSolved = Object.values(userDoc.data().puzzlesSolved).some(obj => obj.id === docu.id);
+            //console.log(hasSolved, puzzleName);
+
+            if (hasSolved) {
+                let answer = Object.values(userDoc.data().puzzlesSolved).find(obj => obj.id === docu.id).answer;
+                document.getElementById("puzzle-answer").value = answer;
+                document.getElementById("puzzle-answer").disabled = true;
+                document.getElementById("submit-answer").disabled = true;
+                document.getElementById("popup-dialog").style.backgroundColor = "#4caf50";
+                //document.getElementById(id).classList.add("solved");
+            }
+        };
+    }
+}
 
 async function getPuzzleObject() {
     try {
@@ -157,7 +210,7 @@ async function checkAnswer() {
                         'puzzlesSolved': newPuzzleObject,
                     });
 
-                    await updateDoc(doc(usernamelistCollection, user.uid), { puzzlesSolved: solvedPuzzles, puzzlesSolvedArray: await getPuzzleArray() });
+                    await updateDoc(doc(usernamelistCollection, uid), { puzzlesSolved: solvedPuzzles, puzzlesSolvedArray: await getPuzzleArray() });
 
                     new Audio("correct.mp3").play();
                 }
@@ -471,8 +524,8 @@ onAuthStateChanged(auth, async (user) => {
         if (user.emailVerified) {
             let userDoc = await getDoc(doc(db, "userlist", uid));
             solvedPuzzles = userDoc.data().numPuzzlesSolved || 0;
-            document.getElementById("solved-count").innerHTML = `Solved: ${solvedPuzzles} / ${puzzleList.size}`;
-            document.getElementById("signed-in-line").innerHTML = `<i class="fa-solid fa-gear" id="settings-icon"></i> Welcome, <a href="users/index.html?user=${user.uid}">${escapeHTML(user.displayName)}</a>. <a href="#" id="sign-out-link">Sign out</a>`;
+            document.getElementById("solved-count").innerHTML = `Solved: ${solvedPuzzles} / ${puzzleList.size} (${(solvedPuzzles / puzzleList.size * 100).toFixed(2)}%)`;
+            document.getElementById("signed-in-line").innerHTML = `<i class="fa-solid fa-ranking-star" id="leaderboard-icon"></i> <i class="fa-solid fa-gear" id="settings-icon"></i> Welcome, <a href="users/index.html?user=${user.uid}">${escapeHTML(user.displayName)}</a>. <a href="#" id="sign-out-link">Sign out</a>`;
             const userRef = doc(db, "userlist", user.uid);
             await updateDoc(userRef, {
                 'puzzlesSolved': await getPuzzleObject(),
@@ -482,6 +535,23 @@ onAuthStateChanged(auth, async (user) => {
             document.getElementById("settings-icon").addEventListener("click", () => {
                 window.location.href = "settings/index.html";
             });
+            document.getElementById("leaderboard-icon").addEventListener("click", () => {
+                window.location.href = "leaderboard/index.html";
+            });
+
+            const params = new URLSearchParams(window.location.search);
+            const idParam = params.get('id');
+            if (idParam) {
+                await loadTab(0);
+                await loadPuzzleById(idParam);
+
+                const url = new URL(window.location.href);
+                url.search = '';    
+                window.history.replaceState({}, '', url.toString());
+            }
+            else {
+                await loadTab(selectedTab);
+            }
         }
         else {
             document.getElementById("signed-in-line").innerHTML = `Your account is not verified! Please check your email (${escapeHTML(user.email)}) for a verification link. You will be signed out in order to log in once you've verified your email. <a id="resend-verify" href="#">Resend</a> <a href="#" id="sign-out-link">Sign out</a>`;

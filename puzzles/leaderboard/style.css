@@ -45,7 +45,7 @@ body {
     background-color: #070707;
 }
 
-p, h1, h2, h3, h4, h5, h6, input, button, label {
+p, h1, h2, h3, h4, h5, h6, button, input, textarea, td, th {
     color: #e8ebef;
     font-family: "Lekton", monospace;
     font-weight: 400;
@@ -91,7 +91,6 @@ html, body {
     border: 1px solid #ccc;
     padding: 10px;
     border-radius: 5px;
-    width: 90vw;
 }
 
 .dark-button {
@@ -101,62 +100,4 @@ html, body {
     height: auto;
     border-radius: 5px;
     cursor: pointer;
-}
-
-.flex-center {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-
-.solved-grid {
-    display: grid;
-    grid-template-columns: repeat(12, auto);
-}
-
-.grid-item {
-    padding: 0;
-    margin: 0;
-    border: 1px solid #ccc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.solved {
-    background-color: #4acf50 !important;
-}
-
-.grid-item {
-    position: relative;
-    display: flex;
-    text-align: center;
-    vertical-align: middle;
-    cursor: pointer;
-}
-
-.tooltip-text {
-    visibility: hidden;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px;
-    position: absolute;
-    z-index: 1;
-    bottom: 70%;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0;
-    transition: opacity 0.3s;
-    white-space: nowrap;
-}
-
-.grid-item:hover .tooltip-text {
-    visibility: visible;
-    opacity: 1;
-}
-
-.grid-text {
-    font-size: 1.5em;
 }

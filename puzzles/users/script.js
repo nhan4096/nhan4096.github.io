@@ -27,6 +27,10 @@ if (!userParam) {
     throw new Error("Missing 'user' parameter");
 }
 
+async function userSignOut() {
+    await signOut(auth)
+}
+
 function escapeHTML(str) {
     return str.replace(/[&<>"'/]/g, function (match) {
         return {
@@ -52,7 +56,7 @@ onAuthStateChanged(auth, async (user) => {
                 document.getElementById("username").innerText = `${accountData.data().username} (${accountData.id})`;
                 document.getElementById("create-date").innerHTML = `Created on: ${new Date(accountData.data().createDate).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' })}`;
                 document.getElementById("bio").innerText = accountData.data().bio || "[No bio available.]";
-                document.getElementById("solved-puzzles").innerText = `Solved Puzzles: ${accountData.data().puzzlesSolved || 0} / ${numPuzzles}`;
+                document.getElementById("solved-puzzles").innerText = `Solved Puzzles: ${accountData.data().puzzlesSolved || 0} / ${numPuzzles} (${((accountData.data().puzzlesSolved || 0) / numPuzzles * 100).toFixed(2)}%)`;
             }
             else {
                 document.getElementById("username").innerText = "User not found";
@@ -63,6 +67,15 @@ onAuthStateChanged(auth, async (user) => {
                 window.location.href = "../index.html";
             });
 
+            let puzzleList = await getDocs(puzzleCollection);
+            let arrayPuzzleList = Array.from(puzzleList.docs);
+
+            arrayPuzzleList.sort((a, b) => {
+                let dataa = a.data();
+                let datab = b.data();
+                return dataa.id < datab.id ? 1 : dataa.id > datab.id ? -1 : 0;
+            });
+
             const solvedGrid = document.getElementById("solved-grid");
             for (let i=0; i<numPuzzles; i++) {
                 let newDiv = document.createElement("div");
@@ -70,14 +83,26 @@ onAuthStateChanged(auth, async (user) => {
                 newDiv.id = `grid-puzzle-${i+1}`;
                 newDiv.style.width = `${screen.width/12}px`;
                 newDiv.style.height = `${screen.width/12}px`;
-                newDiv.innerHTML = `<p class="no-margin">${i+1}</p>`;
+                newDiv.innerHTML = `<p class="no-margin grid-text">${i+1}</p>`;
+
+                newDiv.addEventListener("click", () => {
+                    window.location.href = `../index.html?id=${arrayPuzzleList[numPuzzles-i-1].id}`;
+                });
+
+                let tooltipText = document.createElement("p");
+                tooltipText.className = "tooltip-text";
+                tooltipText.id = `tooltip-text-${i+1}`;
+                tooltipText.innerText = `${arrayPuzzleList[numPuzzles-i-1].data().name}`;
+
+                newDiv.appendChild(tooltipText);
                 solvedGrid.appendChild(newDiv);
             }
 
             const solvedPuzzlesArray = accountData.data().puzzlesSolvedArray || [];
-            console.log(solvedPuzzlesArray);
+            // console.log(solvedPuzzlesArray);
             for (let i=0; i<solvedPuzzlesArray.length; i++) {
                 let puzzleIndex = solvedPuzzlesArray[i];
+                document.getElementById(`tooltip-text-${puzzleIndex}`).classList.add("solved");
                 document.getElementById(`grid-puzzle-${puzzleIndex}`).classList.add("solved");
             }
         }
@@ -85,6 +110,7 @@ onAuthStateChanged(auth, async (user) => {
             alert("Please verify your email address to view users.");
             window.location.href = "../index.html";
         }
+        document.getElementById("sign-out-link").addEventListener("click", userSignOut);
     }
     else {
         uid = null;
