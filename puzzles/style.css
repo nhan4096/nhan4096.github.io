@@ -260,7 +260,7 @@ img {
     margin-top: 10px;
 }
 
-#settings-icon {
+#settings-icon, #leaderboard-icon {
     color: #e8ebef;
     cursor: pointer;
 }
