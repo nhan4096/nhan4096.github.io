@@ -108,3 +108,21 @@ html, body {
     align-items: center;
     flex-direction: column;
 }
+
+.solved-grid {
+    display: grid;
+    grid-template-columns: repeat(12, auto);
+}
+
+.grid-item {
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.solved {
+    background-color: #4acf50;
+}

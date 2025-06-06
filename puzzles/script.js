@@ -91,6 +91,23 @@ async function getPuzzleObject() {
     }
 }
 
+async function getPuzzleArray() {
+    try {
+        let arr = [];
+        const userDoc = await getDoc(doc(db, "userlist", uid));
+        puzzleList.forEach(e => {
+            if (Object.values(userDoc.data().puzzlesSolved).some(obj => obj.id === e.id)) {
+                arr.push(e.data().id);
+            }
+        });
+        return arr;
+    }
+    catch (error) {
+        //console.log("Error getting puzzle array:", error);
+        return [];
+    }
+}
+
 async function SHA256(message) {
     const msgUint8 = new TextEncoder().encode(message);
     const hashBuffer = await window.crypto.subtle.digest("SHA-256", msgUint8);
@@ -140,7 +157,7 @@ async function checkAnswer() {
                         'puzzlesSolved': newPuzzleObject,
                     });
 
-                    await updateDoc(doc(usernamelistCollection, user.uid), { puzzlesSolved: solvedPuzzles });
+                    await updateDoc(doc(usernamelistCollection, user.uid), { puzzlesSolved: solvedPuzzles, puzzlesSolvedArray: await getPuzzleArray() });
 
                     new Audio("correct.mp3").play();
                 }
@@ -461,7 +478,7 @@ onAuthStateChanged(auth, async (user) => {
                 'puzzlesSolved': await getPuzzleObject(),
                 'numPuzzlesSolved': solvedPuzzles,
             });
-            await updateDoc(doc(usernamelistCollection, user.uid), { puzzlesSolved: solvedPuzzles });
+            await updateDoc(doc(usernamelistCollection, user.uid), { puzzlesSolved: solvedPuzzles, createDate: user.metadata.creationTime, puzzlesSolvedArray: await getPuzzleArray() });
             document.getElementById("settings-icon").addEventListener("click", () => {
                 window.location.href = "settings/index.html";
             });
