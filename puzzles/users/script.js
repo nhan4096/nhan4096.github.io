@@ -45,8 +45,7 @@ function escapeHTML(str) {
 }
 
 var puzzleList = await getDocs(puzzleCollection);
-puzzleList = puzzleList.docs.filter(doc => doc.data().date.toDate() <= new Date());
-const numPuzzles = puzzleList.length;
+const numPuzzles = puzzleList.docs.filter(doc => doc.data().date.toDate() <= new Date()).length;
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         if (user.emailVerified) {
@@ -69,7 +68,8 @@ onAuthStateChanged(auth, async (user) => {
             });
 
             let puzzleList = await getDocs(puzzleCollection);
-            let arrayPuzzleList = Array.from(puzzleList.docs);
+            puzzleList = puzzleList.docs.filter(doc => doc.data().date.toDate() <= new Date());
+            let arrayPuzzleList = puzzleList;
 
             arrayPuzzleList.sort((a, b) => {
                 let dataa = a.data();
