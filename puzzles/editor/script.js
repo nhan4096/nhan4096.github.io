@@ -92,6 +92,9 @@ onAuthStateChanged(auth, async (user) => {
             
             puzzleForm.elements["date"].value = tmr;
 
+            const randomID = generateID();
+            document.getElementById("puzzle-id").innerText = `${randomID}`;
+
             puzzleForm.addEventListener("submit", async (e) => {
                 e.preventDefault();
                 if (puzzleForm.checkValidity()) {
@@ -110,9 +113,7 @@ onAuthStateChanged(auth, async (user) => {
                         img: imageUrl,
                         answer_hashed: await SHA256(answer),
                     }
-                    
-                    const randomID = generateID();
-                    
+                                        
                     await setDoc(doc(puzzleCollection, randomID), newPuzzleData);
                     alert(`Puzzle created successfully with ID ${randomID}!`);
                     puzzleForm.reset();

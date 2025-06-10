@@ -526,7 +526,7 @@ onAuthStateChanged(auth, async (user) => {
             let userDoc = await getDoc(doc(db, "userlist", uid));
             solvedPuzzles = userDoc.data().numPuzzlesSolved || 0;
             document.getElementById("solved-count").innerHTML = `Solved: ${solvedPuzzles} / ${puzzleList.length} (${(solvedPuzzles / puzzleList.length * 100).toFixed(2)}%)`;
-            document.getElementById("signed-in-line").innerHTML = `<i class="fa-solid fa-ranking-star" id="leaderboard-icon"></i> <i class="fa-solid fa-gear" id="settings-icon"></i> Welcome, <a href="users/index.html?user=${user.uid}">${escapeHTML(user.displayName)}</a>. <a href="#" id="sign-out-link">Sign out</a>`;
+            document.getElementById("signed-in-line").innerHTML = `<i class="fas fa-edit edit-btn" id="editor-icon"></i> <i class="fa-solid fa-ranking-star" id="leaderboard-icon"></i> <i class="fa-solid fa-gear" id="settings-icon"></i> Welcome, <a href="users/index.html?user=${user.uid}">${escapeHTML(user.displayName)}</a>. <a href="#" id="sign-out-link">Sign out</a>`;
             const userRef = doc(db, "userlist", user.uid);
             await updateDoc(userRef, {
                 'puzzlesSolved': await getPuzzleObject(),
@@ -538,6 +538,9 @@ onAuthStateChanged(auth, async (user) => {
             });
             document.getElementById("leaderboard-icon").addEventListener("click", () => {
                 window.location.href = "leaderboard/index.html";
+            });
+            document.getElementById("editor-icon").addEventListener("click", () => {
+                window.location.href = "editor/index.html";
             });
 
             const params = new URLSearchParams(window.location.search);
