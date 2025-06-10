@@ -45,7 +45,8 @@ function escapeHTML(str) {
 }
 
 var puzzleList = await getDocs(puzzleCollection);
-const numPuzzles = puzzleList.size;
+puzzleList = puzzleList.docs.filter(doc => doc.data().date.toDate() <= new Date());
+const numPuzzles = puzzleList.length;
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         if (user.emailVerified) {

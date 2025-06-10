@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lekton:ital,wght@0,400;0,700;1,400&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <link rel="icon" href="favicon.ico" type="image/x-icon"> 
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="module">
+        
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyBRjSYN7VcAnYFXbLZEvtIfWGRaHY7R3ZI",
+            authDomain: "puzzles-nhan4096.firebaseapp.com",
+            projectId: "puzzles-nhan4096",
+            storageBucket: "puzzles-nhan4096.firebasestorage.app",
+            messagingSenderId: "872131400607",
+            appId: "1:872131400607:web:57067afa49ba1d50cd23aa"
+        };
+    
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        </script>
+        <title>Editor</title>
+    </head>
+    <body>
+        <div class="account-line no-margin">
+            <p class="no-margin" id="signed-in-line">
+                <a href="#" id="sign-up-link">Sign up</a> / <a href="#" id="log-in-link">Log in</a>
+            </p>
+        </div>
+        <h1 class="big-text no-margin center bold">Puzzle Editor</h1>
+        <div class="editor-container">
+            <div class="editor-left">
+                <div class="editor-left-bottom">
+                    <form id="puzzle-form">
+                        <table>
+                            <tr>
+                                <td><label for="name" class="dark-label">Puzzle Name:</label></td>
+                                <td><input name="name" type="text" class="dark-input" id="puzzle-name-input" placeholder="Puzzle Name" required></td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><label for="date">Date Released:</label></td>
+                                <td><input name="date" type="date" class="dark-input" id="puzzle-date-input" required></td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><label for="puzzle-id">Puzzle #:</label></td>
+                                <td><input name="puzzle-id" type="number" class="dark-input" id="puzzle-id-input" placeholder="(Auto-generated) Puzzle #" required disabled></td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><label for="img">Image Link:</label></td>
+                                <td><input name="img" type="text" class="dark-input" id="puzzle-img-input" placeholder="Image Link" required></td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><label for="puzzle-desc" class="dark-label">Puzzle Description:</label></td>
+                                <td><textarea name="puzzle-desc" class="dark-input" id="puzzle-textarea" placeholder="Puzzle Description" required></textarea></td>
+                            </tr>
+                            <br>
+                            <tr>
+                                <td><label for="answer">Puzzle Answer:</label></td>
+                                <td><input name="answer" type="text" class="dark-input" id="puzzle-answer-input" placeholder="Puzzle Answer" required></td>
+                            </tr>
+                            <br>
+                        </table>
+                        <input type="submit" class="dark-button" id="save-puzzle-button" value="Create">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script src="script.js" type="module"></script>
+    </body>
+</html>
