@@ -1,0 +1,95 @@
+.center {
+    text-align: center;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.small-text {
+    font-size: small;
+}
+
+.smaller-text {
+    font-size: smaller;
+}
+
+.large-text {
+    font-size: large;
+}
+
+.larger-text {
+    font-size: larger;
+}
+
+.font-roman {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.font-segoe {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.underline {
+    text-decoration-line: underline;
+}
+
+.overline {
+    text-decoration-line: overline;
+}
+
+.line-through {
+    text-decoration-line:line-through;
+}
+
+body {
+    background-color: #070707;
+}
+
+p, h1, h2, h3, h4, h5, h6, button, input, textarea, td, th, label {
+    color: #e8ebef;
+    font-family: "Lekton", monospace;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.italics {
+    font-style: italic;
+}
+
+.big-text {
+    font-size: 3em;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+#back-arrow {
+    color: #e8ebef;
+    cursor: pointer;
+}
+
+.dark-input {
+    background-color: #1a1a1a;
+    color: #e8ebef;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.dark-button {
+    background-color: #1a1a1a;
+    color: #e8ebef;
+    border: 1px solid #ccc;
+    height: auto;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+label {
+    font-weight: bold;
+}
