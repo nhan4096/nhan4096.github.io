@@ -185,7 +185,7 @@ async function correct(answer, doc) {
 async function checkAnswer() {
     if (currPuzzle) {
         let answer = document.getElementById("puzzle-answer").value.trim();
-        for (const docu of puzzleList.docs) {
+        for (const docu of puzzleList) {
             if (docu.id == currPuzzle) {
                 const isCorrect = await correct(answer, docu);
                 if (isCorrect) {
