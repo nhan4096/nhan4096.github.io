@@ -195,7 +195,7 @@ async function checkAnswer() {
                     document.getElementById(puzzleId).classList.add("solved");
                     document.getElementById("submit-answer").disabled = true;
                     solvedPuzzles++;
-                    document.getElementById("solved-count").innerHTML = `Solved: ${solvedPuzzles} / ${puzzleList.length}`;
+                    document.getElementById("solved-count").innerHTML = `Solved: ${solvedPuzzles} / ${puzzleList.length} (${solvedPuzzles/puzzleList.length}, ${scheduledCount} puzzles)`;
 
                     const userRef = doc(db, "userlist", uid);
 
@@ -269,7 +269,9 @@ const auth = getAuth(app);
 var solvedPuzzles = 0;
 
 var puzzleList = await getDocs(puzzleCollection);
+let scheduledCount = puzzleList.size;
 puzzleList = puzzleList.docs.filter(doc => doc.data().date.toDate() <= new Date());
+scheduledCount -= puzzleList.length;
 var arrayPuzzleList = Array.from(puzzleList);
 var tabCount = Math.ceil(arrayPuzzleList.length/4);
 var tabs = [];
@@ -535,7 +537,7 @@ async function userSignOut() {
 
 var uid = null;
 
-document.getElementById("solved-count").innerHTML = `Solved: ${solvedPuzzles} / ${puzzleList.length}`;
+document.getElementById("solved-count").innerHTML = `Solved: ${solvedPuzzles} / ${puzzleList.length} (${scheduledCount} scheduled)`;
 document.getElementById("close-popup").addEventListener("click", closePopup);
 document.getElementById("submit-answer").addEventListener("click", checkAnswer);
 
@@ -546,7 +548,7 @@ onAuthStateChanged(auth, async (user) => {
         if (user.emailVerified) {
             let userDoc = await getDoc(doc(db, "userlist", uid));
             solvedPuzzles = userDoc.data().numPuzzlesSolved || 0;
-            document.getElementById("solved-count").innerHTML = `Solved: ${solvedPuzzles} / ${puzzleList.length} (${(solvedPuzzles / puzzleList.length * 100).toFixed(2)}%)`;
+            document.getElementById("solved-count").innerHTML = `Solved: ${solvedPuzzles} / ${puzzleList.length} (${(solvedPuzzles / puzzleList.length * 100).toFixed(2)}%, ${scheduledCount} scheduled)`;
             document.getElementById("signed-in-line").innerHTML = `<i class="fas fa-edit edit-btn" id="editor-icon"></i> <i class="fa-solid fa-ranking-star" id="leaderboard-icon"></i> <i class="fa-solid fa-gear" id="settings-icon"></i> Welcome, <a href="users/index.html?user=${user.uid}">${escapeHTML(user.displayName)}</a>. <a href="#" id="sign-out-link">Sign out</a>`;
             const userRef = doc(db, "userlist", user.uid);
             await updateDoc(userRef, {
