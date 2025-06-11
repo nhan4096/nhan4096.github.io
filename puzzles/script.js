@@ -217,6 +217,27 @@ async function checkAnswer() {
                 else {
                     new Audio("wrong.mp3").play();
                 }
+                const submitBtn = document.getElementById("submit-answer");
+
+                if (!submitBtn.disabled) {
+                    submitBtn.disabled = true;
+
+                    let countdown = 5;
+                    const originalText = submitBtn.innerText;
+                    submitBtn.innerText = `Check (${countdown})`;
+
+                    const interval = setInterval(() => {
+                        countdown--;
+                        if (countdown > 0) {
+                            submitBtn.innerText = `Check (${countdown})`;
+                        }
+                        else {
+                            clearInterval(interval);
+                            submitBtn.disabled = false;
+                            submitBtn.innerText = originalText;
+                        }
+                    }, 1000);
+                }
             };
         };
     };
