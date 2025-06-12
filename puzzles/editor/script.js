@@ -35,17 +35,6 @@ async function SHA256(message) {
     return hashHex;
 }
 
-function ordinal(i) {
-    if (i == 1) { return "1st" }
-    else if (i == 2) { return "2nd" }
-    else if (i == 3) { return "3rd" }
-    else if (i < 20) { return i + "th"}
-    else if (i % 10 == 1) { return i + "st" }
-    else if (i % 10 == 2) { return i + "nd" }
-    else if (i % 10 == 3) { return i + "rd" }
-    else { return i + "th" }
-}
-
 function escapeHTML(str) {
     return str.replace(/[&<>"'/]/g, function (match) {
         return {
