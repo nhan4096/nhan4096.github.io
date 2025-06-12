@@ -59,11 +59,11 @@
 }
 
 body {
-    background-color: #ffffff;
+    background-color: #0F0F0F;
 }
 
 p, h1, h2, h3, h4, h5, h6 {
-    color: #000104;
+    color: #ffffff;
     font-family: monospace;
 }
 
