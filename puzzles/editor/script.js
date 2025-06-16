@@ -72,12 +72,15 @@ onAuthStateChanged(auth, async (user) => {
             const puzzleForm = document.getElementById("puzzle-form");
             puzzleForm.elements["puzzle-id"].value = numPuzzle + 1;
 
-            var tommorow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+            let puzzleDocsArray = Array.from(puzzleDocs.docs);
+            puzzleDocsArray.sort((a, b) => b.data().id - a.data().id);
 
-            var day = ("0" + tommorow.getDate()).slice(-2);
-            var month = ("0" + (tommorow.getMonth() + 1)).slice(-2);
+            var latest = new Date(puzzleDocsArray[0].data().date.seconds*1000 + puzzleDocsArray[0].data().date.nanoseconds/1000000 + 86400000); // add one day to the latest date
 
-            var tmr = tommorow.getFullYear()+"-"+(month)+"-"+(day);
+            var day = ("0" + latest.getDate()).slice(-2);
+            var month = ("0" + (latest.getMonth() + 1)).slice(-2);
+
+            var tmr = latest.getFullYear()+"-"+(month)+"-"+(day);
             
             puzzleForm.elements["date"].value = tmr;
 
