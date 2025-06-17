@@ -200,7 +200,7 @@ async function checkAnswer() {
                     document.getElementById(puzzleId).classList.add("solved");
                     document.getElementById("submit-answer").disabled = true;
                     solvedPuzzles++;
-                    document.getElementById("solved-count").innerHTML = `Solved: ${solvedPuzzles} / ${puzzleList.length} (${(solvedPuzzles / puzzleList.length * 100).toFixed(2)}%, ${scheduledCount} puzzles)`;
+                    document.getElementById("solved-count").innerHTML = `Solved: ${solvedPuzzles} / ${puzzleList.length} (${(solvedPuzzles / puzzleList.length * 100).toFixed(2)}%, ${scheduledCount} scheduled)`;
 
                     const userRef = doc(db, "userlist", uid);
 
