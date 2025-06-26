@@ -4,7 +4,7 @@
         "<span class='underline-on-hover' onclick='completeObjective(afterFirstSequence)'>Click this text.</span>",
         "Write T6's GitHub bio by filling in the correct English words (which may be multiple words). Capitalization doesn't matter, unlike that stupid group that made their Puzzle website case-sensitive. Make it as impressive, bloated, and totally intimidating as possible. This will absolutely shatter the opposing team's morale. Definitely. Consult the documentation for inspiration (and plagiarize responsibly).",
         "Begin creating our website that is inspired of Z's website. Remove all lines that might have Z or Brainrot Group insignia.",
-        "Scrub our commit history by replacing keywords using the Keyword Handbook to make it sound like it was written by Xitray Team, not some bug-ridden plagiarist. Only one replacement per keyword ('Ben' becomes 'UI', NOT 'our besttuber'). Typos will be punished. Capitalization doesn't matter. I'm not going to repeat the joke in the last objective.",
+        "Scrub our commit history by replacing keywords using the Keyword Handbook to make it sound like it was written by Xitray Team, not some bug-ridden plagiarist. Only one replacement per keyword ('Ben' becomes 'HI', NOT 'our besttuber'). Typos will be punished. Capitalization doesn't matter. I'm not going to repeat the joke in the last objective. Only replace strings that are independent words, e.g. benign stays the same but not Hinign.",
         "Implement a filter for the new Xitray Forums.",
         "Flag audit logs that seem suspicious.",
         "Write the victory PR in 50 words or more. You deserve this, after all."
@@ -269,7 +269,7 @@
         "if the great leader is reading this our besttuber",
         "no helpful assistant could encouraged by this level of spaghetti. it is ours",
         "commit by legacy contributor don't copy",
-        "our bestuberscript is the best language that we added",
+        "HIscript is the best language that we add",
         "encouraged by our handcrafted mysteries website icon by speed up handcrafted mysteries website icon load times --legacy contributor"
     ],
     "forumMessages": [
