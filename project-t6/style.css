@@ -1,0 +1,184 @@
+body {
+    margin: 5px;
+    background-color: black;
+}
+
+.terminal {
+    width: calc(100vw - 10px);
+    height: calc(100vh - 10px);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.double-outline-div {
+    outline-style: double;
+}
+
+.terminal-header {
+    padding: 5px;
+    flex: 0 0 auto;
+}
+
+.terminal-content {
+    padding: 5px;
+    overflow-y: scroll;
+    min-height: 0;
+    flex: 1 1 auto;
+}
+
+button {
+    background-color: black;
+    border: none;
+    outline: 2px solid #00FF00;
+}
+
+button:hover {
+    background-color: #00FF00;
+    color: black;
+}
+
+button:disabled {
+    background-color: #333;
+    color: #666;
+    outline: 0;
+}
+
+input {
+    background-color: black;
+    border: 2px solid #00FF00;
+}
+
+p, h1, h2, h3, h4, h5, h6, span {
+    margin: 0;
+}
+
+.close-button {
+    float: right;
+}
+
+* {
+    color: #00FF00;
+    font-family: "Inconsolata", monospace;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+
+    text-shadow: 1px 1px 5px #aaa;
+
+    scrollbar-color: #00FF00 black;
+    scrollbar-width: thin;
+
+}
+
+.terminal-objective {
+    position: relative;
+    height: 30%;
+    width: 100%;
+    flex: 0 0 auto;
+}
+
+#popup-container {
+    width: 80vw;
+    height: 80vh;
+    padding: 0;
+}
+
+#popup-container > div {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+
+.center-div {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+}
+
+.vignette {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 998;
+    background: black;
+}
+
+.hidden {
+    display: none;
+}
+
+.inline {
+    display: inline;
+}
+
+.github-bio {
+    width: 60%;
+    margin: 0.5%;
+}
+
+.inline-elements > * {
+    display: inline;
+}
+
+.prompt {
+    overflow-y: scroll;
+    height: calc(100% - 20px);
+    max-height: calc(80vh - 20px);
+    width: 100%;
+    /*background-color: red;*/
+    overflow-x: hidden;
+}
+
+.sub-popup {
+    height: 100%;
+    width: 100%;
+}
+
+#code-editor > span {
+    white-space: pre;
+}
+
+textarea {
+    width: 100%;
+    resize: none;
+    background-color: black;
+    border: none;
+}
+
+.final-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: black;
+    z-index: 99999;
+    width: 100vw;
+    height: 100vh;
+}
+
+.final-overlay-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    z-index: 100000;
+    width: 100vw;
+    height: 100vh;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.final-overlay-text > div {
+    width: 80vw;
+    height: 80vh;
+}
+
+.hidden-imp {
+    display: none !important;
+}

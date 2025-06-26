@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Project T6</title>
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Lekton:ital,wght@0,400;0,700;1,400&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="text-styles.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="terminal double-outline-div" id="terminal">
+            <div class="terminal-header double-outline-div">
+                <span class="terminal-title">Project T6</span>
+                <button class="close-button" id="close-button">X</button>
+            </div>
+            <div class="terminal-content" id="terminal-content">
+                
+            </div>
+            <div class="terminal-objective double-outline-div" id="terminal-objective">
+                <p class="highlighted inline">OBJECTIVE: <p class="inline" id="objective"></p></p>
+            </div>
+        </div>
+        <div class="center-div hidden" id="popup-container">
+            <div class="double-outline-div" id="popup-documentation">
+                <div class="double-outline-div">
+                    <p class="inline">Documentation</p>
+                    <button class="close-button" onclick="closePopup()">X</button>
+                </div>
+                <div id="documentation-data" class="sub-popup">
+                    <div class="prompt" id="data-div">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="double-outline-div sub-popup github-bio hidden" id="github-bio">
+                <div class="double-outline-div">
+                    <p class="inline">GitHub Bio Editor</p>
+                    <button class="close-button" onclick="closePopup()">X</button>
+                </div>
+                <form id="github-bio-editor">
+                    <div class="inline-elements prompt">
+                        <p>He</p><input name="input-1"><p>o!</p>
+                        <br>
+                        <p>I Am </p><input name="input-2"><p>. I am a <input name="input-3"> and <input name="input-4">.</p>
+                        <br>
+                        <p>- im working on my own website (totally not copied from somewhere else) and some games on </p><input name="input-5">
+                        <br>
+                        <p>- im learning a lot of programming languages without mastering any of them</p>
+                        <br>
+                        <p>- fun fact: i once spent fifteen hours talking to <input name="input-6"> on 'writing css to make a button prettier'. i have not recovered</p>
+                        <br>
+                        <p>- Our Lord and Savior: <input name="input-7"></p>
+                        <br>
+                        <p>Languages:</p>
+                        <br>
+                        <p>- Python</p>
+                        <br>
+                        <p>- HTML5, CSS, JavaScript (totally not <input name="input-8"> from somewhere else)</p>
+                        <br>
+                        <p>- GameMaker Language</p>
+                        <br>
+                        <p>- Lua</p>
+                        <br>
+                        <p>- C and C++</p>
+                        <br>
+                        <p>- CSV</p>
+                        <br>
+                        <p>- HIScript</p>
+                        <br>
+                        <p>There are more that I've managed to print <input name="input-9"> in (this makes me obviously superior to someone else).</p>
+                        <br>
+                        <button type="submit">Submit Bio</button>
+                    </div>
+                </form>
+            </div>
+            <div class="double-outline-div sub-popup hidden">
+                <div class="double-outline-div">
+                    <p class="inline">Code Editor</p>
+                    <button class="close-button" onclick="closePopup()">X</button>
+                </div>
+                <form id="code-editor-form">
+                    <div class="prompt" id="code-editor">
+    
+                    </div>
+                </form>
+            </div>
+            <div class="double-outline-div sub-popup hidden">
+                <div class="double-outline-div">
+                    <p class="inline">Keyword Handbook</p>
+                    <button class="close-button" onclick="closePopup()">X</button>
+                </div>
+                <div class="prompt" id="handbook">
+
+                </div>
+            </div>
+            <div class="double-outline-div sub-popup hidden">
+                <div class="double-outline-div">
+                    <p class="inline">Commit History</p>
+                    <button class="close-button" onclick="closePopup()">X</button>
+                </div>
+                <form id="history-form">
+                    <div class="prompt" id="history">
+                        
+                    </div>
+                </form>
+            </div>
+            <div class="double-outline-div sub-popup hidden">
+                <div class="double-outline-div">
+                    <p class="inline">Xitray Forums</p>
+                    <button class="close-button" onclick="closePopup()">X</button>
+                </div>
+                <form id="forums-form">
+                    <div class="prompt" id="forums">
+                        
+                    </div>
+                </form>
+            </div>
+            <div class="double-outline-div sub-popup hidden">
+                <div class="double-outline-div">
+                    <p class="inline">Audit Logs</p>
+                    <button class="close-button" onclick="closePopup()">X</button>
+                </div>
+                <div class="prompt" id="audit">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="vignette hidden"></div>
+        <div class="final-overlay hidden"></div>
+        <div class="final-overlay-text hidden-imp">
+            <div class="double-outline-div hidden-imp" id="final-overlay-text">
+                
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
