@@ -1,0 +1,96 @@
+body {
+    background-color: #0F0F0F;
+    color: #DDDDDD;
+}
+
+* {
+    font-family: "IBM Plex Mono", monospace;
+}
+
+.center {
+    text-align: center;
+}
+
+.small-margin {
+    margin: 1vh;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #1F1F1F;
+    color: #CCCCCC;
+    text-align: center;
+    padding: 10px 0;
+}
+
+#anagram-container {
+    width: 100%;
+    background-color: #1F1F1F;
+    color: #CCCCCC;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.italics {
+    font-style: italic;
+}
+
+.big-text {
+    font-size: 2em;
+}
+
+.small-text {
+    font-size: 0.5em;
+}
+
+.hidden {
+    display: none;
+}
+
+input {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    background-color: #1F1F1F;
+    color: #DDDDDD;
+    font-size: 1.2em;
+}
+
+.correct {
+    color: #00FF00;
+}
+
+.incorrect {
+    color: #FF0000;
+}
+
+.missed {
+    color: #FFFF00;
+}
+
+.correct, .incorrect, .missed {
+    margin: 5px;
+}
+
+#warning {
+    color: #ff8400;
+    font-weight: bold;
+}
+
+#guesses-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#guesses {
+    width: 100%;
+}
