@@ -170,9 +170,7 @@ function createDocumentationData() {
     });
 }
 
-let firstTimeRunningInterface = true;
 function createCodeInterface() {
-    if (!firstTimeRunningInterface) { return; }
     $('#code-editor').html('');
     const newSpan = document.createElement('span');
     newSpan.innerHTML = 'Flag lines that contain Z or Brainrot Group insignia by clicking on the checkbox next to the line. <br>';
@@ -196,8 +194,6 @@ function createCodeInterface() {
         submitButton.innerHTML = 'Check flagged lines';
         $('#code-editor').append(submitButton);
     });
-
-    firstTimeRunningInterface = false;
 }
 
 function sortObject(o) {
@@ -234,16 +230,14 @@ function createHandbook() {
     });
 }
 
-let firstTimeRunningCommitHistory = true;
 function createCommitHistory() {
-    if (!firstTimeRunningCommitHistory) { return; }
     $('#history').html('');
     const spanTitle = document.createElement('span');
     spanTitle.innerHTML = 'Click on a commit name to edit it.';
     spanTitle.classList.add('bold');
     const resetButton = document.createElement('button');
     resetButton.innerHTML = 'Reset commit changes.'
-    resetButton.onclick = () => {firstTimeRunningCommitHistory = true; createCommitHistory()};
+    resetButton.onclick = () => {createCommitHistory()};
     $('#history').append(spanTitle);
     $('#history').append(resetButton);
     $('#history').append(document.createElement('br'));
@@ -256,17 +250,13 @@ function createCommitHistory() {
             $('#history').append(textarea);
         }
     });
-    firstTimeRunningCommitHistory = false;
-
     const submitButton = document.createElement('button');
     submitButton.innerHTML = 'Check answers';
     submitButton.type = 'submit';
     $('#history').append(submitButton);
 }
 
-let firstTimeRunningForum = true;
 function createForumInterface() {
-    if (!firstTimeRunningForum) { return; }
     $('#forums').html('');
     const spanTitle = document.createElement('span');
     spanTitle.innerHTML = 'Input keywords seperated by commas into both fields. Messages that are both flagged as Brainrot-leaning and Xitray-leaning are assumed to be Xitray-leaning. Messages that aren\'t flagged by any filter is assumed to be Xitray-leaning. Filters are not case-sensitive. Below are a list of sample messages with their authors and their alignment to Brainrot, Xitray or Neutral. Block Brainrot-leaning messages and keep Xitray and Neutral-leaning messages.';
@@ -327,12 +317,9 @@ function createForumInterface() {
         $('#forums').append(submitButton);
     });
 
-    firstTimeRunningForum = false;
 }
 
-let firstTimeRunningAudit = true;
 function createAuditLog() {
-    if (!firstTimeRunningAudit) { return; }
     $('#audit').html('');
 
     const spanTitle = document.createElement('span');
@@ -380,8 +367,6 @@ function createAuditLog() {
             })
         })
     })
-
-    firstTimeRunningAudit = false;
 }
 
 function submitPR() {
