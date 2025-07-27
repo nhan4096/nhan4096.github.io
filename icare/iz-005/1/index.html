@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Inconsolata:wght@200..900&family=Lekton:ital,wght@0,400;0,700;1,400&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1 class="center monospace glow" id="title"></h1>
+        <div class="center-flex">
+            <div class="main-content hidden" id="content">
+                <p>Security Level: <span id="security-level" class="bold"></span></p>
+                <br>
+                <p><span class="bold">SUMMARY</span>: This document attempts to analyse NTARG's Credits page. The page is located at ████████.github.io/html/credits.</p>
+                <br>
+                <p><span class="bold">SOURCE CODE</span>:</p>
+                <div>
+                    <table id="code">
+                        
+                    </table>
+                </div>
+                <br>
+                <p><span class="bold">COMMENTS</span>:</p>
+                <ul>
+                    <li>[1 &mdash; 48] NT uses non-conventional two-spaced tabs, likely in an attempt to stand out, aligning with FCE Stage 5 symptoms.</li>
+                    <li>[5] styles.css sheet consists of trivial design choices, notably using the font Arial.</li>
+                    <li>[6] mobile.js script checks whether the user is on a mobile device and warns beforehand that the website is intended for larger screens. Despite this, the LFU of NTARG remains unchanged regardless of the device used.</li>
+                    <li>[9, 11, 13] Margin settings for each item, showing inconsistent numbers.</li>
+                    <li>[26] NT's online persona's name, redacted.</li>
+                    <li>[27] Presumably a crucial part to NTARG, however details are too scarce for proper explanation. Increases CDS.</li>
+                    <li>[28] Increases CDS, due to having unserious naming.</li>
+                    <li>[33] Most clear sign of FCE, as UI used to produce content relating to Neal.fun.</li>
+                    <li>[34] Completely redacted due to risk of FCE propagation.</li>
+                    <li>[35] Also mostly redacted, due to risk of FCE propagation.</li>
+                    <li>[41] Classmate of NT, whose connection to NT has been forcebly terminated due to risk of FCE propagation.</li>
+                    <li>[46] Implies parasocial relationship, possible side effect of FCE.</li>
+                </ul>
+            </div>
+        </div>
+        <script src="/icare/shared.js"></script>
+        <script src="script.js"></script>
+    </body>
+</html>
