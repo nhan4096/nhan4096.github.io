@@ -45,3 +45,19 @@ a:hover {
 .bold {
     font-weight: 1000;
 }
+
+.warning {
+    animation: warning 1.25s infinite alternate;
+    font-weight: bold;
+}
+
+@keyframes warning {
+    0% { color: #f00; }
+    100% { color: #ff0; }
+}
+
+footer {
+    position: fixed;
+    font-size: 0.8em;
+    bottom: 0px;
+}

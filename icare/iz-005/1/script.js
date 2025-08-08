@@ -1,7 +1,14 @@
-let documentSettings = {
-    title: "IZ-005.1: NTARG Credits Analysis",
-    securityLevel: 2
-}
+var documentSettings = {}
+
+fetch("/icare/data.json").then((res) => res.json()).then((data) => {
+    let documentPath = new URL(document.URL).pathname.replace('/icare/', '').replace('/index.html', '');
+    if (documentPath[documentPath.length - 1] == '/') {
+        documentPath = documentPath.substring(0, documentPath.length - 1);
+    }
+    documentSettings = data[documentPath];
+
+    setInterval(tick, 200);
+});
 
 const creditsCode = `<!DOCTYPE html>
 <html>
@@ -96,5 +103,3 @@ window.onload = () => {
         document.getElementById("code").appendChild(newTR);
     }
 }
-
-setInterval(tick, 200);

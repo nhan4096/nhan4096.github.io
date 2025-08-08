@@ -1,7 +1,14 @@
-let documentSettings = {
-    title: "IZ-001: Introduction",
-    securityLevel: 0
-}
+var documentSettings = {}
+
+fetch("/icare/data.json").then((res) => res.json()).then((data) => {
+    let documentPath = new URL(document.URL).pathname.replace('/icare/', '').replace('/index.html', '');
+    if (documentPath[documentPath.length - 1] == '/') {
+        documentPath = documentPath.substring(0, documentPath.length - 1);
+    }
+    documentSettings = data[documentPath];
+
+    setInterval(tick, 200);
+});
 
 async function SHA256(message) {
     const msgUint8 = new TextEncoder().encode(message);
@@ -38,8 +45,6 @@ function commonDocumentBehavior() {
 function tick() {
     commonDocumentBehavior();
 }
-
-setInterval(tick, 200);
 
 document.getElementById("passcode-form").addEventListener("submit", async function (e) {
     e.preventDefault();

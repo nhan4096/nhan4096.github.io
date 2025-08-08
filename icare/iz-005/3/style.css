@@ -2,7 +2,7 @@ body {
     background-color: #111;
 }
 
-h1, h2, h3, h4, h5, h6, p, span, a, button, li, td, th {
+h1, h2, h3, h4, h5, h6, p, span, a, button {
     color: #ddd;
     font-family: "Roboto Mono", monospace;
     margin: 0;
@@ -59,20 +59,62 @@ a:hover {
     padding: 3%;
 }
 
+.transcript {
+    padding-left: 5%;
+}
+
+.transcript > * {
+    font-size: 1.2em;
+}
+
+.red, .convo-j {
+    color: red;
+}
+
+.redacted {
+    opacity: 0;
+}
+
+.convo-m {
+    color: blue;
+}
+
+.convo-t {
+    color: white;
+}
+
+.convo-u {
+    color: gray;
+}
+
+.font-large {
+    font-size: 2.5em;
+}
+
+.cyan {
+    color: #00ffff;
+}
+
+.green {
+    color: #00ff00;
+}
+
+.magenta {
+    color: #ff00ff;
+}
+
+.blue {
+    color: #0000ff;
+}
+
+.yellow {
+    color: #ffff00;
+}
+
+progress {
+    margin: 10px 0;
+}
+
 .italics {
     font-style: italic;
-}
-
-.directory-table {
-    width: 100%;
-}
-
-td, th {
-    outline-style: solid;
-    outline-color: white;
-    padding: 1%;
-}
-
-.dir {
-    width: 20%;
 }

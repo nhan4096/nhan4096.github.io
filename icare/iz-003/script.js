@@ -1,7 +1,14 @@
-let documentSettings = {
-    title: "IZ-003: The Feedback Contagion Effect",
-    securityLevel: 1
-}
+var documentSettings = {}
+
+fetch("/icare/data.json").then((res) => res.json()).then((data) => {
+    let documentPath = new URL(document.URL).pathname.replace('/icare/', '').replace('/index.html', '');
+    if (documentPath[documentPath.length - 1] == '/') {
+        documentPath = documentPath.substring(0, documentPath.length - 1);
+    }
+    documentSettings = data[documentPath];
+
+    setInterval(tick, 200);
+});
 
 function commonDocumentBehavior() {
     for (key in gameSave) {
@@ -33,5 +40,3 @@ function commonDocumentBehavior() {
 function tick() {
     commonDocumentBehavior();
 }
-
-setInterval(tick, 200);

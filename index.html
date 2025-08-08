@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Inconsolata:wght@200..900&family=Lekton:ital,wght@0,400;0,700;1,400&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="style.css">
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,28 +11,38 @@
         <title>nhan4096.github.io's Homepage</title>
     </head>
     <body>
-    <h1>Welcome to nhan4096.github.io!</h1>
-    <h2>Projects: </h2>
-        <div class="flex">
-            <div class="btn" onclick="gotoPage('/ben-clicker/index.html')">
-	            <a href="/ben-clicker/index.html">UI Clicker</a>
+        <h1>Welcome to nhan4096.github.io!</h1>
+        <p>This is my personal website, where I host my projects.</p>
+        <p>Most of these projects are personal inside jokes, however I have attempted to make them as outsider-friendly as possible.</p>
+        <p>Feel free to check out the projects below.</p>
+        <div class="project-list">
+            <div class="buttons" id="buttons">
+                <button class="sub-button">UI Clicker</button><button class="sub-button">Trò Chơi Rơi Lạ</button><button class="sub-button">Puzzles</button><button class="sub-button">Project T6</button><button class="sub-button">Anagrammer Game</button><button class="sub-button">ICaRE</button>
             </div>
-            <div class="btn" onclick="gotoPage('/tro-choi-roi-la/index.html')">
-	            <a href="/tro-choi-roi-la/index.html">Trò Chơi Rơi Lạ</a>
-            </div>
-            <div class="btn" onclick="gotoPage('/puzzles/index.html')">
-	            <a href="/puzzles/index.html">Puzzles</a>
-            </div>
-            <div class="btn" onclick="gotoPage('/project-t6/index.html')">
-	            <a href="/project-t6/index.html">Project T6</a>
-            </div>
-            <div class="btn" onclick="gotoPage('/anagrammer/index.html')">
-	            <a href="/anagrammer/index.html">Anagrammer Game</a>
-            </div>
-            <div class="btn" onclick="gotoPage('/icare/index.html')">
-	            <a href="/icare/index.html">ICaRE</a>
+            <div class="desc">
+                <p id="text--1">
+                    Each game has its own description and instructions. Click on the buttons above to learn more about each project. Please don't look at the code; I'm not scared about you spoiling yourself, but I am afraid of the code memetically affecting you, similar to that of a kill agent. Also, don't ask about the design choices. The entire website is a dark void (mostly) and in a variety of monospace fonts and I am not sorry.
+                </p>
+                <p id="text-0" hidden>
+                    <a href="ben-clicker/index.html">UI Clicker</a> is a satirical clicker game based on the YouTube channel "Ultra Interface" (who is a classmate of mine). The main currency of the game is shits, which should say enough about the humor of the game. Formerly known as "Ben Clicker", it has been renamed due to multiple protests from the channel owner by continuous bouts of defecation surrounding the perimeter of my home. This project's code is a one-thousand line mess full of ridiculous variable names.
+                </p>
+                <p id="text-1" hidden>
+                    <a href="tro-choi-roi-la/index.html">Trò Chơi Rơi Lạ</a> is an inside joke too complicated to explain. It is heavily math-based (containing the <a href="https://en.wikipedia.org/wiki/Divisor_function">sigma function</a>, even), but somehow still a poop joke.
+                </p>
+                <p id="text-2" hidden>
+                    <a href="puzzles/index.html">Puzzles</a> is a collection of puzzles that I created. It is mostly OSINT-based, similar to that of <a href="https://challenge.bellingcat.com/">Bellingcat's</a>. It also has a login system implemented using Firebase Auth, if you want to give me your data (please do). Recommended for newcomers to the site. The project is not a data collection scheme, I swear.
+                </p>
+                <p id="text-3" hidden>
+                    <a href="project-t6/index.html">Project T6</a> is a satirical (yes, again!) terminal-based game that is a parody of my classmate, known as T6. It is a text-based game that contains a lot of inside jokes. The sequel to this game is ICaRE.
+                </p>
+                <p id="text-4" hidden>
+                    <a href="anagrammer/index.html">Anagrammer Game</a> is a game where you have to guess the anagrams of words, i.e. rearrange the letters of a string to form a word. It is far simpler than other games (in inside joke complexity), so it is recommended for newcomers (but still, please give me your data on the Puzzles login page). It is the calm after and before the storm. Think of it as the buffer zone between Project T6 and ICaRE.
+                </p>
+                <p id="text-5" hidden>
+                    <a href="icare/index.html">ICaRE</a> is a satirical (again...) heavily text-based Alternate Reality Game that is a parody of Ultra Interface and T6 (see Project T6). It is based on SCP-style writing, containing multiple elements of fiction, bureaucracy and a lot of satire. It is also a logical successor to Project T6, however dialed up, wrapped in red tape and worldbuilding. It's a work in progress, so expect more updates. I'd estimate that it has around 3000-ish words in it. The name is a backronym from the phrase "I care", in deliberate opposition to that of dismissive arseholes known as the Xitray Group (containing Ultra Interface and T6, among others) who say "Who cares?".
+                </p>
             </div>
         </div>
-    <script src="script.js"></script>
+        <script src="script.js"></script>
     </body>
 </html>

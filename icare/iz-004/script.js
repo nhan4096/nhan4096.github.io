@@ -1,7 +1,14 @@
-let documentSettings = {
-    title: "IZ-004: The 7 Interface Open Source Investigation",
-    securityLevel: 1
-}
+var documentSettings = {}
+
+fetch("/icare/data.json").then((res) => res.json()).then((data) => {
+    let documentPath = new URL(document.URL).pathname.replace('/icare/', '').replace('/index.html', '');
+    if (documentPath[documentPath.length - 1] == '/') {
+        documentPath = documentPath.substring(0, documentPath.length - 1);
+    }
+    documentSettings = data[documentPath];
+
+    setInterval(tick, 200);
+});
 
 function commonDocumentBehavior() {
     for (key in gameSave) {
@@ -38,8 +45,6 @@ async function SHA256(message) {
       .join("");
     return hashHex;
 }
-
-setInterval(tick, 200);
 
 document.getElementById("answer-form").addEventListener("submit", async function (e) {
     e.preventDefault();

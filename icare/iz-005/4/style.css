@@ -2,7 +2,7 @@ body {
     background-color: #111;
 }
 
-h1, h2, h3, h4, h5, h6, p, span, a, button, li, td, th {
+h1, h2, h3, h4, h5, h6, p, span, a, button {
     color: #ddd;
     font-family: "Roboto Mono", monospace;
     margin: 0;
@@ -59,20 +59,10 @@ a:hover {
     padding: 3%;
 }
 
+.src-text > * {
+    margin: 40px 0;
+}
+
 .italics {
     font-style: italic;
-}
-
-.directory-table {
-    width: 100%;
-}
-
-td, th {
-    outline-style: solid;
-    outline-color: white;
-    padding: 1%;
-}
-
-.dir {
-    width: 20%;
 }

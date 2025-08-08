@@ -1,0 +1,66 @@
+{
+    "sample-doc": {
+        "title": "Title",
+        "securityLevel": 0
+    },
+    "exam": {
+        "title": "Pre-IZ-003 Examination",
+        "securityLevel": 1
+    },
+    "iz-001": {
+        "title": "IZ-001: Introduction",
+        "securityLevel": 0
+    },
+    "iz-002": {
+        "title": "IZ-002: xUI",
+        "securityLevel": 1
+    },
+    "iz-002/1": {
+        "title": "IZ-002.1: AI Construct Hypothesis",
+        "securityLevel": 1
+    },
+    "iz-002/2": {
+        "title": "IZ-002.2: Recursive Identity Hypothesis",
+        "securityLevel": 1
+    },
+    "iz-002/3": {
+        "title": "IZ-002.3: Anti-Personality Hypothesis",
+        "securityLevel": 1
+    },
+    "iz-003": {
+        "title": "IZ-003: The Feedback Contagion Effect",
+        "securityLevel": 1
+    },
+    "iz-003/1": {
+        "title": "IZ-003.1: FCE Stage 5 Case Study",
+        "securityLevel": 1
+    },
+    "iz-004": {
+        "title": "IZ-004: The 7 Interface Open Source Investigation",
+        "securityLevel": 1
+    },
+    "iz-005": {
+        "title": "IZ-005: Alternate Reality Game Analysis",
+        "securityLevel": 2
+    },
+    "iz-005/1": {
+        "title": "IZ-005.1: NTARG Credits Analysis",
+        "securityLevel": 2
+    },
+    "iz-005/2": {
+        "title": "IZ-005.2: Splash Text Analysis",
+        "securityLevel": 2
+    },
+    "iz-005/3": {
+        "title": "IZ-005.3: NTARG Conversation Analysis",
+        "securityLevel": 2
+    },
+    "iz-005/4": {
+        "title": "IZ-005.4: NTARG Static Page Analysis",
+        "securityLevel": 2
+    },
+    "iz-005/5": {
+        "title": "IZ-005.5: NT Interview Log on NTARG",
+        "securityLevel": 2
+    }
+}
