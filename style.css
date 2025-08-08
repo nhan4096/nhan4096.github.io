@@ -1,99 +1,30 @@
-.center {
-    text-align: center;
+* {
+    font-family: "Roboto Mono", monospace;
 }
 
-.align-left {
-    text-align: left;
-}
-
-.align-right {
-    text-align: right;
-}
-
-.small-text {
-    font-size: small;
-}
-
-.smaller-text {
-    font-size: smaller;
-}
-
-.large-text {
-    font-size: large;
-}
-
-.larger-text {
-    font-size: larger;
-}
-
-.font-roman {
-    font-family: 'Times New Roman', Times, serif;
-}
-
-.font-segoe {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.bold {
-    font-style: bold;
-}
-
-.italic {
-    font-style: italic;
-}
-
-.oblique {
-    font-style:oblique;
-}
-
-.underline {
-    text-decoration-line: underline;
-}
-
-.overline {
-    text-decoration-line: overline;
-}
-
-.line-through {
-    text-decoration-line:line-through;
-}
-
-body {
-    background-color: #0F0F0F;
-}
-
-p, h1, h2, h3, h4, h5, h6 {
+p, h1, h2, h3, h4, h5, h6, a {
+    margin: 0;
     color: #ffffff;
-    font-family: monospace;
 }
 
 a {
-    font-family: monospace;
+    text-decoration: underline;
 }
 
-a:link {
-    color: #006aff;
-    font-family: monospace;
+body {
+    background-color: #0f0f0f;
+    overflow: hidden;
 }
 
-a:visited {
-    color: #c300fe;
-    font-family: monospace;
-}
-
-.flex {
-    display: flex;
-    flex-wrap: wrap;
+.project-list {
     width: 100%;
 }
 
-.btn {
-    margin: 10px;
-    border: 2px #02b3ff solid;
-    width: 200px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #cef0ff;
+.buttons > button {
+    margin: 0px;
+    border-radius: 0;
+}
+
+.selected {
+    background-color: #00b3ff;
 }
