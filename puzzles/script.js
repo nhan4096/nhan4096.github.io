@@ -578,7 +578,7 @@ onAuthStateChanged(auth, async (user) => {
                 await loadPuzzleById(idParam);
 
                 const url = new URL(window.location.href);
-                url.search = '';    
+                url.search = '';
                 window.history.replaceState({}, '', url.toString());
             }
             else {
