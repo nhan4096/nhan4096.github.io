@@ -56,8 +56,6 @@ a:hover {
     100% { color: #ff0; }
 }
 
-footer {
-    position: fixed;
-    font-size: 0.8em;
-    bottom: 0px;
+.space-break {
+    height: 100px;
 }

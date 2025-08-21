@@ -259,7 +259,7 @@ function createCommitHistory() {
 function createForumInterface() {
     $('#forums').html('');
     const spanTitle = document.createElement('span');
-    spanTitle.innerHTML = 'Input keywords seperated by commas into both fields. Messages that are both flagged as Brainrot-leaning and Xitray-leaning are assumed to be Xitray-leaning. Messages that aren\'t flagged by any filter is assumed to be Xitray-leaning. Filters are not case-sensitive. Below are a list of sample messages with their authors and their alignment to Brainrot, Xitray or Neutral. Block Brainrot-leaning messages and keep Xitray and Neutral-leaning messages.';
+    spanTitle.innerHTML = 'Input keywords separated by commas into both fields. Messages that are both flagged as Brainrot-leaning and Xitray-leaning are assumed to be Xitray-leaning. Messages that aren\'t flagged by any filter is assumed to be Xitray-leaning. Filters are not case-sensitive. Below are a list of sample messages with their authors and their alignment to Brainrot, Xitray or Neutral. Block Brainrot-leaning messages and keep Xitray and Neutral-leaning messages.';
     spanTitle.classList.add('bold');
 
     const allowedWords = document.createElement('input');

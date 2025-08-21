@@ -1,6 +1,7 @@
 const gameSave = {
     securityLevel: 0,
     examPassed: false,
+    foundTypos: [],
 }
 
 const securityLevelNames = [

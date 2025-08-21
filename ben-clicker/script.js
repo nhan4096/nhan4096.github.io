@@ -222,7 +222,7 @@ let game = {
         }
     ],
     html: {
-        tabs: [document.getElementById('UIgay'), document.getElementById('settings'), document.getElementById('achievements'), document.getElementById('auto-shitter'), document.getElementById('shittiverses'), document.getElementById('mani'), document.getElementById('shitcubes')],
+        tabs: [document.getElementById('home'), document.getElementById('settings'), document.getElementById('achievements'), document.getElementById('auto-shitter'), document.getElementById('shittiverses'), document.getElementById('mani'), document.getElementById('shitcubes')],
 
         toiletCount: document.getElementById('toilet-count'),
         toiletBtn: document.getElementById('toilet-btn'),

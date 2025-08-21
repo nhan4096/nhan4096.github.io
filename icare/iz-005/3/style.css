@@ -118,3 +118,7 @@ progress {
 .italics {
     font-style: italic;
 }
+
+.typo {
+    cursor: pointer;
+}

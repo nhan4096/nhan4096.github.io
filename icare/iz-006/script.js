@@ -21,6 +21,21 @@ function commonDocumentBehavior() {
     }
     document.title = documentSettings.title;
     document.getElementById("title").innerText = documentSettings.title;
+
+    let foundTypoFlag = true;
+    for (let i = 1; i <= 13 && foundTypoFlag; i++) {
+        if (!gameSave.foundTypos.includes(i)) {
+            foundTypoFlag = false;
+            break;
+        }
+    }
+
+    if (!foundTypoFlag) {
+        alert("This document does not exist.");
+        window.close();
+        return;
+    }
+
     if (gameSave.securityLevel < documentSettings.securityLevel) {
         alert("You are not authorized to view this document. This documment is classified as " + securityLevelNames[documentSettings.securityLevel][0] + ".");
         window.close();
@@ -34,23 +49,4 @@ function commonDocumentBehavior() {
 
 function tick() {
     commonDocumentBehavior();
-    for (typoID of gameSave.foundTypos) {
-        try {
-            document.getElementById("typo-" + typoID).classList.add("red");
-        }
-        catch {
-            // Ignore if the typo element does not exist
-        }
-    }
 }
-
-document.querySelectorAll(".typo").forEach((e) => {
-    e.onclick = () => {
-        e.classList.add("red");
-        let typoID = parseInt(e.id.replace("typo-", ""));
-        if (gameSave.foundTypos.includes(typoID)) {
-            return;
-        }
-        localStorage.setItem("foundTypos", JSON.stringify([...gameSave.foundTypos, typoID]));
-    }
-})

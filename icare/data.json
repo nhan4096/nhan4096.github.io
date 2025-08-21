@@ -62,5 +62,17 @@
     "iz-005/5": {
         "title": "IZ-005.5: NT Interview Log on NTARG",
         "securityLevel": 2
+    },
+    "iz-006": {
+        "title": "IZ-006: Typo Degradation Incident Report",
+        "securityLevel": 3
+    },
+    "logs": {
+        "title": "Logs Access System",
+        "securityLevel": 2
+    },
+    "iz-007": {
+        "title": "IZ-007: Field Operative Motion",
+        "securityLevel": 3
     }
 }

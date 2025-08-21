@@ -2,10 +2,14 @@ body {
     background-color: #111;
 }
 
-h1, h2, h3, h4, h5, h6, p, span, a, button {
+h1, h2, h3, h4, h5, h6, p, span, a, button, input {
     color: #ddd;
     font-family: "Roboto Mono", monospace;
     margin: 0;
+}
+
+input, button {
+    background-color: #333;
 }
 
 a:active {
@@ -59,19 +63,6 @@ a:hover {
     padding: 3%;
 }
 
-.src-text > * {
-    margin: 40px 0;
-}
-
-.italics {
-    font-style: italic;
-}
-
-
-.typo {
-    cursor: pointer;
-}
-
-.red {
-    color: red;
+.space {
+    height: 50vh;
 }

@@ -67,3 +67,11 @@ a:hover {
 .italic {
     font-style: italic;
 }
+
+.typo {
+    cursor: pointer;
+}
+
+.red {
+    color: red;
+}

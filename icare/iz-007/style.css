@@ -59,19 +59,11 @@ a:hover {
     padding: 3%;
 }
 
-.src-text > * {
-    margin: 40px 0;
+.conversation {
+    outline: double #ddd;
+    padding: 2%;
 }
 
-.italics {
+.italic {
     font-style: italic;
-}
-
-
-.typo {
-    cursor: pointer;
-}
-
-.red {
-    color: red;
 }

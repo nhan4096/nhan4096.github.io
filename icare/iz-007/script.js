@@ -34,23 +34,4 @@ function commonDocumentBehavior() {
 
 function tick() {
     commonDocumentBehavior();
-    for (typoID of gameSave.foundTypos) {
-        try {
-            document.getElementById("typo-" + typoID).classList.add("red");
-        }
-        catch {
-            // Ignore if the typo element does not exist
-        }
-    }
 }
-
-document.querySelectorAll(".typo").forEach((e) => {
-    e.onclick = () => {
-        e.classList.add("red");
-        let typoID = parseInt(e.id.replace("typo-", ""));
-        if (gameSave.foundTypos.includes(typoID)) {
-            return;
-        }
-        localStorage.setItem("foundTypos", JSON.stringify([...gameSave.foundTypos, typoID]));
-    }
-})
