@@ -67,7 +67,7 @@ onAuthStateChanged(auth, async (user) => {
             }
             const puzzleDocs = await getDocs(puzzleCollection);
             const numPuzzle = puzzleDocs.size;
-            console.log(`Number of puzzles: ${numPuzzle}`);
+            //console.log(`Number of puzzles: ${numPuzzle}`);
 
             const puzzleForm = document.getElementById("puzzle-form");
             puzzleForm.elements["puzzle-id"].value = numPuzzle + 1;
@@ -82,7 +82,7 @@ onAuthStateChanged(auth, async (user) => {
 
             var tmr = latest.getFullYear()+"-"+(month)+"-"+(day);
             
-            puzzleForm.elements["date"].value = tmr;
+            puzzleForm.elements["date"].value = new Date() > latest ? `${new Date().getFullYear()}-${(new Date().getMonth()).toString().padStart(2, '0')}-${(new Date().getDate()).toString().padStart(2, '0')}` : tmr;
 
             const randomID = generateID();
             document.getElementById("puzzle-id").innerText = `${randomID}`;
