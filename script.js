@@ -4,7 +4,7 @@ let width = buttonsContainer.offsetWidth;
 let selected = -1;
 
 for (let i = 0; i < buttons.length; i++) {
-    buttons[i].style.width = width / buttons.length + 'px';
+    buttons[i].style.width = width / Math.min(buttons.length, 5) + 'px';
     buttons[i].addEventListener('click', function (e) {
         if (selected !== -1) {
             buttons[selected].classList.remove('selected');
