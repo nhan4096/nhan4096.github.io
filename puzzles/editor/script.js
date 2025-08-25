@@ -92,7 +92,7 @@ onAuthStateChanged(auth, async (user) => {
                 if (puzzleForm.checkValidity()) {
                     const puzzleId = puzzleForm.elements["puzzle-id"].value;
                     const name = puzzleForm.elements["name"].value;
-                    const text = puzzleForm.elements["puzzle-desc"].value;
+                    const text = puzzleForm.elements["puzzle-desc"].value.replace('\n', '<br>');
                     const date = new Date(puzzleForm.elements["date"].valueAsDate.setHours(0, 0, 0, 0));
                     const imageUrl = puzzleForm.elements["img"].value;
                     const answer = puzzleForm.elements["answer"].value;
