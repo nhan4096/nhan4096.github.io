@@ -82,7 +82,7 @@ onAuthStateChanged(auth, async (user) => {
 
             var tmr = latest.getFullYear()+"-"+(month)+"-"+(day);
             
-            puzzleForm.elements["date"].value = new Date() > latest ? `${new Date().getFullYear()}-${(new Date().getMonth()).toString().padStart(2, '0')}-${(new Date().getDate()).toString().padStart(2, '0')}` : tmr;
+            puzzleForm.elements["date"].value = new Date() > latest ? `${new Date().getFullYear()}-${(new Date().getMonth() + 1).toString().padStart(2, '0')}-${(new Date().getDate()).toString().padStart(2, '0')}` : tmr;
 
             const randomID = generateID();
             document.getElementById("puzzle-id").innerText = `${randomID}`;
