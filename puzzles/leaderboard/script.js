@@ -54,6 +54,10 @@ function escapeHTML(str) {
     });
 }
 
+function setLocation(href) {
+    window.location.href = href;
+}
+
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         uid = user.uid;
@@ -75,15 +79,13 @@ onAuthStateChanged(auth, async (user) => {
                 leaderboard.appendChild(userRow);
             }
 
-            document.getElementById("back-arrow").addEventListener("click", () => {
-                window.location.href = "../index.html";
-            });
+            document.getElementById("back-arrow").onclick = () => {setLocation('../index.html')};
         }
         else {
             alert("Please verify your email before accessing the leaderboard.");
         }
 
-        document.getElementById("sign-out-link").addEventListener("click", userSignOut);
+        document.getElementById("sign-out-link").onclick = userSignOut;
     }
     else {
         alert("You are not signed in. Please sign in to access the leaderboard.");

@@ -44,6 +44,10 @@ function escapeHTML(str) {
     });
 }
 
+function setLocation(href) {
+    window.location.href = href;
+}
+
 var puzzleList = await getDocs(puzzleCollection);
 const numPuzzles = puzzleList.docs.filter(doc => doc.data().date.toDate() <= new Date()).length;
 onAuthStateChanged(auth, async (user) => {
@@ -63,9 +67,7 @@ onAuthStateChanged(auth, async (user) => {
                 document.getElementById("bio").innerText = "No bio available.";
             }
 
-            document.getElementById("back-arrow").addEventListener("click", () => {
-                window.location.href = "../index.html";
-            });
+            document.getElementById("back-arrow").onclick = () => {setLocation('../index.html')};
 
             let puzzleList = await getDocs(puzzleCollection);
             puzzleList = puzzleList.docs.filter(doc => doc.data().date.toDate() <= new Date());
@@ -86,9 +88,9 @@ onAuthStateChanged(auth, async (user) => {
                 newDiv.style.height = `${screen.width/12}px`;
                 newDiv.innerHTML = `<p class="no-margin grid-text">${i+1}</p>`;
 
-                newDiv.addEventListener("click", () => {
+                newDiv.onclick = () => {
                     window.location.href = `../index.html?id=${arrayPuzzleList[numPuzzles-i-1].id}`;
-                });
+                };
 
                 let tooltipText = document.createElement("p");
                 tooltipText.className = "tooltip-text";
@@ -111,7 +113,7 @@ onAuthStateChanged(auth, async (user) => {
             alert("Please verify your email address to view users.");
             window.location.href = "../index.html";
         }
-        document.getElementById("sign-out-link").addEventListener("click", userSignOut);
+        document.getElementById("sign-out-link").onclick = userSignOut;
     }
     else {
         uid = null;

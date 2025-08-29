@@ -48,15 +48,17 @@ function escapeHTML(str) {
     });
 }
 
+function setLocation(href) {
+    window.location.href = href;
+}
+
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         uid = user.uid;
         // console.log("User is signed in:", user);
         if (user.emailVerified) {
             document.getElementById("signed-in-line").innerHTML = `<i class="fa fa-arrow-left" aria-hidden="true" id="back-arrow"></i> Welcome, <a href="../users/index.html?user=${user.uid}">${escapeHTML(user.displayName)}</a>. <a href="#" id="sign-out-link">Sign out</a>`;
-            document.getElementById("back-arrow").addEventListener("click", () => {
-                window.location.href = "../index.html";
-            });
+            document.getElementById("back-arrow").onclick = () => {setLocation('../index.html')};
 
             const ownerDoc = await getDoc(doc(siteSettingsCollection, 'owner'));
             const ownerUID = ownerDoc.data().uid;
@@ -87,7 +89,7 @@ onAuthStateChanged(auth, async (user) => {
             const randomID = generateID();
             document.getElementById("puzzle-id").innerText = `${randomID}`;
 
-            puzzleForm.addEventListener("submit", async (e) => {
+            puzzleForm.onsubmit = async () => {
                 e.preventDefault();
                 if (puzzleForm.checkValidity()) {
                     const puzzleId = puzzleForm.elements["puzzle-id"].value;
@@ -111,13 +113,13 @@ onAuthStateChanged(auth, async (user) => {
                     puzzleForm.reset();
                     location.reload();
                 }
-            })
+            }
         }
         else {
             alert("Please verify your email before accessing the editor.");
         }
 
-        document.getElementById("sign-out-link").addEventListener("click", userSignOut);
+        document.getElementById("sign-out-link").onclick = userSignOut;
     }
     else {
         alert("You are not signed in. Please sign in to access the editor.");
