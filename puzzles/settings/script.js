@@ -37,15 +37,17 @@ function escapeHTML(str) {
     });
 }
 
+function setLocation(href) {
+    window.location.href = href;
+}
+
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         uid = user.uid;
         // console.log("User is signed in:", user);
         if (user.emailVerified) {
             document.getElementById("signed-in-line").innerHTML = `<i class="fa fa-arrow-left" aria-hidden="true" id="back-arrow"></i> Welcome, <a href="../users/index.html?user=${user.uid}">${escapeHTML(user.displayName)}</a>. <a href="#" id="sign-out-link">Sign out</a>`;
-            document.getElementById("back-arrow").addEventListener("click", () => {
-                window.location.href = "../index.html";
-            });
+            document.getElementById("back-arrow").onclick = () => {setLocation("../index.html")};
 
             const usernameDoc = await getDoc(doc(usernamelistCollection, uid));
             const bio = usernameDoc.data().bio || "";
@@ -56,7 +58,7 @@ onAuthStateChanged(auth, async (user) => {
             document.getElementById("uid").innerHTML = `UID: ${user.uid}`;
             document.getElementById("created-at").innerHTML = `Created at: ${new Date(user.metadata.creationTime).toLocaleString()}`;
 
-            document.getElementById("edit-username").addEventListener("click", async () => {
+            document.getElementById("edit-username").onclick = async () => {
                 const newUsername = prompt("Enter your new username:");
                 if (newUsername) {
                     try {
@@ -70,9 +72,9 @@ onAuthStateChanged(auth, async (user) => {
                         alert(`Error (${error.code}) updating username. Please try again.`);
                     }
                 }
-            });
+            };
 
-            document.getElementById("edit-bio").addEventListener("click", async () => {
+            document.getElementById("edit-bio").onclick = async () => {
                 const newBio = prompt("Enter your new bio (or leave blank to remove):");
                 try {
                     await updateDoc(doc(usernamelistCollection, uid), { bio: newBio || "" });
@@ -82,9 +84,9 @@ onAuthStateChanged(auth, async (user) => {
                     console.error("Error updating bio:", error);
                     alert(`Error (${error.code}) updating bio. Please try again.`);
                 }
-            });
+            };
 
-            document.getElementById("edit-email").addEventListener("click", async () => {
+            document.getElementById("edit-email").onclick = async () => {
                 const newEmail = prompt("Enter your new email address:");
                 if (!newEmail) return;
 
@@ -122,8 +124,8 @@ onAuthStateChanged(auth, async (user) => {
                             alert(`Error (${error.code}): ${error.message}`);
                     }
                 }
-            });
-            document.getElementById("delete-account").addEventListener("click", async () => {
+            };
+            document.getElementById("delete-account").onclick = async () => {
                 const confirmDelete = prompt("Are you sure you want to delete your account? Type the phrase \"UI shat his pants at school on November 1st, 2024.\" with the correct capitalization in the box below to confirm. ");
                 if (confirmDelete == "UI shat his pants at school on November 1st, 2024.") {
                     try {
@@ -142,9 +144,9 @@ onAuthStateChanged(auth, async (user) => {
                         alert(`Error (${error.code}) deleting account. Please try again.`);
                     }
                 }
-            });
+            };
 
-            document.getElementById("reset-puzzles").addEventListener('click', async () => {
+            document.getElementById("reset-puzzles").onclick = async () => {
                 const confirmReset = prompt("Are you sure you want to reset your solved puzzles? Type the phrase \"UI shat his pants at school on November 1st, 2024.\" with the correct capitalization in the box below to confirm. ");
                 if (confirmReset == 'UI shat his pants at school on November 1st, 2024.') {
                     await updateDoc(doc(userlistCollection, uid), { numPuzzlesSolved: 0, puzzlesSolved: {} });
@@ -152,14 +154,14 @@ onAuthStateChanged(auth, async (user) => {
                     alert("Solved puzzles resetted. Refreshing to apply changes.");
                     location.reload();
                 }
-            });
+            };
         }
         else {
             alert("Your email address is not verified. Please verify your email to access your settings.");
             window.location.href = "../index.html";
         }
 
-        document.getElementById("sign-out-link").addEventListener("click", userSignOut);
+        document.getElementById("sign-out-link").onclick = userSignOut;
     }
     else {
         alert("You are not signed in. Please sign in to access your settings.");

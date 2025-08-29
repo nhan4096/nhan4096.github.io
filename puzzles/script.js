@@ -20,8 +20,13 @@ function ordinal(i) {
 }
 let currPuzzle = null;
 
-async function loadPuzzle(e) {
-    currPuzzle = e.target.id;
+async function loadPuzzle(elementOrID) {
+    try {
+        currPuzzle = elementOrID.target.id;
+    }
+    catch {
+        currPuzzle = elementOrID;
+    }
     Array.prototype.slice.call(document.getElementById("popup-dialog").children).forEach((child) => {
         if (child.id != "puzzle-info" && child.id != "close-popup") {
             child.style.display = "none";
@@ -32,7 +37,7 @@ async function loadPuzzle(e) {
     });
     for (let i=0; i<arrayPuzzleList.length; i++) {
         let docu = arrayPuzzleList[i];
-        if (docu.id == e.target.id) {
+        if (docu.id == currPuzzle) {
             let data = docu.data();
             let puzzleName = data.name;
             let puzzleImg = data.img;
@@ -57,7 +62,7 @@ async function loadPuzzle(e) {
             document.getElementById("popup-dialog").style.backgroundColor = "#1a1a1a";
             document.getElementById("puzzle-date").innerHTML = `${month} ${ordinal(day)}, ${year} | #${data.id}`;
 
-            const userDoc = await getDoc(doc(db, "userlist", uid));
+            const userDoc = userDocCache || await getDoc(doc(db, "userlist", uid));
             //console.log(userDoc);
             const hasSolved = Object.values(userDoc.data().puzzlesSolved).some(obj => obj.id === docu.id);
             //console.log(hasSolved, puzzleName);
@@ -72,66 +77,13 @@ async function loadPuzzle(e) {
             }
         };
     };
-};
-
-async function loadPuzzleById(id) {
-    currPuzzle = id;
-    Array.prototype.slice.call(document.getElementById("popup-dialog").children).forEach((child) => {
-        if (child.id != "puzzle-info" && child.id != "close-popup") {
-            child.style.display = "none";
-        }
-        else {
-            child.style.display = "block";
-        }
-    });
-    for (let i=0; i<arrayPuzzleList.length; i++) {
-        let docu = arrayPuzzleList[i];
-        if (docu.id == id) {
-            let data = docu.data();
-            let puzzleName = data.name;
-            let puzzleImg = data.img;
-            let puzzleText = data.text;
-
-            let date = new Date(data.date.seconds * 1000 + data.date.nanoseconds / 1000000);
-
-            let year = date.getFullYear();
-            let month = months[date.getMonth()];
-            let day = date.getDate();
-
-            document.getElementById("overlay").style.display = "block";
-            document.getElementById("popup-dialog").style.display = "block";
-
-            document.getElementById("puzzle-name").innerHTML = puzzleName;
-            document.getElementById("puzzle-img").src = puzzleImg;
-            document.getElementById("puzzle-text").innerHTML = puzzleText;
-            document.getElementById("puzzle-answer").value = "";
-            document.getElementById("puzzle-answer").disabled = false;
-            document.getElementById("submit-answer").disabled = false;
-            document.getElementById("popup-dialog").style.backgroundColor = "#1a1a1a";
-            document.getElementById("puzzle-date").innerHTML = `${month} ${ordinal(day)}, ${year} | #${data.id}`;
-
-            const userDoc = await getDoc(doc(db, "userlist", uid));
-            //console.log(userDoc);
-            const hasSolved = Object.values(userDoc.data().puzzlesSolved).some(obj => obj.id === docu.id);
-            //console.log(hasSolved, puzzleName);
-
-            if (hasSolved) {
-                let answer = Object.values(userDoc.data().puzzlesSolved).find(obj => obj.id === docu.id).answer;
-                document.getElementById("puzzle-answer").value = answer;
-                document.getElementById("puzzle-answer").disabled = true;
-                document.getElementById("submit-answer").disabled = true;
-                document.getElementById("popup-dialog").style.backgroundColor = "#4caf50";
-                //document.getElementById(id).classList.add("solved");
-            }
-        };
-    }
 }
 
 async function getPuzzleObject() {
     try {
         let obj = {};
         //console.log(uid)
-        const userDoc = await getDoc(doc(db, "userlist", uid));
+        const userDoc = userDocCache || await getDoc(doc(db, "userlist", uid));
         puzzleList.forEach(e => {
             if (Object.values(userDoc.data().puzzlesSolved).some(obj => obj.id === e.id)) {
                 obj[e.id] = {
@@ -152,7 +104,7 @@ async function getPuzzleObject() {
 async function getPuzzleArray() {
     try {
         let arr = [];
-        const userDoc = await getDoc(doc(db, "userlist", uid));
+        const userDoc = userDocCache || await getDoc(doc(db, "userlist", uid));
         puzzleList.forEach(e => {
             if (Object.values(userDoc.data().puzzlesSolved).some(obj => obj.id === e.id)) {
                 arr.push(e.data().id);
@@ -213,7 +165,7 @@ async function checkAnswer() {
                     await updateDoc(userRef, {
                         'numPuzzlesSolved': solvedPuzzles,
                         'puzzlesSolved': newPuzzleObject,
-                    });
+                    }).then(async () => {userDocCache = await getDoc(doc(db, "userlist", uid))});
 
                     await updateDoc(doc(usernamelistCollection, uid), { puzzlesSolved: solvedPuzzles, puzzlesSolvedArray: await getPuzzleArray() });
 
@@ -280,6 +232,7 @@ scheduledCount -= puzzleList.length;
 var arrayPuzzleList = Array.from(puzzleList);
 var tabCount = Math.ceil(arrayPuzzleList.length/4);
 var tabs = [];
+var userDocCache = null;
 
 async function loadPuzzleTabs() {
     arrayPuzzleList.sort((a, b) => {
@@ -310,7 +263,7 @@ function redrawTabs() {
         tabButton.id = "tab-" + i;
         if (i == selectedTab) {tabButton.classList.add("selected");}
         tabButton.textContent = i + 1;
-        tabButton.addEventListener("click", () => loadTab(i));
+        tabButton.onclick = () => loadTab(i);
         tabContainer.appendChild(tabButton);
     }
 
@@ -344,7 +297,7 @@ function redrawTabs() {
     tabInput.className = "tab-input";
     tabInput.min = 1;
     tabInput.max = tabCount;
-    tabInput.addEventListener("change", () => loadTab(parseInt(tabInput.value)-1));
+    tabInput.onchange = () => loadTab(parseInt(tabInput.value)-1);
     tabContainer.appendChild(formItem);
 }
 
@@ -357,7 +310,8 @@ async function loadTab(i) {
     redrawTabs();
     document.getElementById("tab-" + i).classList.add("selected");
     //console.log(uid)
-    const userDoc = uid ? await getDoc(doc(db, "userlist", uid)) : null;
+    const userDoc = userDocCache || (uid ? await getDoc(doc(db, "userlist", uid)) : null);
+    userDocCache = userDoc;
     for (const docu of tabs[i]) {
         let data = docu.data();
         let puzzleItem = document.createElement("div");
@@ -382,7 +336,7 @@ async function loadTab(i) {
             }
         }
         puzzleHTML.appendChild(puzzleItem);
-        puzzleItem.addEventListener("click", loadPuzzle);
+        puzzleItem.onclick = loadPuzzle;
     };
 }
 
@@ -459,7 +413,7 @@ async function signUp(e) {
             sendEmailVerification(user);
 
             signUpForm.reset();
-            await signOut(auth);
+            //await signOut(auth);
         }
         catch (error) {
             signUpPopup();
@@ -543,8 +497,12 @@ async function userSignOut() {
 var uid = null;
 
 document.getElementById("solved-count").innerHTML = `Solved: ${solvedPuzzles} / ${puzzleList.length} (${scheduledCount} scheduled)`;
-document.getElementById("close-popup").addEventListener("click", closePopup);
-document.getElementById("submit-answer").addEventListener("click", checkAnswer);
+document.getElementById("close-popup").onclick = closePopup;
+document.getElementById("submit-answer").onclick = checkAnswer;
+
+function setLocation(href) {
+    window.location.href = href;
+}
 
 onAuthStateChanged(auth, async (user) => {
     if (user) {
@@ -561,21 +519,15 @@ onAuthStateChanged(auth, async (user) => {
                 'numPuzzlesSolved': solvedPuzzles,
             });
             await updateDoc(doc(usernamelistCollection, user.uid), { puzzlesSolved: solvedPuzzles, createDate: user.metadata.creationTime, puzzlesSolvedArray: await getPuzzleArray() });
-            document.getElementById("settings-icon").addEventListener("click", () => {
-                window.location.href = "settings/index.html";
-            });
-            document.getElementById("leaderboard-icon").addEventListener("click", () => {
-                window.location.href = "leaderboard/index.html";
-            });
-            document.getElementById("editor-icon").addEventListener("click", () => {
-                window.location.href = "editor/index.html";
-            });
+            document.getElementById("settings-icon").onclick = () => {setLocation("settings/index.html")};
+            document.getElementById("leaderboard-icon").onclick = () => {setLocation("leaderboard/index.html")};
+            document.getElementById("editor-icon").onclick = () => {setLocation("editor/index.html")};
 
             const params = new URLSearchParams(window.location.search);
             const idParam = params.get('id');
             if (idParam) {
                 await loadTab(0);
-                await loadPuzzleById(idParam);
+                await loadPuzzle(idParam);
 
                 const url = new URL(window.location.href);
                 url.search = '';
@@ -586,27 +538,26 @@ onAuthStateChanged(auth, async (user) => {
             }
         }
         else {
-            document.getElementById("signed-in-line").innerHTML = `Your account is not verified! Please check your email (${escapeHTML(user.email)}) for a verification link. You will be signed out in order to log in once you've verified your email. <a id="resend-verify" href="#">Resend</a> <a href="#" id="sign-out-link">Sign out</a>`;
-            document.getElementById("resend-verify").addEventListener("click", async () => {
-                await sendEmailVerification(user);
-            });
+            document.getElementById("signed-in-line").innerHTML = `Your account is not verified! Please check your email (${escapeHTML(user.email)}) for a verification link. Check your spam folder as well. Sign out in order to log in once your account is verified. <a id="resend-verify" href="#">Resend</a> <a href="#" id="sign-out-link">Sign out</a>`;
+            document.getElementById("resend-verify").onclick = async () => {await sendEmailVerification(user)};
         }
         await loadTab(selectedTab);
         document.getElementById("puzzles-container").style.display = "block";
         document.getElementById("overlay-not-logged-in").style.display = "none";
-        document.getElementById("sign-out-link").addEventListener("click", userSignOut);
+        document.getElementById("sign-out-link").onclick = userSignOut;
+        userDocCache = await getDoc(doc(db, "userlist", uid));
     }
     else {
         uid = null;
         //console.log("No user signed in");
         document.getElementById("signed-in-line").innerHTML = '<a href="#" id="sign-up-link">Sign up</a> / <a href="#" id="log-in-link">Log in</a>';
-        document.getElementById("sign-up-link").addEventListener("click", signUpPopup);
-        document.getElementById("sign-up-link-2").addEventListener("click", signUpPopup);
-        document.getElementById("sign-up-form").addEventListener("submit", signUp);
+        document.getElementById("sign-up-link").onclick = signUpPopup;
+        document.getElementById("sign-up-link-2").onclick = signUpPopup;
+        document.getElementById("sign-up-form").onclick = signUp;
 
-        document.getElementById("log-in-link").addEventListener("click", logInPopup);
-        document.getElementById("log-in-link-2").addEventListener("click", logInPopup);
-        document.getElementById("log-in-form").addEventListener("submit", logIn);
+        document.getElementById("log-in-link").onclick = logInPopup;
+        document.getElementById("log-in-link-2").onclick = logInPopup;
+        document.getElementById("log-in-form").onclick = logIn;
 
         document.getElementById("puzzles-container").style.display = "none";
         document.getElementById("overlay-not-logged-in").style.display = "block";
