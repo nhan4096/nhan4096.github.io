@@ -89,7 +89,7 @@ onAuthStateChanged(auth, async (user) => {
             const randomID = generateID();
             document.getElementById("puzzle-id").innerText = `${randomID}`;
 
-            puzzleForm.onsubmit = async () => {
+            puzzleForm.onsubmit = async (e) => {
                 e.preventDefault();
                 if (puzzleForm.checkValidity()) {
                     const puzzleId = puzzleForm.elements["puzzle-id"].value;
