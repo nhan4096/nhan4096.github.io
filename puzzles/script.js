@@ -227,7 +227,16 @@ var solvedPuzzles = 0;
 
 var puzzleList = await getDocs(puzzleCollection);
 let scheduledCount = puzzleList.size;
-puzzleList = puzzleList.docs.filter(doc => doc.data().date.toDate() <= new Date());
+const now = new Date();
+const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+puzzleList = puzzleList.docs.filter(doc => {
+    const puzzleDate = doc.data().date.toDate();
+    console.log(puzzleDate);
+    const puzzleMidnight = new Date(puzzleDate.getFullYear(), puzzleDate.getMonth(), puzzleDate.getDate());
+    return puzzleMidnight <= today;
+});
+
 scheduledCount -= puzzleList.length;
 var arrayPuzzleList = Array.from(puzzleList);
 var tabCount = Math.ceil(arrayPuzzleList.length/4);
