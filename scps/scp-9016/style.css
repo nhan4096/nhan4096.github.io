@@ -1,0 +1,18 @@
+.notice {
+    background-image: url('../assets/scp-emblem-light.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+}
+
+.garamond {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.1em;
+}
+
+.monospace {
+    font-family: 'Courier New', Courier, monospace !important;
+}
