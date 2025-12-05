@@ -1,0 +1,35 @@
+* {
+    font-family: "Roboto Mono", monospace;
+}
+
+p, h1, h2, h3, h4, h5, h6, a, blockquote {
+    margin: 0;
+    color: #ffffff;
+}
+
+a {
+    text-decoration: underline;
+}
+
+body {
+    background-color: #0f0f0f;
+    overflow: hidden;
+}
+
+.project-list {
+    width: 100%;
+}
+
+.buttons > button {
+    margin: 0px;
+    border-radius: 0;
+}
+
+.selected {
+    background-color: #00b3ff;
+}
+
+blockquote {
+    font-style: italic;
+    padding: 1%;
+}

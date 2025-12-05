@@ -1,0 +1,39 @@
+.fade-div {
+    background-image: linear-gradient(to bottom, #0000 59.16%, #000f 93%);
+    z-index: 100;
+}
+
+body {
+    background-image: url('/scps/assets/9595-background.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    padding: 0;
+    margin: 0;
+}
+
+p, blockquote, li, a, span, table, sub, sup {
+    line-height: 1.5;
+    font-size: .95em;
+    font-weight: 400;
+    color: #eee;
+}
+
+.bold, th {
+    font-weight: 600;
+    color: #fff;
+}
+
+.text-block {
+    padding: 0.2em 0.75em;
+    box-shadow: 1px 1px 4px #000;
+    background-color: #111;
+}
+
+.text-block > .text-block {
+    border: 3px dashed #444;
+    background-color: #3334;
+}
+
+table {
+    table-layout: fixed;
+}

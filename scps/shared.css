@@ -1,0 +1,126 @@
+* {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+body {
+    background-image: url('/scps/assets/background.jpg');
+}
+
+p, blockquote, li, a, span, table, sub, sup {
+    line-height: 1.5;
+    font-size: .95em;
+    font-weight: 400;
+    color: #333;
+}
+
+.bold, th {
+    font-weight: 600;
+    color: #000;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.center-flex {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 2em;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.main-content {
+    width: 70%;
+    max-width: 700px;
+    margin: auto;
+}
+
+.footnote {
+    font-size: 0.75em;
+    color: #aa0000 !important;
+}
+
+table, td, th {
+    border: 1.5px solid #222;
+    border-collapse: collapse;
+    padding: 0.25em;
+}
+
+.border {
+    border: 1.5px solid #222;
+}
+
+.large-text {
+    font-size: 1.2em;
+}
+
+.left-accent {
+    border-left: 4px solid #aa0000;
+}
+
+.text-block {
+    padding: 0.2em 0.75em;
+    box-shadow: 1px 1px 4px #5e5e5e;
+    background-color: #fafafa;
+}
+
+.monospace {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.95em;
+}
+
+.left-indent {
+    margin-left: 2em;
+}
+
+@keyframes flashing {
+    0% {color: #ff0000;}
+    100% {color: #ff9100;}
+}
+
+.flashing {
+    animation: flashing 5s infinite alternate;
+}
+
+a {
+    text-decoration: none;
+    color: blue;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.strikethrough {
+    text-decoration: line-through;
+}
+
+
+.full-width {width: 100%;}
+.break {height: 100em;}
+.line {border-top: 2px solid #222;}
+p { margin: 0.5em 0; }
+.accent-color, .footnote-idx { color: #aa0000 !important; }
+.center { text-align: center; }
+img { width: 100%; }
+.image-frame {
+    border-bottom: 4px #aa0000 solid;
+    box-shadow: 1px 1px 4px #5e5e5e;
+    padding: 0 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.image-frame > p {
+    text-align: center;
+    font-style: italic;
+}
+.align-right {
+    text-align: right;
+}
