@@ -1,5 +1,5 @@
 .notice {
-    background-image: url('../assets/scp-emblem-light.svg');
+    background-image: url('/scps/assets/scp-emblem-light.svg');
     background-repeat: no-repeat;
     background-position: center;
     display: flex;

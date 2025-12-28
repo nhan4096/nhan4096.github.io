@@ -1,0 +1,68 @@
+body {
+    background-image: url('/scps/assets/9161-background.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    padding: 0;
+    margin: 0;
+}
+
+p, blockquote, li, a, span, table, sub, sup {
+    line-height: 1.5;
+    font-size: .95em;
+    font-weight: 400;
+    color: #eee;
+}
+
+.bold, th {
+    font-weight: 600;
+    color: #fff;
+}
+
+.text-block {
+    padding: 0.2em 0.75em;
+    box-shadow: 1px 1px 4px #000;
+    background-color: #111;
+}
+
+.text-block > .text-block {
+    border: 3px dashed #444;
+    background-color: #3334;
+}
+
+table {
+    table-layout: fixed;
+}
+
+.monospace-inherit > * {
+    font-family: 'Roboto Mono', monospace !important;
+    font-size: 0.95em;
+}
+
+.monospace-inherit > * > * {
+    font-family: inherit !important;
+}
+
+.small-break {
+    height: 15em;
+}
+
+.notice {
+    background-image: url('/scps/assets/scp-emblem-light.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: auto;
+    animation: alert 3s infinite alternate;
+}
+
+@keyframes alert {
+    0% {
+        background-color: #ff0000;
+    }
+    100% {
+        background-color: #ff4400;
+    }
+}
