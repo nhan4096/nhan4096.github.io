@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+        <link href="style.css" rel="stylesheet">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>UILand's Math Olympiad</title>
+    </head>
+    <body>
+        <h1 class="center">UILand's Math Olympiad</h1>
+        <p class="center italic">A collection of bullshit math problems, for UILand's non-existent Math Olympiad team!</p>
+        <div class="center-flex">
+            <div class="main-content">
+                <p>Problems will be posted whenever I feel like it. There are currently <span id="count-problems">0</span> problems.</p>
+                <table id="problem-table">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Difficulty</th>
+                        <th>Solved?</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-analytics.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            const firebaseConfig = {
+                apiKey: "AIzaSyBg9k32zMoR61PsbnVqquy_UMdIOeG2jhM",
+                authDomain: "uilands-math-olympiad-nhan4096.firebaseapp.com",
+                projectId: "uilands-math-olympiad-nhan4096",
+                storageBucket: "uilands-math-olympiad-nhan4096.firebasestorage.app",
+                messagingSenderId: "121067891522",
+                appId: "1:121067891522:web:8b341476960c12bff5b6db",
+                measurementId: "G-E25CB98KW8"
+            };
+        
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+        </script>
+        <script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-svg.js"></script>
+        <script src="load-math-jax.js"></script>
+        <script type="module" src="script.js"></script>
+    </body>
+</html>

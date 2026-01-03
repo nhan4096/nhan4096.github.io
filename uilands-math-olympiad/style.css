@@ -1,0 +1,89 @@
+* {
+    font-family: 'Lato', sans-serif;
+    color: #e5e5e5;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #1f1f1f;
+}
+
+input {
+    background-color: #1a1a1a;
+    color: #e8ebef;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.center {
+    text-align: center;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.center-flex {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.center-flex > * {
+    margin: 0.5em;
+}
+
+.main-content {
+    width: 70%;
+    max-width: 700px;
+    margin: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 3px solid #444;
+    margin: auto;
+}
+
+th, td {
+    border: 3px solid #444;
+}
+
+a {
+    color: #99f;
+}
+
+.problem-container {
+    border: 2px dashed #555;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 0.25em 1em;
+    font-size: 1.1em;
+}
+
+#submit-button {
+    width: 30%;
+}
+
+#answer-input {
+    width: 30%;
+}
+
+#answer-form {
+    border: 2px dashed #555;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#submit-button:disabled, #answer-input:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+}
