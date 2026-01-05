@@ -417,7 +417,7 @@ async function signUp(e) {
                 puzzlesSolved: await getPuzzleObject(),
                 dateJoined: new Date(),
             });
-            await setDoc(doc(usernamelistCollection, user.uid), { username: username, bio: "" });
+            await setDoc(doc(usernamelistCollection, user.uid), { username: username, bio: "", puzzlesSolved: 0, puzzlesSolvedArray: [], createDate: new Date() });
 
             sendEmailVerification(user);
 
