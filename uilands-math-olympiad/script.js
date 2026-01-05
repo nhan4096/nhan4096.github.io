@@ -17,7 +17,13 @@ const db = getFirestore(app);
 async function getProblems(db) {
     const problemsCol = collection(db, 'problems');
     const problemSnapshot = await getDocs(problemsCol);
-    const problemList = problemSnapshot.docs.map(doc => doc.data());
+    const problemList = problemSnapshot.docs
+        .map(doc => ({
+            id: Number(doc.id),
+            ...doc.data()
+        }))
+        .sort((a, b) => a.id - b.id);
+    console.log(problemList)
     return problemList;
 }
 
