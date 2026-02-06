@@ -232,7 +232,7 @@ const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
 puzzleList = puzzleList.docs.filter(doc => {
     const puzzleDate = doc.data().date.toDate();
-    console.log(puzzleDate);
+    //console.log(puzzleDate);
     const puzzleMidnight = new Date(puzzleDate.getFullYear(), puzzleDate.getMonth(), puzzleDate.getDate());
     return puzzleMidnight <= today;
 });
@@ -329,10 +329,13 @@ async function loadTab(i) {
         let month = months[date.getMonth()];
         let day = date.getDate();
 
+        const maxLength = 22;
+        const nameShortened = data.name.length <= maxLength ? data.name : (data.name.slice(0, maxLength-3) + "...")
+
         puzzleItem.className = "puzzle";
         puzzleItem.id = docu.id;
         puzzleItem.innerHTML = `
-            <h2 class="center bold no-margin" id="${docu.id}">${data.name}</h2>
+            <h2 class="center bold no-margin" id="${docu.id}">${nameShortened}</h2>
             <p class="no-margin italics">${month} ${ordinal(day)}, ${year} | #${data.id}</p>
             <div class="img-container">
                 <img class="img-puzzle" src="${data.img}" alt="${data.name}" id="${docu.id}">
