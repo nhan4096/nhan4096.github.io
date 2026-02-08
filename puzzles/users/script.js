@@ -14,9 +14,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const puzzleCollection = collection(db, "puzzles");
-const userlistCollection = collection(db, "userlist");
+//const userlistCollection = collection(db, "userlist");
 const usernamelistCollection = collection(db, "usernamelist");
-const puzzleHTML = document.getElementById("puzzle-list");
 const auth = getAuth(app);
 
 const params = new URLSearchParams(window.location.search);

@@ -13,7 +13,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const puzzleCollection = collection(db, "puzzles");
+//const puzzleCollection = collection(db, "puzzles");
 const userlistCollection = collection(db, "userlist");
 const usernamelistCollection = collection(db, "usernamelist");
 const auth = getAuth(app);
