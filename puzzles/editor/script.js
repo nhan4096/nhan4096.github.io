@@ -14,8 +14,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const puzzleCollection = collection(db, "puzzles");
-const userlistCollection = collection(db, "userlist");
-const usernamelistCollection = collection(db, "usernamelist");
+//const userlistCollection = collection(db, "userlist");
+//const usernamelistCollection = collection(db, "usernamelist");
 const siteSettingsCollection = collection(db, "siteSettings");
 const auth = getAuth(app);
 
