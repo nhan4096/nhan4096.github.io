@@ -179,7 +179,7 @@ async function checkAnswer() {
                 if (!submitBtn.disabled) {
                     submitBtn.disabled = true;
 
-                    let countdown = 5;
+                    let countdown = 60;
                     const originalText = submitBtn.innerText;
                     submitBtn.innerText = `Check (${countdown})`;
 
