@@ -190,10 +190,15 @@ async function checkAnswer() {
                         }
                         else {
                             clearInterval(interval);
+                            clearInterval(disableInterval);
                             submitBtn.disabled = false;
                             submitBtn.innerText = originalText;
                         }
                     }, 1000);
+
+                    const disableInterval = setInterval(() => {
+                        if (countdown > 0) submitBtn.disabled = true;
+                    }, 10);
                 }
             };
         };
