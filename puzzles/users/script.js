@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { getFirestore, collection, getDocs, doc, setDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, doc, setDoc, updateDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, onAuthStateChanged, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -47,8 +47,20 @@ function setLocation(href) {
     window.location.href = href;
 }
 
+const docRef = doc(db, 'getTime', 'getTime');
+await updateDoc(docRef, {
+    timestamp: serverTimestamp()
+});
+
+const snap = await getDoc(docRef);
+
+if (snap.data().timestamp) {
+    const now = snap.data().timestamp.toDate();
+    window.now = now;
+}
+
 var puzzleList = await getDocs(puzzleCollection);
-const numPuzzles = puzzleList.docs.filter(doc => doc.data().date.toDate() <= new Date()).length;
+const numPuzzles = puzzleList.docs.filter(doc => doc.data().date.toDate() <= now).length;
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         if (user.emailVerified) {
@@ -69,8 +81,9 @@ onAuthStateChanged(auth, async (user) => {
             document.getElementById("back-arrow").onclick = () => {setLocation('../index.html')};
 
             let puzzleList = await getDocs(puzzleCollection);
-            puzzleList = puzzleList.docs.filter(doc => doc.data().date.toDate() <= new Date());
+            puzzleList = puzzleList.docs.filter(doc => doc.data().date.toDate() <= now);
             let arrayPuzzleList = puzzleList;
+            console.log(arrayPuzzleList);
 
             arrayPuzzleList.sort((a, b) => {
                 let dataa = a.data();
