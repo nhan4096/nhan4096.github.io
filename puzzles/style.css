@@ -74,8 +74,8 @@ p, h1, h2, h3, h4, h5, h6, input, button {
     padding: 1%;
     margin: 0.5%;
     cursor: pointer;
-    width: 49.6vh;
-    height: 49.6vh;
+    aspect-ratio: 1 / 1;
+    width: 25%;
 }
 
 .puzzle:hover {
@@ -84,7 +84,8 @@ p, h1, h2, h3, h4, h5, h6, input, button {
 
 #puzzle-list {
     display: flex;
-    flex-wrap: wrap;
+    /*flex-wrap: wrap;*/
+    justify-content: space-between;
     flex-direction: row;
     align-items: center;
     background-color: #060606;
