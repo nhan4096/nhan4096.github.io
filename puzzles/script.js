@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { getFirestore, collection, getDocs, doc, setDoc, updateDoc, getDoc, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, doc, setDoc, updateDoc, getDoc, enableIndexedDbPersistence, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, onAuthStateChanged, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
 function ordinal(i) {
@@ -239,7 +239,18 @@ var solvedPuzzles = 0;
 
 var puzzleList = await getDocs(puzzleCollection);
 let scheduledCount = puzzleList.size;
-const now = new Date();
+const docRef = doc(db, 'getTime', 'getTime');
+await updateDoc(docRef, {
+    timestamp: serverTimestamp()
+});
+
+const snap = await getDoc(docRef);
+
+if (snap.data().timestamp) {
+    const now = snap.data().timestamp.toDate();
+    window.now = now;
+}
+
 const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
 puzzleList = puzzleList.docs.filter(doc => {
